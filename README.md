@@ -24,7 +24,7 @@
 
 The GVC Builder Kit gets you from idea to live project in minutes. No coding experience needed. The GVC brand is baked in, Claude knows the design rules, and deploying is one command.
 
-Every template and power-up is extracted from **5 real, shipped GVC projects** — the Gallery, Smash the Wall, Vibepool, VibeOff, and VibeMatch. Nothing is made up. Everything is battle-tested.
+Every template and power-up is extracted from **5 real, shipped GVC projects**: the Gallery, Smash the Wall, Vibepool, VibeOff, and VibeMatch. Nothing is made up. Everything is battle-tested.
 
 ---
 
@@ -38,7 +38,7 @@ You need two things on your computer. If you already have them, skip to Step 2.
 1. Go to [nodejs.org](https://nodejs.org)
 2. Download the **LTS version** (the big green button)
 3. Open the installer and follow the steps
-4. When it's done, open your terminal and type `node -v` — you should see a version number
+4. When it's done, open your terminal and type `node -v` and you should see a version number
 
 **Claude** (your AI building partner)
 1. Go to [claude.ai/download](https://claude.ai/download) and install Claude for desktop
@@ -72,7 +72,7 @@ The Builder Kit walks you through everything:
   > A dashboard that shows which GVCs are listed
     under 0.5 ETH and tracks who's been sweeping
 
-  Got it — setting you up with the Tracker template
+  Got it! Setting you up with the Tracker template
   and including GVC Collection data + Stats panel.
 ```
 
@@ -113,7 +113,7 @@ gvc deploy
 
 Your project is now live on the internet with a shareable URL.
 
-**That's it — you just built and shipped something.**
+**That's it. You just built and shipped something.**
 
 ---
 
@@ -121,17 +121,17 @@ Your project is now live on the internet with a shareable URL.
 
 Not ready for the terminal? No worries.
 
-Use the **[Web Builder](https://web-seven-tan-85.vercel.app)** to walk through the setup visually — pick your template, describe your idea, choose power-ups — then get a command to run when you're ready.
+Use the **[Web Builder](https://web-seven-tan-85.vercel.app)** to walk through the setup visually. Pick your template, describe your idea, choose power-ups, then get a command to run when you're ready.
 
 ---
 
 ## What you're building with
 
-Every project comes loaded with the **GVC brand system** — the same design behind every GVC site you've seen.
+Every project comes loaded with the **GVC brand system**. The same design behind every GVC site you've seen.
 
 | What's included | Details |
 |---|---|
-| **Color palette** | Gold (#FFE048), black, dark grays — the full system |
+| **Color palette** | Gold (#FFE048), black, dark grays. The full system |
 | **Typography** | Brice (headlines) + Mundial (body) loaded and ready |
 | **Effects** | Gold glow, shimmer animations, glassmorphism cards, embers |
 | **Icons** | Shaka and particle effects available |
@@ -141,7 +141,7 @@ Every project comes loaded with the **GVC brand system** — the same design beh
 
 ## What can I build?
 
-Anything you can imagine. The Builder Kit gives you a starting point — you take it wherever you want.
+Anything you can imagine. The Builder Kit gives you a starting point, and you take it wherever you want.
 
 | You say... | What you get |
 |---|---|
@@ -152,7 +152,7 @@ Anything you can imagine. The Builder Kit gives you a starting point — you tak
 | "A voting or ranking page" | 1v1 matchups or poll-style voting, leaderboard, results |
 | "A community hub" | Member highlights, activity feed, badge wall, links |
 | "A blog or content page" | Post list, individual post pages, writing support |
-| "A simple links page" | Profile card, link list, socials — all GVC-styled |
+| "A simple links page" | Profile card, link list, socials, all GVC-styled |
 | "I have my own idea" | Just the brand system, ready for anything |
 
 ---
@@ -203,7 +203,7 @@ The Builder Kit reads your description and picks the right setup:
 | "A game where people vote on favorite GVCs" | Vote & Rank + NFT images + Leaderboard |
 | "A page for my GVC art collection" | Gallery + NFT image loading |
 | "A sweep tracker with wallet connect" | Tracker + Wallet + Collection data + On-chain reads |
-| "Something fun, not sure yet" | Blank Canvas — build whatever you want |
+| "Something fun, not sure yet" | Blank Canvas. Build whatever you want |
 
 ---
 
@@ -238,7 +238,7 @@ The patterns are proven. The brand system is battle-tested.
 
 - Open your project in Claude and ask it anything
 - Check the README inside your project for example prompts
-- Ask in the GVC Discord — the community is always here to help
+- Ask in the GVC Discord. The community is always here to help
 
 <p align="center">
   <br />

@@ -99,11 +99,14 @@ export default function StepWizard() {
       </div>
 
       {/* Footer */}
-      <div className="py-4 text-center">
-        <p className="text-white/20 text-xs font-body inline-flex items-center gap-2">
-          <Image src="/shaka.png" alt="" width={14} height={14} className="opacity-40" />
-          Good Vibes Club
-        </p>
+      <div className="py-4 flex justify-center">
+        <Image
+          src="/gvc-logotype.svg"
+          alt="Good Vibes Club"
+          width={130}
+          height={8}
+          className="opacity-20 hover:opacity-40 transition-opacity duration-300"
+        />
       </div>
     </div>
   );
