@@ -2,15 +2,37 @@
 
 **One command. GVC brand. Ship something.**
 
-`npx gvc create` gets any community member from idea to deployed project in minutes — no coding experience required. The GVC brand system is baked in, Claude knows the rules, and deploying is one command.
+The GVC Builder Kit gets you from idea to live project in minutes. No coding experience needed. The GVC brand is baked in, Claude knows the design rules, and deploying is one command.
 
 ---
 
-## How it works
+## Getting Started
+
+### Step 1: Install the basics
+
+You need two things on your computer. If you already have them, skip to Step 2.
+
+**Node.js** (makes everything run)
+1. Go to [nodejs.org](https://nodejs.org)
+2. Download the LTS version (the big green button)
+3. Open the installer and follow the steps
+4. When it's done, open your terminal and type `node -v` — you should see a version number
+
+**Claude** (your AI building partner)
+1. Go to [claude.ai/download](https://claude.ai/download) and install Claude for desktop
+2. Or install Claude Code in your terminal: `npm install -g @anthropic-ai/claude-code`
+
+### Step 2: Create your project
+
+Open your terminal and run:
 
 ```
 npx gvc create
+```
 
+That's it. The Builder Kit walks you through everything:
+
+```
 ? What's your project called? my-gvc-tracker
 
 ? What do you want to build?
@@ -30,113 +52,123 @@ npx gvc create
 
   Got it — I'll set you up with the Tracker template
   and include GVC Collection data + Animated stats panel.
-
-? Want to add anything else?
-  ◻ Web3 wallet connect
-  ◻ Token prices (ETH, VIBESTR, PNKSTR)
-  ◻ Leaderboard system
-  ◻ Toast notifications
-
-✔ Created my-gvc-tracker
-
-Next steps:
-  cd my-gvc-tracker
-  gvc dev        ← start building
-  gvc deploy     ← ship to the world
-
-Open your project in Claude and tell it what you
-want to change. It already knows the GVC brand.
 ```
 
-You describe what you want. The CLI figures out the rest.
+You describe what you want. The Builder Kit figures out the rest.
+
+### Step 3: Start building
+
+```
+cd my-gvc-tracker
+gvc dev
+```
+
+Your project is now running on your computer. Open it in the browser to see it.
+
+### Step 4: Customize with Claude
+
+Open your project folder in Claude and start telling it what you want. Your project already includes a brand guide so Claude knows the GVC style.
+
+Try things like:
+- "Add a hero section with a big gold title that says Welcome to my Tracker"
+- "Show the current GVC floor price in a glowing stats card"
+- "Add a leaderboard that shows the top 10 sweepers"
+- "Make the background darker and add some floating gold particles"
+
+Claude will keep everything on-brand automatically.
+
+### Step 5: Ship it
+
+When you're ready to go live:
+
+```
+gvc deploy
+```
+
+Your project is now live on the internet with a shareable URL. That's it — you built and shipped something.
 
 ---
 
-## What's inside every project
+## Try it in the browser first
 
-**GVC Brand System**
-- Gold (#FFE048), black, dark grays — the full color palette
-- Brice + Mundial fonts loaded and configured
-- Gold glow effects, shimmer animations, glassmorphism cards
-- Shaka icon and particle effects available
-
-**Claude-Ready**
-- Every project includes a `CLAUDE.md` that teaches Claude the GVC brand rules
-- Members can open their project in Claude and start vibe coding immediately
-- Claude keeps them on-brand automatically
-
-**Human README**
-- Not a dev README — a plain-English guide that says exactly what to do next
-- Example prompts to give Claude so you can start customizing right away
-
-**Deploy in one command**
-- `gvc deploy` handles Vercel setup — no config needed
-- Custom domains supported
+Not ready for the terminal yet? Use the **[Web Builder](https://web-seven-tan-85.vercel.app)** to walk through the setup visually, then get a command to run when you're ready.
 
 ---
 
-## Templates
+## What you're building with
 
-Described by what you want to build, not technical jargon.
+Every project comes loaded with the GVC brand system — the same design behind the Gallery, Smash the Wall, VibeOff, Vibepool, and VibeMatch.
 
-| You say... | Template | What you get |
-|---|---|---|
-| "A website for my project" | **Project Site** | Hero, about section, features grid, CTA, footer |
-| "A tool that tracks something" | **Tracker** | Stats cards, charts, live data feeds, refresh intervals |
-| "A game or interactive experience" | **Mini Game** | Game board scaffold, scoring, game-over screen, leaderboard |
-| "A place to show off my collection" | **Gallery** | Image grid with gold glow cards, upload/submit, filtering |
-| "A voting or ranking page" | **Vote & Rank** | 1v1 matchups or poll-style voting, leaderboard, results |
-| "A community hub" | **Community Page** | Member highlights, activity feed, badge wall, links |
-| "A blog or content page" | **Blog / Journal** | Post list, individual post pages, markdown support |
-| "A simple links page" | **Link-in-Bio** | Profile card, link list, socials, GVC-styled |
-| "I have my own idea" | **Blank Canvas** | Just the brand system, ready for anything |
-
-All templates use Next.js, Tailwind, Framer Motion, and TypeScript — the same proven stack behind every GVC site.
+- **Gold (#FFE048)**, black, dark grays — the full color palette
+- **Brice + Mundial** fonts loaded and ready
+- **Gold glow effects**, shimmer animations, glassmorphism cards
+- **Shaka icon** and particle effects
+- A **brand guide for Claude** so it keeps your project looking GVC
 
 ---
 
-## Add-ons
+## What can I build?
 
-Modular extras suggested based on your idea. Each comes with working API routes, typed helper functions, example components, and `.env.example` files.
+Anything you can imagine. Here are the starting templates:
+
+| You say... | What you get |
+|---|---|
+| "A website for my project" | Hero, about section, features grid, CTA, footer |
+| "A tool that tracks something" | Stats cards, charts, live data feeds, auto-refresh |
+| "A game or interactive experience" | Game board, scoring, game-over screen, leaderboard |
+| "A place to show off my collection" | Image grid with gold glow cards, uploads, filtering |
+| "A voting or ranking page" | 1v1 matchups or poll-style voting, leaderboard, results |
+| "A community hub" | Member highlights, activity feed, badge wall, links |
+| "A blog or content page" | Post list, individual post pages, writing support |
+| "A simple links page" | Profile card, link list, socials — all GVC-styled |
+| "I have my own idea" | Just the brand system, ready for anything |
+
+---
+
+## Power-ups
+
+Want to connect to blockchain data, add a leaderboard, or build a game? The Builder Kit can wire that up for you during setup. Just describe your idea and it suggests what you need.
 
 **Blockchain & Data**
-| Add-on | What it scaffolds |
+| Power-up | What it gives you |
 |---|---|
-| **Web3 wallet connect** | RainbowKit + wagmi config, connect button component |
-| **GVC Collection data** | OpenSea API routes, `getGVCListings()`, `getFloorPrice()` helpers |
-| **Token prices** | CoinGecko + DexScreener feeds for ETH/VIBESTR/PNKSTR |
-| **On-chain reads** | viem client, ERC20 balance reads, contract call helpers |
-| **IPFS image loading** | Multi-gateway fallback (dweb, Cloudflare, Pinata), proxy route |
+| **Web3 wallet connect** | Let users connect their wallet to your site |
+| **GVC Collection data** | Pull live listings, floor price, and owner data from OpenSea |
+| **Token prices** | Show live prices for ETH, VIBESTR, and PNKSTR |
+| **On-chain reads** | Read wallet balances and smart contract data |
+| **IPFS image loading** | Load NFT images reliably with automatic fallbacks |
 
-**Game & Social**
-| Add-on | What it scaffolds |
+**Games & Social**
+| Power-up | What it gives you |
 |---|---|
-| **Badge collection** | 90 GVC badges across 4 tiers (Common/Silver/Gold/Cosmic), PinBook UI, drop tables |
-| **Leaderboard system** | Daily, weekly, all-time leaderboards with Vercel KV + optimistic UI |
-| **Auth** | Edge-compatible JWT sessions via Web Crypto API — works on Vercel Edge |
-| **Game engine scaffold** | Pure game logic layer, seeded PRNG for daily challenges, scoring multipliers |
-| **Audio mixer** | Web Audio API with 3-bus hierarchy, voice limiting, music ducking |
+| **Badge collection** | All 90 GVC badges across 4 tiers with a collection UI |
+| **Leaderboard** | Daily, weekly, and all-time rankings |
+| **User accounts** | Let people sign up and save their progress |
+| **Game engine** | Scoring, daily challenges, and game logic ready to go |
+| **Audio** | Sound effects and music for games and interactive projects |
 
-**UI Components**
-| Add-on | What it scaffolds |
+**UI Extras**
+| Power-up | What it gives you |
 |---|---|
-| **Toast notifications** | Toast provider, gold-themed notifications, auto-dismiss |
-| **Animated stats panel** | Stat card grid with count-up animations, loading states, 24h deltas |
-| **Vercel KV** | Redis setup, KV helpers, `.env` template |
+| **Notifications** | Gold-themed popup alerts |
+| **Stats panel** | Animated number cards with live data |
+| **Database** | Save and retrieve data for your project |
+
+You don't need to understand what these are — just describe your idea and the Builder Kit recommends the right ones.
 
 ---
 
 ## Smart suggestions
 
-You don't need to know which add-ons to pick. Describe your idea and the CLI recommends what you need:
+Describe what you want and the Builder Kit picks the right setup:
 
-| Your description | CLI suggests |
+| Your idea | What you get |
 |---|---|
-| "A dashboard that tracks GVC floor price" | Tracker template + GVC Collection data + Animated stats panel |
-| "A game where people vote on their favorite GVCs" | Vote & Rank template + IPFS image loading + Leaderboard system |
-| "A page for my GVC art collection" | Gallery template + IPFS image loading |
-| "A sweep tracker with wallet connect" | Tracker template + Web3 wallet + GVC Collection data + On-chain reads |
-| "Something fun, not sure yet" | Blank Canvas — customize from there |
+| "A dashboard that tracks GVC floor price" | Tracker + GVC Collection data + Stats panel |
+| "A game where people vote on their favorite GVCs" | Vote & Rank + NFT images + Leaderboard |
+| "A page for my GVC art collection" | Gallery + NFT image loading |
+| "A sweep tracker with wallet connect" | Tracker + Wallet connect + Collection data + On-chain reads |
+| "Something fun, not sure yet" | Blank Canvas — build whatever you want |
 
 ---
 
@@ -144,62 +176,29 @@ You don't need to know which add-ons to pick. Describe your idea and the CLI rec
 
 | Command | What it does |
 |---|---|
-| `npx gvc create` | Scaffold a new project |
-| `gvc dev` | Start local dev server |
-| `gvc deploy` | Deploy to Vercel |
-| `gvc templates` | Browse available templates |
-
----
-
-## First-time setup
-
-If it's your first time, the CLI walks you through everything:
-
-1. Checks if Node.js is installed — links you to install if not
-2. Checks if you have Claude — links you to get started
-3. Runs the create flow
-4. Opens your project with a README that tells you exactly what to do
-
-No assumptions. No jargon. Just build.
-
----
-
-## Who it's for
-
-GVC community members who want to build something — a tracker, a game, a portfolio, a tool, anything — but don't know where to start. The Builder Kit removes every barrier:
-
-- **No coding experience needed** — describe your idea, customize with Claude
-- **No design decisions** — GVC brand is already there
-- **No deploy complexity** — one command
-- **No blockchain learning curve** — add-ons handle the setup
+| `npx gvc create` | Create a new project |
+| `gvc dev` | Run your project locally |
+| `gvc deploy` | Ship it live |
+| `gvc templates` | See all available templates |
 
 ---
 
 ## Built from 5 production GVC projects
 
-Every template and add-on is extracted from real, shipped GVC projects — not invented from scratch:
+Every template and power-up is extracted from real, shipped GVC projects:
 
 - **GVC Gallery** — community art gallery with submissions and voting
 - **Smash the Wall** — real-time NFT market analytics dashboard
 - **Vibepool** — crypto portfolio tracker with badge system
-- **VibeOff** — 1v1 voting game with Elo rankings and VIBESTR payments
+- **VibeOff** — 1v1 voting game with Elo rankings
 - **VibeMatch** — match-3 puzzle game with badge collection and leaderboards
 
-The patterns are proven. The brand system is battle-tested.
+Nothing is made up. Everything is battle-tested.
 
 ---
 
-## What's NOT in v1
+## Need help?
 
-- Community tracker / "ship it" feed (v2)
-- Web-based launcher at gvc.build (v2)
-- Non-Next.js templates (React Native, games, etc.)
-
----
-
-## Tech
-
-- Built with Node.js + clack (terminal UI)
-- Distributed via npm (`npx gvc create`)
-- Templates stored in the CLI package
-- Deploy helper wraps Vercel CLI
+- Open your project in Claude and ask it anything
+- Check the README inside your project for example prompts
+- Ask in the GVC Discord — the community is here to help
