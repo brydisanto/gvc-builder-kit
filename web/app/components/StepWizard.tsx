@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import StepIndicator from "./StepIndicator";
 import HeroStep from "./HeroStep";
 import NameStep from "./NameStep";
@@ -33,6 +34,8 @@ export default function StepWizard() {
       {step > 1 && (
         <div className="pt-6 pb-2 px-4">
           <StepIndicator currentStep={step} totalSteps={TOTAL_STEPS} />
+          {/* Gold gradient separator */}
+          <div className="mt-3 max-w-md mx-auto step-progress-line" />
         </div>
       )}
 
@@ -97,8 +100,9 @@ export default function StepWizard() {
 
       {/* Footer */}
       <div className="py-4 text-center">
-        <p className="text-white/15 text-xs font-body">
-          GVC Builder Kit v0.1.0
+        <p className="text-white/20 text-xs font-body inline-flex items-center gap-2">
+          <Image src="/shaka.png" alt="" width={14} height={14} className="opacity-40" />
+          Good Vibes Club
         </p>
       </div>
     </div>

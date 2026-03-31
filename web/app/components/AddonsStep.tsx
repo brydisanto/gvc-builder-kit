@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowLeft, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
+import Image from "next/image";
 
 // Same suggestion rules as CLI
 const SUGGESTION_RULES = [
@@ -112,7 +113,7 @@ export default function AddonsStep({
         transition={{ delay: 0.1, duration: 0.4 }}
         className="text-3xl sm:text-4xl font-display font-black text-white mb-3 text-center"
       >
-        Add-ons
+        Power-ups
       </motion.h2>
 
       <motion.p
@@ -121,7 +122,7 @@ export default function AddonsStep({
         transition={{ delay: 0.2, duration: 0.4 }}
         className="text-white/40 font-body mb-8 text-center"
       >
-        Toggle the extras you want included in your project
+        We picked some based on your idea. Toggle whatever sounds cool.
       </motion.p>
 
       {/* Categories */}
@@ -175,7 +176,7 @@ export default function AddonsStep({
                         </span>
                         {isRecommended && (
                           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-gvc-gold/15 text-gvc-gold text-[10px] font-bold uppercase tracking-wide">
-                            <Sparkles className="w-2.5 h-2.5" />
+                            <Image src="/shaka.png" alt="" width={10} height={10} className="opacity-80" />
                             Recommended
                           </span>
                         )}
@@ -195,8 +196,8 @@ export default function AddonsStep({
       {/* Selected count */}
       <div className="mb-6 text-sm text-white/40 font-body">
         {selected.length === 0
-          ? "No add-ons selected (you can always add them later)"
-          : `${selected.length} add-on${selected.length === 1 ? "" : "s"} selected`}
+          ? "No power-ups selected (you can always add them later)"
+          : `${selected.length} power-up${selected.length === 1 ? "" : "s"} selected`}
       </div>
 
       {/* Navigation */}

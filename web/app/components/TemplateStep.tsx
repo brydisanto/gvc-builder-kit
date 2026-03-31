@@ -20,54 +20,81 @@ const TEMPLATES = [
     icon: Globe,
     title: "Project Website",
     description: "A website for my project",
+    example: "Like a homepage for your brand or idea",
+    color: "text-blue-400",
+    bgColor: "bg-blue-400/10",
   },
   {
     value: "tracker",
     icon: BarChart3,
     title: "Tracker",
     description: "A tool that tracks something",
+    example: "Like Smash the Wall or Vibepool",
+    color: "text-emerald-400",
+    bgColor: "bg-emerald-400/10",
   },
   {
     value: "mini-game",
     icon: Gamepad2,
     title: "Game",
     description: "A game or interactive experience",
+    example: "Like VibeMatch or VibeOff",
+    color: "text-purple-400",
+    bgColor: "bg-purple-400/10",
   },
   {
     value: "gallery",
     icon: Image,
     title: "Gallery",
     description: "A place to show off my collection",
+    example: "Like the GVC Gallery",
+    color: "text-pink-400",
+    bgColor: "bg-pink-400/10",
   },
   {
     value: "vote-and-rank",
     icon: Vote,
     title: "Vote & Rank",
     description: "A voting or ranking page",
+    example: "Like VibeOff's 1v1 voting",
+    color: "text-orange-400",
+    bgColor: "bg-orange-400/10",
   },
   {
     value: "community-page",
     icon: Users,
     title: "Community Hub",
     description: "A community hub",
+    example: "A home base for your crew",
+    color: "text-cyan-400",
+    bgColor: "bg-cyan-400/10",
   },
   {
     value: "blog-journal",
     icon: PenLine,
     title: "Blog / Journal",
     description: "A blog or content page",
+    example: "Share your thoughts and stories",
+    color: "text-amber-400",
+    bgColor: "bg-amber-400/10",
   },
   {
     value: "link-in-bio",
     icon: Link,
     title: "Links Page",
     description: "A simple links page",
+    example: "Your personal link-in-bio",
+    color: "text-rose-400",
+    bgColor: "bg-rose-400/10",
   },
   {
     value: "blank-canvas",
     icon: Sparkles,
     title: "Blank Canvas",
     description: "I have my own idea",
+    example: "Start from scratch with just the brand",
+    color: "text-gvc-gold",
+    bgColor: "bg-gvc-gold/10",
   },
 ];
 
@@ -141,16 +168,16 @@ export default function TemplateStep({
             >
               <div
                 className={`
-                  w-10 h-10 rounded-xl flex items-center justify-center mb-3
+                  w-11 h-11 rounded-xl flex items-center justify-center mb-3
                   transition-colors duration-300
                   ${
                     isSelected
                       ? "bg-gvc-gold/20 text-gvc-gold"
-                      : "bg-white/5 text-white/40"
+                      : `${template.bgColor} ${template.color}`
                   }
                 `}
               >
-                <Icon className="w-5 h-5" />
+                <Icon className="w-5.5 h-5.5" />
               </div>
 
               <h3
@@ -164,6 +191,10 @@ export default function TemplateStep({
 
               <p className="text-white/40 text-sm font-body leading-relaxed">
                 {template.description}
+              </p>
+
+              <p className="text-white/25 text-xs font-body mt-1 italic">
+                {template.example}
               </p>
 
               {isSelected && (

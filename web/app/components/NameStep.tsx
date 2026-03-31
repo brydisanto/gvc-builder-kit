@@ -94,12 +94,12 @@ export default function NameStep({
       >
         <div
           className={`
-            relative rounded-2xl border transition-all duration-300
+            relative rounded-2xl border transition-all duration-300 gold-underline-focus
             ${
               error
                 ? "border-red-500/50 bg-red-500/5"
                 : value
-                ? "border-gvc-gold/30 bg-gvc-gold/[0.03]"
+                ? "border-gvc-gold/30 bg-gvc-gold/[0.03] border-b-gvc-gold"
                 : "border-white/10 bg-white/[0.02]"
             }
           `}
@@ -146,6 +146,9 @@ export default function NameStep({
         <p className="text-white/25 text-xs mt-3 ml-2 font-body">
           Lowercase, numbers, dashes, and underscores only. Spaces auto-convert
           to dashes.
+        </p>
+        <p className="text-white/20 text-xs mt-1 ml-2 font-body italic">
+          This becomes your project folder name
         </p>
       </motion.div>
 

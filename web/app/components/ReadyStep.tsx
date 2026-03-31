@@ -7,9 +7,9 @@ import {
   Copy,
   Check,
   ExternalLink,
-  Sparkles,
   Terminal,
 } from "lucide-react";
+import Image from "next/image";
 
 // Template label map
 const TEMPLATE_LABELS: Record<string, string> = {
@@ -145,14 +145,20 @@ export default function ReadyStep({
     >
       {showConfetti && <ConfettiEffect />}
 
-      {/* Celebration icon */}
+      {/* Celebration: Shaka + text */}
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 12 }}
-        className="w-16 h-16 rounded-2xl bg-gvc-gold/15 border border-gvc-gold/30 flex items-center justify-center mb-6"
+        className="flex items-center gap-4 mb-6"
       >
-        <Sparkles className="w-8 h-8 text-gvc-gold" />
+        <Image
+          src="/shaka.png"
+          alt="GVC Shaka"
+          width={64}
+          height={64}
+          className="wiggle-infinite drop-shadow-[0_0_20px_rgba(255,224,72,0.3)]"
+        />
       </motion.div>
 
       <motion.h2
@@ -168,19 +174,19 @@ export default function ReadyStep({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.4 }}
-        className="text-white/40 font-body mb-8 text-center"
+        className="text-white/50 font-body mb-8 text-center text-lg"
       >
-        Here&apos;s a summary of your project
+        You&apos;re about to ship something. Let&apos;s go.
       </motion.p>
 
-      {/* Summary card */}
+      {/* Summary card with snake border */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.4 }}
-        className="w-full glass-card p-6 mb-6"
+        className="w-full glass-card snake-border p-6 mb-6"
       >
-        <div className="space-y-4">
+        <div className="space-y-4 relative z-10">
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="text-white/40 text-xs font-body uppercase tracking-wider mb-1">
@@ -216,7 +222,7 @@ export default function ReadyStep({
               <div className="h-px bg-white/[0.06]" />
               <div>
                 <p className="text-white/40 text-xs font-body uppercase tracking-wider mb-2">
-                  Add-ons ({addons.length})
+                  Power-ups ({addons.length})
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {addons.map((addon) => (
@@ -279,6 +285,38 @@ export default function ReadyStep({
             Copied to clipboard!
           </motion.p>
         )}
+      </motion.div>
+
+      {/* What's next? */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.65, duration: 0.4 }}
+        className="w-full glass-card p-5 mb-6"
+      >
+        <h3 className="text-white font-display font-bold text-sm mb-4">
+          What&apos;s next?
+        </h3>
+        <div className="space-y-3">
+          {[
+            { num: "1", text: "Open your terminal and paste the command above" },
+            { num: "2", text: "Run gvc dev to see your project" },
+            { num: "3", text: "Open it in Claude and tell it what you want to change" },
+          ].map((step) => (
+            <div key={step.num} className="flex items-start gap-3">
+              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gvc-gold/15 text-gvc-gold text-xs font-bold flex items-center justify-center mt-0.5">
+                {step.num}
+              </span>
+              <p className="text-white/60 text-sm font-body">
+                {step.num === "2" ? (
+                  <>Run <code className="text-gvc-gold/70 font-mono text-xs bg-gvc-gold/10 px-1.5 py-0.5 rounded">gvc dev</code> to see your project</>
+                ) : (
+                  step.text
+                )}
+              </p>
+            </div>
+          ))}
+        </div>
       </motion.div>
 
       {/* Help links */}

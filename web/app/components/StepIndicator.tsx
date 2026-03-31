@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 const STEP_LABELS = [
   "Start",
   "Name",
-  "Template",
+  "Pick",
   "Describe",
-  "Add-ons",
-  "Ready",
+  "Power-ups",
+  "Build!",
 ];
 
 interface StepIndicatorProps {
@@ -94,12 +94,17 @@ export default function StepIndicator({
             </div>
 
             {i < totalSteps - 1 && (
-              <div
-                className={`
-                  w-6 sm:w-10 h-px mb-5 sm:mb-4 transition-colors duration-300
-                  ${isCompleted ? "bg-gvc-gold/40" : "bg-white/10"}
-                `}
-              />
+              <div className="relative w-6 sm:w-10 h-px mb-5 sm:mb-4">
+                {/* Background line */}
+                <div className="absolute inset-0 bg-white/10" />
+                {/* Gold fill that animates */}
+                <motion.div
+                  className="absolute inset-y-0 left-0 bg-gvc-gold/50"
+                  initial={{ width: "0%" }}
+                  animate={{ width: isCompleted ? "100%" : "0%" }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                />
+              </div>
             )}
           </div>
         );

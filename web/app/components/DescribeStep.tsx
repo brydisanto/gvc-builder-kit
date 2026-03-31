@@ -68,6 +68,14 @@ const SUGGESTION_RULES = [
   },
 ];
 
+const EXAMPLE_DESCRIPTIONS = [
+  "A sweep tracker that shows who's buying the most GVCs",
+  "A game where you vote on the best GVC art",
+  "A leaderboard that ranks holders by badge count",
+  "A dashboard showing floor prices and collection stats",
+  "A community hub where holders share their GVC stories",
+];
+
 function getSuggestions(text: string): { addon: string; label: string }[] {
   const lower = text.toLowerCase();
   const results: { addon: string; label: string }[] = [];
@@ -101,6 +109,7 @@ export default function DescribeStep({
   const [suggestions, setSuggestions] = useState<
     { addon: string; label: string }[]
   >([]);
+  const [exampleIndex, setExampleIndex] = useState(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -117,6 +126,14 @@ export default function DescribeStep({
       setSuggestions([]);
     }
   }, [value]);
+
+  // Cycle through example descriptions
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setExampleIndex((prev) => (prev + 1) % EXAMPLE_DESCRIPTIONS.length);
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
 
   function handleNext() {
     if (!value.trim()) {
@@ -147,10 +164,31 @@ export default function DescribeStep({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.4 }}
-        className="text-white/40 font-body mb-8 text-center"
+        className="text-white/40 font-body mb-2 text-center"
       >
-        A sentence or two about what you want to build
+        This helps Claude understand what you&apos;re going for
       </motion.p>
+
+      {/* Cycling example */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.25, duration: 0.4 }}
+        className="mb-8 h-6 flex items-center justify-center"
+      >
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={exampleIndex}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
+            className="text-white/20 text-sm font-body italic text-center"
+          >
+            e.g. &quot;{EXAMPLE_DESCRIPTIONS[exampleIndex]}&quot;
+          </motion.p>
+        </AnimatePresence>
+      </motion.div>
 
       {/* Textarea */}
       <motion.div

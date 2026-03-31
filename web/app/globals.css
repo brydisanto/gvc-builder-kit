@@ -26,6 +26,34 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: var(--font-mundial), system-ui, sans-serif;
+  position: relative;
+}
+
+/* Grid background via pseudo-element */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('/grid.svg');
+  background-size: 40px 40px;
+  background-position: center;
+  opacity: 0.07;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Radial gold glow behind hero */
+body::after {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120%;
+  height: 70%;
+  background: radial-gradient(ellipse at center, rgba(255, 224, 72, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 ::selection {
@@ -123,6 +151,7 @@ body {
   opacity: 0.6;
   animation: emberFloat 6s ease-in-out infinite;
   pointer-events: none;
+  box-shadow: 0 0 6px 2px rgba(255, 224, 72, 0.4);
 }
 
 @keyframes emberFloat {
@@ -153,6 +182,10 @@ body {
   }
 }
 
+.glow-pulse {
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
+
 /* ---------------------------------- */
 /* Glass card                         */
 /* ---------------------------------- */
@@ -162,6 +195,19 @@ body {
   backdrop-filter: blur(20px) saturate(150%);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 16px;
+  position: relative;
+}
+
+/* Noise texture overlay for glass cards */
+.glass-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0.03;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
 }
 
 .glass-card-hover:hover {
@@ -179,6 +225,60 @@ body {
     0 0 20px rgba(255, 224, 72, 0.2),
     0 0 60px rgba(255, 224, 72, 0.08),
     inset 0 0 20px rgba(255, 224, 72, 0.03);
+}
+
+/* ---------------------------------- */
+/* Wiggle Animation (Shaka)           */
+/* ---------------------------------- */
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  15% { transform: rotate(14deg); }
+  30% { transform: rotate(-8deg); }
+  45% { transform: rotate(10deg); }
+  60% { transform: rotate(-6deg); }
+  75% { transform: rotate(4deg); }
+}
+
+.wiggle-hover:hover {
+  animation: wiggle 0.8s ease-in-out;
+}
+
+.wiggle-infinite {
+  animation: wiggle 1.5s ease-in-out infinite;
+}
+
+/* ---------------------------------- */
+/* Snake Border Animation             */
+/* ---------------------------------- */
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.snake-border {
+  position: relative;
+  overflow: hidden;
+}
+
+.snake-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--angle, 0deg), transparent 60%, var(--color-gvc-gold) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: snakeRotate 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes snakeRotate {
+  to { --angle: 360deg; }
 }
 
 /* ---------------------------------- */
@@ -230,6 +330,30 @@ body {
 .toggle-track.active .toggle-thumb {
   transform: translateX(20px);
   background: var(--color-gvc-gold);
+}
+
+/* ---------------------------------- */
+/* Gold underline focus               */
+/* ---------------------------------- */
+
+.gold-underline-focus {
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gold-underline-focus:focus-within {
+  border-bottom-color: var(--color-gvc-gold);
+  box-shadow: 0 2px 12px rgba(255, 224, 72, 0.2);
+}
+
+/* ---------------------------------- */
+/* Step progress line                 */
+/* ---------------------------------- */
+
+.step-progress-line {
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-gvc-gold), rgba(255, 224, 72, 0.3), transparent);
+  border-radius: 1px;
 }
 
 /* ---------------------------------- */
