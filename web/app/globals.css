@@ -1,0 +1,259 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-gvc-gold: #FFE048;
+  --color-gvc-black: #050505;
+  --color-gvc-dark: #121212;
+  --color-gvc-gray: #1F1F1F;
+  --color-pink-accent: #FF6B9D;
+  --color-gvc-orange: #FF5F1F;
+  --color-gvc-green: #2EFF2E;
+}
+
+/* ---------------------------------- */
+/* Base Styles                        */
+/* ---------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-gvc-black);
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-mundial), system-ui, sans-serif;
+}
+
+::selection {
+  background-color: var(--color-gvc-gold);
+  color: var(--color-gvc-black);
+}
+
+/* ---------------------------------- */
+/* Scrollbar                          */
+/* ---------------------------------- */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-gvc-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gvc-gray);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333333;
+}
+
+/* ---------------------------------- */
+/* Font Utilities                     */
+/* ---------------------------------- */
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-brice), serif;
+  }
+
+  .font-body {
+    font-family: var(--font-mundial), sans-serif;
+  }
+}
+
+/* ---------------------------------- */
+/* Gold Shimmer Text                  */
+/* ---------------------------------- */
+
+.text-shimmer {
+  background: linear-gradient(
+    110deg,
+    var(--color-gvc-gold) 0%,
+    #fff8b8 25%,
+    var(--color-gvc-gold) 50%,
+    #fff8b8 75%,
+    var(--color-gvc-gold) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ---------------------------------- */
+/* Card Glow                          */
+/* ---------------------------------- */
+
+.card-glow {
+  box-shadow:
+    0 0 20px rgba(255, 224, 72, 0.15),
+    0 0 60px rgba(255, 224, 72, 0.05);
+  transition: box-shadow 0.4s ease;
+}
+
+.card-glow:hover {
+  box-shadow:
+    0 0 30px rgba(255, 224, 72, 0.3),
+    0 0 80px rgba(255, 224, 72, 0.1);
+}
+
+/* ---------------------------------- */
+/* Gold Ember Float                   */
+/* ---------------------------------- */
+
+.ember {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--color-gvc-gold);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: emberFloat 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes emberFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.1);
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------- */
+/* Gold Glow Pulse                    */
+/* ---------------------------------- */
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(255, 224, 72, 0.3),
+      0 0 60px rgba(255, 224, 72, 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(255, 224, 72, 0.5),
+      0 0 80px rgba(255, 224, 72, 0.2);
+  }
+}
+
+/* ---------------------------------- */
+/* Glass card                         */
+/* ---------------------------------- */
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+}
+
+.glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 224, 72, 0.2);
+}
+
+/* ---------------------------------- */
+/* Gold border selected               */
+/* ---------------------------------- */
+
+.gold-selected {
+  border-color: var(--color-gvc-gold) !important;
+  box-shadow:
+    0 0 20px rgba(255, 224, 72, 0.2),
+    0 0 60px rgba(255, 224, 72, 0.08),
+    inset 0 0 20px rgba(255, 224, 72, 0.03);
+}
+
+/* ---------------------------------- */
+/* Code block styling                 */
+/* ---------------------------------- */
+
+.code-block {
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-x: auto;
+}
+
+/* ---------------------------------- */
+/* Toggle switch                      */
+/* ---------------------------------- */
+
+.toggle-track {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.toggle-track.active {
+  background: rgba(255, 224, 72, 0.25);
+  border-color: var(--color-gvc-gold);
+}
+
+.toggle-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toggle-track.active .toggle-thumb {
+  transform: translateX(20px);
+  background: var(--color-gvc-gold);
+}
+
+/* ---------------------------------- */
+/* Confetti                           */
+/* ---------------------------------- */
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-10px) rotate(0deg) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0) rotate(45deg) scale(1);
+  }
+  100% {
+    transform: translateY(400px) rotate(720deg) scale(0.3);
+    opacity: 0;
+  }
+}
+
+.confetti-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 100;
+  animation: confettiFall 3s ease-out forwards;
+}

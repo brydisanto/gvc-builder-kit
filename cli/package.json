@@ -1,0 +1,27 @@
+{
+  "name": "create-gvc-app",
+  "version": "0.1.0",
+  "description": "Scaffold branded Next.js projects for the Good Vibes Club community",
+  "type": "module",
+  "bin": {
+    "gvc": "./src/index.mjs"
+  },
+  "files": [
+    "src",
+    "templates"
+  ],
+  "keywords": [
+    "gvc",
+    "good-vibes-club",
+    "nft",
+    "nextjs",
+    "scaffold",
+    "cli"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@clack/prompts": "^0.9.1",
+    "fs-extra": "^11.2.0",
+    "picocolors": "^1.1.1"
+  }
+}

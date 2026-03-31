@@ -1,0 +1,279 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, ArrowLeft, Lightbulb } from "lucide-react";
+
+// Same keyword matching rules from the CLI
+const SUGGESTION_RULES = [
+  {
+    keywords: ["nft", "collection", "floor", "listing", "opensea", "mint"],
+    addon: "collection-data",
+    label: "GVC Collection data",
+  },
+  {
+    keywords: ["price", "token", "vibestr", "eth", "pnkstr", "crypto"],
+    addon: "token-prices",
+    label: "Token prices",
+  },
+  {
+    keywords: ["wallet", "connect", "web3", "metamask", "ethereum"],
+    addon: "web3-wallet",
+    label: "Web3 wallet connect",
+  },
+  {
+    keywords: ["track", "stat", "dashboard", "counter", "analytics", "chart"],
+    addon: "stats-panel",
+    label: "Animated stats panel",
+  },
+  {
+    keywords: ["vote", "rank", "leaderboard", "elo", "bracket", "competition"],
+    addon: "leaderboard",
+    label: "Leaderboard system",
+  },
+  {
+    keywords: ["game", "score", "play", "level", "quest", "arcade"],
+    addon: "game-engine",
+    label: "Game engine scaffold",
+  },
+  {
+    keywords: ["badge", "collect", "tier", "achievement", "unlock"],
+    addon: "badge-collection",
+    label: "Badge collection",
+  },
+  {
+    keywords: ["chain", "contract", "balance", "onchain", "on-chain"],
+    addon: "on-chain-reads",
+    label: "On-chain reads",
+  },
+  {
+    keywords: ["ipfs", "image", "metadata", "pinata"],
+    addon: "ipfs-images",
+    label: "IPFS image loading",
+  },
+  {
+    keywords: ["sound", "audio", "music", "beat", "mix"],
+    addon: "audio-mixer",
+    label: "Audio mixer",
+  },
+  {
+    keywords: ["login", "auth", "session", "sign in", "account"],
+    addon: "auth",
+    label: "Authentication",
+  },
+  {
+    keywords: ["store", "save", "database", "cache", "persist", "redis"],
+    addon: "vercel-kv",
+    label: "Vercel KV storage",
+  },
+];
+
+function getSuggestions(text: string): { addon: string; label: string }[] {
+  const lower = text.toLowerCase();
+  const results: { addon: string; label: string }[] = [];
+
+  for (const rule of SUGGESTION_RULES) {
+    for (const keyword of rule.keywords) {
+      if (lower.includes(keyword)) {
+        results.push({ addon: rule.addon, label: rule.label });
+        break;
+      }
+    }
+  }
+
+  return results;
+}
+
+interface DescribeStepProps {
+  value: string;
+  onChange: (value: string) => void;
+  onNext: () => void;
+  onBack: () => void;
+}
+
+export default function DescribeStep({
+  value,
+  onChange,
+  onNext,
+  onBack,
+}: DescribeStepProps) {
+  const [error, setError] = useState("");
+  const [suggestions, setSuggestions] = useState<
+    { addon: string; label: string }[]
+  >([]);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      textareaRef.current?.focus();
+    }, 400);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (value.length > 3) {
+      setSuggestions(getSuggestions(value));
+    } else {
+      setSuggestions([]);
+    }
+  }, [value]);
+
+  function handleNext() {
+    if (!value.trim()) {
+      setError("Even a short description helps! Just a sentence is fine.");
+      return;
+    }
+    onNext();
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="flex flex-col items-center justify-center px-4 max-w-xl mx-auto w-full"
+    >
+      <motion.h2
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1, duration: 0.4 }}
+        className="text-3xl sm:text-4xl font-display font-black text-white mb-3 text-center"
+      >
+        Describe your idea
+      </motion.h2>
+
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.4 }}
+        className="text-white/40 font-body mb-8 text-center"
+      >
+        A sentence or two about what you want to build
+      </motion.p>
+
+      {/* Textarea */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.4 }}
+        className="w-full"
+      >
+        <div
+          className={`
+            rounded-2xl border transition-all duration-300
+            ${
+              error
+                ? "border-red-500/50 bg-red-500/5"
+                : value
+                ? "border-gvc-gold/20 bg-gvc-gold/[0.02]"
+                : "border-white/10 bg-white/[0.02]"
+            }
+          `}
+        >
+          <textarea
+            ref={textareaRef}
+            value={value}
+            onChange={(e) => {
+              onChange(e.target.value);
+              if (error) setError("");
+            }}
+            placeholder="A dashboard that tracks GVC floor prices and shows my NFT collection..."
+            rows={4}
+            className="
+              w-full bg-transparent px-6 py-5
+              text-base font-body text-white
+              placeholder:text-white/20
+              outline-none resize-none
+              rounded-2xl leading-relaxed
+            "
+          />
+        </div>
+
+        {error && (
+          <motion.p
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-red-400 text-sm mt-3 ml-2 font-body"
+          >
+            {error}
+          </motion.p>
+        )}
+
+        <p className="text-white/25 text-xs mt-3 ml-2 font-body">
+          This gets saved in your project so Claude knows what you&apos;re building.
+        </p>
+
+        {/* Smart suggestions */}
+        <AnimatePresence>
+          {suggestions.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mt-4 overflow-hidden"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <Lightbulb className="w-3.5 h-3.5 text-gvc-gold/70" />
+                <span className="text-xs text-gvc-gold/70 font-body">
+                  We&apos;ll recommend these add-ons based on your description
+                </span>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {suggestions.map((s) => (
+                  <motion.span
+                    key={s.addon}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="inline-flex items-center px-3 py-1.5 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body"
+                  >
+                    {s.label}
+                  </motion.span>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+
+      {/* Navigation */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4, duration: 0.4 }}
+        className="flex items-center gap-4 mt-10"
+      >
+        <button
+          onClick={onBack}
+          className="
+            inline-flex items-center gap-2 px-5 py-3
+            text-white/50 font-body text-sm
+            rounded-xl border border-white/10
+            hover:border-white/20 hover:text-white/70
+            transition-all duration-200
+          "
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back
+        </button>
+
+        <button
+          onClick={handleNext}
+          disabled={!value.trim()}
+          className="
+            inline-flex items-center gap-2 px-6 py-3
+            bg-gvc-gold text-gvc-black font-display font-bold
+            rounded-xl
+            transition-all duration-300
+            hover:shadow-[0_0_30px_rgba(255,224,72,0.3)]
+            disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:shadow-none
+          "
+        >
+          Continue
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </motion.div>
+    </motion.div>
+  );
+}
