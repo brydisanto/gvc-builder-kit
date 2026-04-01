@@ -184,9 +184,9 @@ export default function HeroStep({ onNext }: HeroStepProps) {
                 <Image
                   src={`/badges/${badge}.webp`}
                   alt={badge}
-                  width={72}
-                  height={72}
-                  className="rounded-xl opacity-60 hover:opacity-100 hover:scale-110 transition-all duration-300"
+                  width={120}
+                  height={120}
+                  className="rounded-2xl opacity-60 hover:opacity-100 hover:scale-110 transition-all duration-300"
                 />
               </div>
             ))}

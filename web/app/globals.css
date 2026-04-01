@@ -398,7 +398,7 @@ body::after {
 
 .badge-marquee-track {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   width: max-content;
   animation: marqueeScroll 40s linear infinite;
 }
