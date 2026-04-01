@@ -105,9 +105,9 @@ export default function HeroStep({ onNext }: HeroStepProps) {
         transition={{ delay: 0.3, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         className="text-5xl sm:text-7xl lg:text-8xl font-display font-black text-shimmer leading-[1.05] mb-3 tracking-wide"
       >
-        THE
+        The
         <br />
-        PLAYGROUND
+        Playground
       </motion.h1>
 
       {/* Subtitle */}
