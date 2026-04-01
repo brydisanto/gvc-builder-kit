@@ -31,7 +31,7 @@ interface AddonDef {
 const ADDONS: AddonDef[] = [
   // Blockchain & Data
   { value: "collection-data", label: "GVC Collection data", hint: "Fetch NFT metadata, floor prices", category: "Blockchain & Data" },
-  { value: "token-prices", label: "Token prices (ETH, VIBESTR, PNKSTR)", hint: "Live price feeds", category: "Blockchain & Data" },
+  { value: "token-prices", label: "Token prices (ETH, VIBESTR)", hint: "Live price feeds", category: "Blockchain & Data" },
   { value: "web3-wallet", label: "Web3 wallet connect", hint: "Connect wallet, read address", category: "Blockchain & Data" },
   { value: "on-chain-reads", label: "On-chain reads", hint: "Wallet balances, contract reads", category: "Blockchain & Data" },
   { value: "ipfs-images", label: "IPFS image loading", hint: "Load images from IPFS gateways", category: "Blockchain & Data" },

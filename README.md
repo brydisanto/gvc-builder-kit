@@ -167,7 +167,7 @@ Want to connect to blockchain data, add a leaderboard, or build a game? Just des
 |---|---|
 | **Web3 wallet connect** | Let users connect their wallet to your site |
 | **GVC Collection data** | Pull live GVC listings, floor price, and owner data |
-| **Token prices** | Show live prices for ETH, VIBESTR, and PNKSTR |
+| **Token prices** | Show live prices for ETH and VIBESTR |
 | **On-chain reads** | Read wallet balances and smart contract data |
 | **IPFS image loading** | Load NFT images reliably with automatic fallbacks |
 

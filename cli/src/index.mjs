@@ -118,7 +118,7 @@ const TEMPLATE_CHOICES = [
 // ── Add-on definitions ───────────────────────────────────────────────
 const ADDONS = [
   { value: "collection-data",   label: "GVC Collection data",                   hint: "fetch NFT metadata, floor prices" },
-  { value: "token-prices",      label: "Token prices (ETH, VIBESTR, PNKSTR)",   hint: "live price feeds" },
+  { value: "token-prices",      label: "Token prices (ETH, VIBESTR)",            hint: "live price feeds" },
   { value: "web3-wallet",       label: "Web3 wallet connect",                   hint: "connect wallet, read address" },
   { value: "stats-panel",       label: "Animated stats panel",                  hint: "counters, charts, dashboards" },
   { value: "leaderboard",       label: "Leaderboard system (daily/weekly/all-time)", hint: "rankings, scores, streaks" },
