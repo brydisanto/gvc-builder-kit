@@ -32,11 +32,11 @@ const ALL_BADGES = [
   "vibetown_social_club","visooor_enjoyooor","yin_n_yang","zoom_in_vibe_out",
 ];
 
-// GVC portrait token IDs for the scrolling row
+// GVC portrait token IDs (real collection NFTs)
 const GVC_PORTRAITS = [
-  142, 1337, 888, 2222, 500, 77, 1111, 369, 1969,
-  420, 707, 999, 1234, 555, 808, 2000, 1500, 333,
-  666, 1776, 2100, 900, 1010, 750, 1600,
+  3939, 4604, 5300, 1138, 2445, 4612, 5267, 1934, 1960,
+  147, 3504, 1576, 4836, 1082, 346, 4506, 4915, 1473,
+  3516, 1346, 2787, 6608, 4443, 821, 5894,
 ];
 
 interface HeroStepProps {
@@ -215,8 +215,8 @@ export default function HeroStep({ onNext }: HeroStepProps) {
                 <Image
                   src={`/badges/${badge}.webp`}
                   alt={badge}
-                  width={100}
-                  height={100}
+                  width={130}
+                  height={130}
                   className="rounded-2xl opacity-85 hover:opacity-100 hover:scale-110 transition-all duration-300"
                 />
               </div>
