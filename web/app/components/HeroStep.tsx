@@ -67,7 +67,7 @@ export default function HeroStep({ onNext }: HeroStepProps) {
       </div>
 
       {/* Left: Content */}
-      <div className="flex flex-col items-center lg:items-start text-center lg:text-left max-w-lg relative z-10">
+      <div className="flex flex-col items-center text-center max-w-lg relative z-10">
         {/* Shaka */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
@@ -90,7 +90,7 @@ export default function HeroStep({ onNext }: HeroStepProps) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="text-xs text-gvc-gold/40 font-body uppercase tracking-[0.25em] mb-3"
+          className="text-sm text-gvc-gold/50 font-display font-bold uppercase tracking-[0.08em] mb-3"
         >
           Good Vibes Club Presents
         </motion.p>
