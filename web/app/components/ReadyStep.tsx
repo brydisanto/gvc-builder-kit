@@ -9,6 +9,8 @@ import {
   ExternalLink,
   ChevronDown,
   ChevronUp,
+  MessageSquare,
+  TerminalSquare,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -23,6 +25,28 @@ const TEMPLATE_LABELS: Record<string, string> = {
   "blog-journal": "Blog / Journal",
   "link-in-bio": "Links Page",
   "blank-canvas": "Blank Canvas",
+};
+
+// Template build instructions for Claude
+const TEMPLATE_INSTRUCTIONS: Record<string, string> = {
+  "project-site":
+    "Build a landing page with: hero section with gold shimmer title, about section, features grid (3 columns), CTA section, footer with social links.",
+  tracker:
+    "Build a dashboard with: stats panel showing 3-4 key metrics with animated counters, a data table or card grid for tracked items, auto-refresh every 60 seconds.",
+  "mini-game":
+    "Build a browser game with: a game board or play area, score display, moves/lives counter, game-over screen with final score, and a restart button.",
+  gallery:
+    "Build a gallery page with: responsive image grid (3 columns desktop, 2 mobile) with gold glow cards on hover, filtering or search, and an upload/submit form.",
+  "vote-and-rank":
+    "Build a voting page with: 1v1 card matchups where users pick a winner, a results leaderboard sorted by wins, keyboard shortcuts for fast voting.",
+  "community-page":
+    "Build a community hub with: member spotlight grid, activity feed or recent updates section, badge showcase wall, and links to GVC socials.",
+  "blog-journal":
+    "Build a blog with: post list page showing title, date, and preview text, individual post pages with full content, and markdown support.",
+  "link-in-bio":
+    "Build a links page with: profile section (avatar, name, bio), vertical list of link buttons with hover effects, social icons at the bottom. Mobile-first.",
+  "blank-canvas":
+    "This is a blank start with the GVC brand system. Help me build whatever I describe.",
 };
 
 // Addon label map
@@ -57,8 +81,10 @@ export default function ReadyStep({
   addons,
   onBack,
 }: ReadyStepProps) {
-  const [copied, setCopied] = useState(false);
+  const [copiedCommand, setCopiedCommand] = useState(false);
+  const [copiedClaude, setCopiedClaude] = useState(false);
   const [terminalHelpOpen, setTerminalHelpOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"claude" | "terminal">("claude");
 
   // Build the CLI command
   const buildCommand = useCallback(() => {
@@ -71,22 +97,85 @@ export default function ReadyStep({
 
   const command = buildCommand();
 
+  // Build the Claude prompt
+  const buildClaudePrompt = useCallback(() => {
+    const templateLabel = TEMPLATE_LABELS[template] || template;
+    const instruction = TEMPLATE_INSTRUCTIONS[template] || "";
+    const addonList = addons
+      .map((a) => ADDON_LABELS[a] || a)
+      .join(", ");
+
+    const prompt = `I want to build a project called "${projectName}" for the Good Vibes Club (GVC) community.
+
+Here is what I want to build:
+${description}
+
+Starting point: ${templateLabel}
+${instruction}
+
+${addonList ? `I also want these features: ${addonList}` : ""}
+
+Please use the GVC brand system:
+- Colors: Gold #FFE048 (primary), Black #050505 (background), Dark #121212 (cards), Gray #1F1F1F (borders)
+- Typography: Brice font for headlines (bold, premium feel), Mundial font for body text
+- Design: Dark backgrounds, gold accents, rounded corners, gold glow effects on hover, generous whitespace
+- Animations: Use Framer Motion for entrance animations, shimmer effect on key headlines
+- Tech: Next.js with App Router, TypeScript, Tailwind CSS, Framer Motion
+
+Smart Contract and API Reference:
+- GVC NFT Contract: 0xB8Ea78fcaCEf50d41375E44E6814ebbA36Bb33c4
+- VIBESTR Token: 0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196
+- OpenSea Collection Slug: good-vibes-club
+- OpenSea API: https://api.opensea.io/api/v2
+- ETH Price: https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd
+- VIBESTR Price: https://api.dexscreener.com/latest/dex/tokens/0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196
+- Public RPC: https://ethereum-rpc.publicnode.com
+
+Help me set up the project and start building. Walk me through each step.`;
+
+    return prompt;
+  }, [projectName, template, description, addons]);
+
   async function copyCommand() {
     try {
       await navigator.clipboard.writeText(command);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
+      setCopiedCommand(true);
+      setTimeout(() => setCopiedCommand(false), 2500);
     } catch {
-      // Fallback for older browsers
-      const textarea = document.createElement("textarea");
-      textarea.value = command;
-      document.body.appendChild(textarea);
-      textarea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textarea);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
+      fallbackCopy(command);
+      setCopiedCommand(true);
+      setTimeout(() => setCopiedCommand(false), 2500);
     }
+  }
+
+  async function copyClaudePrompt() {
+    const prompt = buildClaudePrompt();
+    try {
+      await navigator.clipboard.writeText(prompt);
+      setCopiedClaude(true);
+      setTimeout(() => setCopiedClaude(false), 2500);
+    } catch {
+      fallbackCopy(prompt);
+      setCopiedClaude(true);
+      setTimeout(() => setCopiedClaude(false), 2500);
+    }
+  }
+
+  async function openInClaude() {
+    await copyClaudePrompt();
+    // Small delay so the copy completes before the tab switch
+    setTimeout(() => {
+      window.open("https://claude.ai/new", "_blank");
+    }, 300);
+  }
+
+  function fallbackCopy(text: string) {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
   }
 
   return (
@@ -128,7 +217,7 @@ export default function ReadyStep({
         transition={{ delay: 0.4, duration: 0.4 }}
         className="text-white/50 font-body mb-8 text-center text-lg"
       >
-        Here is a summary of what you picked, and how to create it.
+        Here is what you picked. Now choose how you want to get started.
       </motion.p>
 
       {/* Summary card */}
@@ -192,149 +281,278 @@ export default function ReadyStep({
         </div>
       </motion.div>
 
-      {/* Step-by-step instructions */}
+      {/* Two paths: tabs */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6, duration: 0.4 }}
-        className="w-full glass-card p-6 mb-6"
+        className="w-full mb-6"
       >
-        <h3 className="text-white font-display font-bold text-base mb-5">
-          How to create your project
-        </h3>
-        <div className="space-y-5">
-          {/* Step 1 */}
-          <div className="flex items-start gap-4">
-            <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
-              1
-            </span>
-            <div>
-              <p className="text-white font-body font-semibold text-sm mb-1">
-                Open your terminal
-              </p>
-              <p className="text-white/50 text-sm font-body leading-relaxed">
-                On Mac, press <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Cmd + Space</kbd> and type <span className="text-white/70">Terminal</span>, then press Enter.
-              </p>
-              <p className="text-white/50 text-sm font-body leading-relaxed mt-1">
-                On Windows, press the <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Windows</kbd> key and type <span className="text-white/70">cmd</span>, then press Enter.
-              </p>
-            </div>
-          </div>
+        {/* Tab switcher */}
+        <div className="flex rounded-xl overflow-hidden border border-white/[0.08] mb-0">
+          <button
+            onClick={() => setActiveTab("claude")}
+            className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-display font-bold transition-all duration-200 ${
+              activeTab === "claude"
+                ? "bg-gvc-gold/15 text-gvc-gold border-b-2 border-gvc-gold"
+                : "bg-white/[0.02] text-white/40 hover:text-white/60 border-b-2 border-transparent"
+            }`}
+          >
+            <MessageSquare className="w-4 h-4" />
+            Open in Claude
+          </button>
+          <button
+            onClick={() => setActiveTab("terminal")}
+            className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-sm font-display font-bold transition-all duration-200 ${
+              activeTab === "terminal"
+                ? "bg-gvc-gold/15 text-gvc-gold border-b-2 border-gvc-gold"
+                : "bg-white/[0.02] text-white/40 hover:text-white/60 border-b-2 border-transparent"
+            }`}
+          >
+            <TerminalSquare className="w-4 h-4" />
+            Use your terminal
+          </button>
+        </div>
 
-          {/* Step 2 */}
-          <div className="flex items-start gap-4">
-            <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
-              2
-            </span>
-            <div className="flex-1 min-w-0">
-              <p className="text-white font-body font-semibold text-sm mb-2">
-                Copy this command
+        {/* Claude tab */}
+        <AnimatePresence mode="wait">
+          {activeTab === "claude" && (
+            <motion.div
+              key="claude-tab"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="glass-card rounded-t-none p-6"
+            >
+              <p className="text-white/60 font-body text-sm mb-5 leading-relaxed">
+                The easiest way to get started. We will copy your project details to your clipboard,
+                then open Claude in a new tab. Just paste it in and Claude will help you build everything step by step.
               </p>
-              <div className="code-block p-4 relative group">
-                <code className="text-gvc-green/90 text-sm break-all whitespace-pre-wrap">
-                  {command}
-                </code>
+
+              <div className="space-y-4">
+                {/* Step 1 */}
+                <div className="flex items-start gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
+                    1
+                  </span>
+                  <div>
+                    <p className="text-white font-body font-semibold text-sm">
+                      Click the button below
+                    </p>
+                    <p className="text-white/40 text-sm font-body">
+                      It copies your project details and opens Claude in a new tab.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 2 */}
+                <div className="flex items-start gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
+                    2
+                  </span>
+                  <div>
+                    <p className="text-white font-body font-semibold text-sm">
+                      Paste into Claude
+                    </p>
+                    <p className="text-white/40 text-sm font-body">
+                      Press{" "}
+                      <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">
+                        Cmd + V
+                      </kbd>{" "}
+                      on Mac or{" "}
+                      <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">
+                        Ctrl + V
+                      </kbd>{" "}
+                      on Windows, then press Enter.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 3 */}
+                <div className="flex items-start gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
+                    3
+                  </span>
+                  <div>
+                    <p className="text-white font-body font-semibold text-sm">
+                      Claude takes it from there
+                    </p>
+                    <p className="text-white/40 text-sm font-body">
+                      It already knows the GVC brand, your idea, and what features you want. Just tell it what to do in plain English.
+                    </p>
+                  </div>
+                </div>
               </div>
+
+              {/* Open in Claude button */}
               <button
-                onClick={copyCommand}
+                onClick={openInClaude}
                 className={`
-                  mt-3 inline-flex items-center gap-2 px-5 py-2.5
-                  font-display font-bold text-sm rounded-xl
+                  mt-6 w-full inline-flex items-center justify-center gap-3 px-6 py-4
+                  font-display font-bold text-base rounded-xl
                   transition-all duration-300
                   ${
-                    copied
+                    copiedClaude
                       ? "bg-gvc-green/20 text-gvc-green border border-gvc-green/30"
                       : "bg-gvc-gold text-gvc-black hover:shadow-[0_0_30px_rgba(255,224,72,0.3)]"
                   }
                 `}
               >
-                {copied ? (
+                {copiedClaude ? (
                   <>
-                    <Check className="w-4 h-4" />
+                    <Check className="w-5 h-5" />
+                    Copied! Opening Claude...
+                  </>
+                ) : (
+                  <>
+                    <MessageSquare className="w-5 h-5" />
+                    Open in Claude
+                    <ExternalLink className="w-4 h-4 opacity-60" />
+                  </>
+                )}
+              </button>
+
+              <p className="text-white/30 text-xs font-body text-center mt-3">
+                Opens claude.ai in a new tab with your project details on your clipboard.
+              </p>
+            </motion.div>
+          )}
+
+          {/* Terminal tab */}
+          {activeTab === "terminal" && (
+            <motion.div
+              key="terminal-tab"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="glass-card rounded-t-none p-6"
+            >
+              <p className="text-white/60 font-body text-sm mb-5 leading-relaxed">
+                For people comfortable with a terminal. Copy the command below, paste it in, and the CLI walks you through everything.
+              </p>
+
+              <div className="space-y-4">
+                {/* Step 1 */}
+                <div className="flex items-start gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
+                    1
+                  </span>
+                  <div>
+                    <p className="text-white font-body font-semibold text-sm mb-1">
+                      Open your terminal
+                    </p>
+                    <p className="text-white/40 text-sm font-body">
+                      On Mac, press{" "}
+                      <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">
+                        Cmd + Space
+                      </kbd>{" "}
+                      and type <span className="text-white/60">Terminal</span>.
+                      On Windows, press the{" "}
+                      <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">
+                        Windows
+                      </kbd>{" "}
+                      key and type <span className="text-white/60">cmd</span>.
+                    </p>
+                  </div>
+                </div>
+
+                {/* Step 2 */}
+                <div className="flex items-start gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
+                    2
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white font-body font-semibold text-sm mb-2">
+                      Copy and paste this command
+                    </p>
+                    <div className="code-block p-4">
+                      <code className="text-gvc-green/90 text-sm break-all whitespace-pre-wrap">
+                        {command}
+                      </code>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Step 3 */}
+                <div className="flex items-start gap-4">
+                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
+                    3
+                  </span>
+                  <div>
+                    <p className="text-white font-body font-semibold text-sm">
+                      Press Enter and follow the prompts
+                    </p>
+                    <p className="text-white/40 text-sm font-body">
+                      The tool sets everything up and tells you how to see your new project.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Copy command button */}
+              <button
+                onClick={copyCommand}
+                className={`
+                  mt-6 w-full inline-flex items-center justify-center gap-2 px-6 py-4
+                  font-display font-bold text-base rounded-xl
+                  transition-all duration-300
+                  ${
+                    copiedCommand
+                      ? "bg-gvc-green/20 text-gvc-green border border-gvc-green/30"
+                      : "bg-gvc-gold text-gvc-black hover:shadow-[0_0_30px_rgba(255,224,72,0.3)]"
+                  }
+                `}
+              >
+                {copiedCommand ? (
+                  <>
+                    <Check className="w-5 h-5" />
                     Copied to clipboard!
                   </>
                 ) : (
                   <>
-                    <Copy className="w-4 h-4" />
+                    <Copy className="w-5 h-5" />
                     Copy command
                   </>
                 )}
               </button>
-            </div>
-          </div>
 
-          {/* Step 3 */}
-          <div className="flex items-start gap-4">
-            <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
-              3
-            </span>
-            <div>
-              <p className="text-white font-body font-semibold text-sm mb-1">
-                Paste it in your terminal and press Enter
-              </p>
-              <p className="text-white/50 text-sm font-body leading-relaxed">
-                Right-click in the terminal window to paste, or press <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Cmd + V</kbd> on Mac or <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Ctrl + V</kbd> on Windows.
-              </p>
-            </div>
-          </div>
+              {/* What's a terminal? */}
+              <div className="mt-4">
+                <button
+                  onClick={() => setTerminalHelpOpen(!terminalHelpOpen)}
+                  className="w-full flex items-center justify-between px-4 py-3 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.03] transition-all duration-200"
+                >
+                  <span className="text-white/50 font-body text-xs">
+                    What is a terminal?
+                  </span>
+                  {terminalHelpOpen ? (
+                    <ChevronUp className="w-3.5 h-3.5 text-white/40" />
+                  ) : (
+                    <ChevronDown className="w-3.5 h-3.5 text-white/40" />
+                  )}
+                </button>
 
-          {/* Step 4 */}
-          <div className="flex items-start gap-4">
-            <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
-              4
-            </span>
-            <div>
-              <p className="text-white font-body font-semibold text-sm mb-1">
-                Follow the prompts
-              </p>
-              <p className="text-white/50 text-sm font-body leading-relaxed">
-                The tool will walk you through the rest. It will set everything up and tell you how to see your new project.
-              </p>
-            </div>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* What's a terminal? expandable section */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.65, duration: 0.4 }}
-        className="w-full mb-6"
-      >
-        <button
-          onClick={() => setTerminalHelpOpen(!terminalHelpOpen)}
-          className="w-full flex items-center justify-between px-5 py-4 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.03] transition-all duration-200"
-        >
-          <span className="text-white/60 font-body text-sm font-semibold">
-            What is a terminal?
-          </span>
-          {terminalHelpOpen ? (
-            <ChevronUp className="w-4 h-4 text-white/40" />
-          ) : (
-            <ChevronDown className="w-4 h-4 text-white/40" />
-          )}
-        </button>
-
-        <AnimatePresence>
-          {terminalHelpOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-              className="overflow-hidden"
-            >
-              <div className="px-5 py-4 border border-t-0 border-white/[0.06] rounded-b-xl bg-white/[0.02]">
-                <p className="text-white/50 text-sm font-body leading-relaxed mb-3">
-                  A terminal is a text-based app that comes built into every computer. You type commands into it instead of clicking buttons. It might sound intimidating, but you only need to do two things: paste the command above and press Enter. That is it.
-                </p>
-                <p className="text-white/50 text-sm font-body leading-relaxed mb-3">
-                  On a Mac, it is called <span className="text-white/70 font-semibold">Terminal</span> and you can find it by pressing <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Cmd + Space</kbd> and typing &ldquo;Terminal&rdquo;.
-                </p>
-                <p className="text-white/50 text-sm font-body leading-relaxed">
-                  On Windows, it is called <span className="text-white/70 font-semibold">Command Prompt</span>. Press the <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Windows</kbd> key and type &ldquo;cmd&rdquo; to find it.
-                </p>
+                <AnimatePresence>
+                  {terminalHelpOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 py-3 border border-t-0 border-white/[0.06] rounded-b-xl bg-white/[0.02]">
+                        <p className="text-white/40 text-xs font-body leading-relaxed">
+                          A terminal is a text-based app built into every computer.
+                          You type commands instead of clicking buttons.
+                          You only need to do two things: paste the command above and press Enter.
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             </motion.div>
           )}
@@ -349,9 +567,18 @@ export default function ReadyStep({
         className="w-full glass-card p-5 mb-8"
       >
         <p className="text-white/50 text-sm font-body mb-3">
-          Before you start, make sure you have these installed:
+          You will also need:
         </p>
         <div className="space-y-2">
+          <a
+            href="https://claude.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-gvc-gold/80 text-sm font-body hover:text-gvc-gold transition-colors"
+          >
+            <ExternalLink className="w-3.5 h-3.5" />
+            A Claude account (free to sign up)
+          </a>
           <a
             href="https://nodejs.org/"
             target="_blank"
@@ -359,26 +586,16 @@ export default function ReadyStep({
             className="flex items-center gap-2 text-gvc-gold/80 text-sm font-body hover:text-gvc-gold transition-colors"
           >
             <ExternalLink className="w-3.5 h-3.5" />
-            Node.js (needed to run the command above)
-          </a>
-          <a
-            href="https://docs.anthropic.com/en/docs/claude-code/overview"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-gvc-gold/80 text-sm font-body hover:text-gvc-gold transition-colors"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-            Claude Code (your AI coding assistant, optional but recommended)
+            Node.js (needed for the terminal option)
           </a>
         </div>
       </motion.div>
 
-      {/* Navigation */}
+      {/* Back button */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8, duration: 0.4 }}
-        className="flex items-center gap-4"
       >
         <button
           onClick={onBack}
@@ -392,32 +609,6 @@ export default function ReadyStep({
         >
           <ArrowLeft className="w-4 h-4" />
           Back
-        </button>
-
-        <button
-          onClick={copyCommand}
-          className={`
-            inline-flex items-center gap-2 px-6 py-3
-            font-display font-bold rounded-xl
-            transition-all duration-300
-            ${
-              copied
-                ? "bg-gvc-green/20 text-gvc-green border border-gvc-green/30"
-                : "bg-gvc-gold text-gvc-black hover:shadow-[0_0_30px_rgba(255,224,72,0.3)]"
-            }
-          `}
-        >
-          {copied ? (
-            <>
-              <Check className="w-4 h-4" />
-              Copied!
-            </>
-          ) : (
-            <>
-              <Copy className="w-4 h-4" />
-              Copy command
-            </>
-          )}
         </button>
       </motion.div>
     </motion.div>
