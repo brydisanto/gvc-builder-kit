@@ -40,9 +40,8 @@ interface HeroStepProps {
 }
 
 export default function HeroStep({ onNext }: HeroStepProps) {
-  // Shuffle badges for the marquee rows
-  const row1 = useMemo(() => shuffleArray([...ALL_BADGES]).slice(0, 20), []);
-  const row2 = useMemo(() => shuffleArray([...ALL_BADGES]).slice(20, 40), []);
+  // Shuffle badges for the marquee
+  const row1 = useMemo(() => shuffleArray([...ALL_BADGES]).slice(0, 30), []);
 
   return (
     <motion.div
@@ -178,33 +177,16 @@ export default function HeroStep({ onNext }: HeroStepProps) {
         transition={{ delay: 1, duration: 0.8 }}
         className="w-screen mt-10 overflow-hidden badge-marquee-container"
       >
-        {/* Row 1 - scrolls left */}
-        <div className="badge-marquee mb-2">
+        <div className="badge-marquee">
           <div className="badge-marquee-track">
             {[...row1, ...row1].map((badge, i) => (
               <div key={`r1-${i}`} className="badge-marquee-item">
                 <Image
                   src={`/badges/${badge}.webp`}
                   alt={badge}
-                  width={48}
-                  height={48}
-                  className="rounded-lg opacity-60 hover:opacity-100 hover:scale-110 transition-all duration-300"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* Row 2 - scrolls right */}
-        <div className="badge-marquee badge-marquee-reverse">
-          <div className="badge-marquee-track">
-            {[...row2, ...row2].map((badge, i) => (
-              <div key={`r2-${i}`} className="badge-marquee-item">
-                <Image
-                  src={`/badges/${badge}.webp`}
-                  alt={badge}
-                  width={48}
-                  height={48}
-                  className="rounded-lg opacity-60 hover:opacity-100 hover:scale-110 transition-all duration-300"
+                  width={72}
+                  height={72}
+                  className="rounded-xl opacity-60 hover:opacity-100 hover:scale-110 transition-all duration-300"
                 />
               </div>
             ))}
