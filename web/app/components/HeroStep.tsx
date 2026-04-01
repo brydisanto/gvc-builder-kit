@@ -67,7 +67,7 @@ export default function HeroStep({ onNext }: HeroStepProps) {
       </div>
 
       {/* Left: Content */}
-      <div className="flex flex-col items-center text-center max-w-lg relative z-10">
+      <div className="flex flex-col items-center lg:items-start text-center lg:text-left max-w-lg relative z-10">
         {/* Shaka */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
