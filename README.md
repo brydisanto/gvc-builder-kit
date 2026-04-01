@@ -2,12 +2,18 @@
   <img src="web/public/shaka.png" alt="GVC Shaka" width="80" />
 </p>
 
-<h1 align="center">GVC Builder Kit</h1>
+<p align="center">
+  Good Vibes Club Presents
+</p>
+
+<h1 align="center">THE PLAYGROUND</h1>
 
 <p align="center">
-  <strong>One command. GVC brand. Ship something.</strong>
+  A builder toolkit for the GVC community
   <br />
-  <em>Built by the community, for the community.</em>
+  <em>Built by the community, for the community</em>
+  <br /><br />
+  <strong>One command. GVC brand. Ship something.</strong>
 </p>
 
 <p align="center">

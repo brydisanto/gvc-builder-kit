@@ -22,12 +22,12 @@ const mundial = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "GVC Builder Kit",
+  title: "The Playground | Good Vibes Club",
   description:
-    "Go from idea to live project in minutes. The visual builder for the Good Vibes Club community.",
+    "A builder toolkit for the GVC community. Go from idea to live project in minutes. No coding experience needed.",
   openGraph: {
-    title: "GVC Builder Kit",
-    description: "Go from idea to live project in minutes.",
+    title: "The Playground | Good Vibes Club",
+    description: "A builder toolkit for the GVC community. Go from idea to live project in minutes.",
     type: "website",
   },
 };

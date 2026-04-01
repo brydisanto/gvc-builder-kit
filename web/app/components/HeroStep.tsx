@@ -3,19 +3,54 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Terminal } from "lucide-react";
 import Image from "next/image";
+import { useMemo } from "react";
+
+// All 101 badge filenames
+const ALL_BADGES = [
+  "anchorman","any_gvc","astro_balls","astro_bean","captain","checkmate",
+  "chris_favorite_badge","cosmic_guardian","doge","electric_rings",
+  "elite_rainbow_ranger","fifteen_badges","fifty_badges","five_badges",
+  "flow_state","forty_badges","full_send_maverick","full_throttle",
+  "funky_fresh","fur_the_win","gamer","gold_member","gradient_hatrick",
+  "gradient_high_five","gradient_lover","grayscale_seeker","great_stacheby",
+  "gud_meat","hail_mary_heroes","high_noon_hustler","highkeymoments_1",
+  "highkeymoments_2","homerun","hoodie_up_society","hue_too_fresh","king",
+  "kinky","ladies_night","lamp","mountain_goat","multi_type_master",
+  "necks_level","no_face_no_problem","nounish_vibes","one_of_one",
+  "party_in_the_back","patch_powerhouse","pepe","plants","plastic_hatrick",
+  "plastic_high_five","plastic_lover","poker_face","pothead","power_duo",
+  "rack_em_up","rainbow_boombox","rainbow_bubble_goggles","rainbow_citizen",
+  "rainbow_visor","ranger","robot_hatrick","robot_high_five","robot_lover",
+  "science_goggles","seas_the_day","shadow_funk_division","shower","showtime",
+  "sir_vibes_a_lot","stone","straw_man","sugar_rush","suited_up","super_rare",
+  "surfer","tanks_a_lot","tatted_up","ten_badges","the_completionist",
+  "thirty_badges","toy_bricks","trait_maxi","twenty_badges",
+  "unfathomable_vibes","varsity_vibes","vibefoot_fan_club","vibestr_blue_tier",
+  "vibestr_bounty_hunter","vibestr_bronze_tier","vibestr_cosmic_tier",
+  "vibestr_diamond_tier","vibestr_gold_tier","vibestr_pink_tier",
+  "vibestr_purple_tier","vibestr_silver_tier","vibetown_baller",
+  "vibetown_social_club","visooor_enjoyooor","yin_n_yang","zoom_in_vibe_out",
+];
+
+// 9 curated GVC token IDs for the image grid
+const GVC_TOKEN_IDS = [142, 1337, 888, 2222, 500, 77, 1111, 369, 1969];
 
 interface HeroStepProps {
   onNext: () => void;
 }
 
 export default function HeroStep({ onNext }: HeroStepProps) {
+  // Shuffle badges for the marquee rows
+  const row1 = useMemo(() => shuffleArray([...ALL_BADGES]).slice(0, 20), []);
+  const row2 = useMemo(() => shuffleArray([...ALL_BADGES]).slice(20, 40), []);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="flex flex-col items-center justify-center text-center min-h-[60vh] px-4"
+      className="flex flex-col items-center justify-center text-center w-full px-4"
     >
       {/* Background embers */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -41,90 +76,75 @@ export default function HeroStep({ onNext }: HeroStepProps) {
         initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
         animate={{ opacity: 1, scale: 1, rotate: 0 }}
         transition={{ delay: 0.1, duration: 0.6, type: "spring", stiffness: 150, damping: 14 }}
-        className="wiggle-hover mb-6 cursor-default"
+        className="wiggle-hover mb-4 cursor-default"
       >
         <Image
           src="/shaka.png"
           alt="GVC Shaka"
-          width={120}
-          height={120}
+          width={100}
+          height={100}
           className="drop-shadow-[0_0_30px_rgba(255,224,72,0.3)]"
           priority
         />
       </motion.div>
 
-      {/* Logo badge */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
+      {/* "Good Vibes Club Presents:" */}
+      <motion.p
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gvc-gray/60 border border-gvc-gold/20 mb-8"
+        className="text-sm text-gvc-gold/50 font-body uppercase tracking-[0.2em] mb-3"
       >
-        <Image
-          src="/gvc-logotype.svg"
-          alt="Good Vibes Club"
-          width={160}
-          height={10}
-          className="opacity-90"
-        />
-      </motion.div>
+        Good Vibes Club Presents
+      </motion.p>
 
-      {/* Title */}
+      {/* Title: THE PLAYGROUND */}
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="text-5xl sm:text-7xl lg:text-8xl font-display font-black text-shimmer leading-[1.05] mb-4 tracking-wide"
+        className="text-5xl sm:text-7xl lg:text-8xl font-display font-black text-shimmer leading-[1.05] mb-3 tracking-wide"
       >
-        GVC BUILDER
+        THE
         <br />
-        KIT
+        PLAYGROUND
       </motion.h1>
 
-      {/* Tagline */}
+      {/* Subtitle */}
       <motion.p
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4, duration: 0.5 }}
-        className="text-sm text-gvc-gold/50 font-body uppercase tracking-[0.2em] mb-4"
+        className="text-lg sm:text-xl text-white/60 font-body mb-1"
+      >
+        A builder toolkit for the GVC community
+      </motion.p>
+
+      {/* Italic tagline */}
+      <motion.p
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.45, duration: 0.5 }}
+        className="text-sm text-white/30 font-body italic mb-2"
       >
         Built by the community, for the community
       </motion.p>
 
-      {/* Subtitle */}
+      {/* Description */}
       <motion.p
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.6 }}
-        className="text-lg sm:text-xl text-white/50 font-body max-w-lg mx-auto mb-8"
+        className="text-base text-white/40 font-body max-w-lg mx-auto mb-8"
       >
-        Go from idea to live project in minutes.
-        <br className="hidden sm:block" />
-        No coding experience needed.
+        Go from idea to live project in minutes. No coding experience needed.
       </motion.p>
-
-      {/* Feature pills */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 0.5 }}
-        className="flex flex-wrap items-center justify-center gap-3 mb-10"
-      >
-        {["GVC Brand System", "Claude-Ready", "One-Command Deploy"].map((pill) => (
-          <span
-            key={pill}
-            className="inline-flex items-center px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] text-white/50 text-sm font-body"
-          >
-            {pill}
-          </span>
-        ))}
-      </motion.div>
 
       {/* CTA Button */}
       <motion.button
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7, duration: 0.5 }}
+        transition={{ delay: 0.6, duration: 0.5 }}
         whileHover={{ scale: 1.04, y: -2 }}
         whileTap={{ scale: 0.97 }}
         onClick={onNext}
@@ -144,12 +164,88 @@ export default function HeroStep({ onNext }: HeroStepProps) {
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 0.5 }}
-        className="mt-6 text-sm text-white/30 font-body inline-flex items-center gap-2 hover:text-white/50 transition-colors cursor-default"
+        transition={{ delay: 0.8, duration: 0.5 }}
+        className="mt-5 text-sm text-white/30 font-body inline-flex items-center gap-2 hover:text-white/50 transition-colors cursor-default"
       >
         <Terminal className="w-3.5 h-3.5" />
-        Or try it in your terminal with <code className="text-gvc-gold/60 font-mono text-xs">npx create-gvc-app</code>
+        Or try it in your terminal with <code className="text-gvc-gold/60 font-mono text-xs ml-1">npx create-gvc-app</code>
       </motion.p>
+
+      {/* Badge Marquee */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.8 }}
+        className="w-screen mt-10 overflow-hidden badge-marquee-container"
+      >
+        {/* Row 1 - scrolls left */}
+        <div className="badge-marquee mb-2">
+          <div className="badge-marquee-track">
+            {[...row1, ...row1].map((badge, i) => (
+              <div key={`r1-${i}`} className="badge-marquee-item">
+                <Image
+                  src={`/badges/${badge}.webp`}
+                  alt={badge}
+                  width={48}
+                  height={48}
+                  className="rounded-lg opacity-60 hover:opacity-100 hover:scale-110 transition-all duration-300"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* Row 2 - scrolls right */}
+        <div className="badge-marquee badge-marquee-reverse">
+          <div className="badge-marquee-track">
+            {[...row2, ...row2].map((badge, i) => (
+              <div key={`r2-${i}`} className="badge-marquee-item">
+                <Image
+                  src={`/badges/${badge}.webp`}
+                  alt={badge}
+                  width={48}
+                  height={48}
+                  className="rounded-lg opacity-60 hover:opacity-100 hover:scale-110 transition-all duration-300"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+
+      {/* GVC Image Grid - 3x3 */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.8 }}
+        className="mt-8 mb-4 grid grid-cols-3 gap-2 sm:gap-3 max-w-sm mx-auto"
+      >
+        {GVC_TOKEN_IDS.map((tokenId, i) => (
+          <motion.div
+            key={tokenId}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.3 + i * 0.06, duration: 0.4, type: "spring", stiffness: 120 }}
+            className="aspect-square rounded-xl overflow-hidden border border-white/10 hover:border-gvc-gold/30 transition-all duration-300 card-glow cursor-default"
+          >
+            <Image
+              src={`https://i.seadn.io/s/raw/files/good-vibes-club/${tokenId}.png`}
+              alt={`GVC #${tokenId}`}
+              width={200}
+              height={200}
+              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              unoptimized
+            />
+          </motion.div>
+        ))}
+      </motion.div>
     </motion.div>
   );
+}
+
+function shuffleArray<T>(arr: T[]): T[] {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
 }

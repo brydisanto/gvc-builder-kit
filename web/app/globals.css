@@ -381,3 +381,42 @@ body::after {
   z-index: 100;
   animation: confettiFall 3s ease-out forwards;
 }
+
+/* ---------------------------------- */
+/* Badge Marquee                      */
+/* ---------------------------------- */
+
+.badge-marquee-container {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.badge-marquee {
+  overflow: hidden;
+  width: 100%;
+}
+
+.badge-marquee-track {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  animation: marqueeScroll 40s linear infinite;
+}
+
+.badge-marquee-reverse .badge-marquee-track {
+  animation: marqueeScrollReverse 40s linear infinite;
+}
+
+.badge-marquee-item {
+  flex-shrink: 0;
+}
+
+@keyframes marqueeScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marqueeScrollReverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
