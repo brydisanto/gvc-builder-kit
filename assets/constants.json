@@ -1,0 +1,25 @@
+{
+  "contracts": {
+    "gvc_nft": "0xB8Ea78fcaCEf50d41375E44E6814ebbA36Bb33c4",
+    "vibestr_token": "0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196",
+    "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+    "burn_address": "0x000000000000000000000000000000000000dEaD"
+  },
+  "opensea": {
+    "collection_slug": "good-vibes-club",
+    "api_base": "https://api.opensea.io/api/v2",
+    "image_base": "https://i.seadn.io"
+  },
+  "rpc": {
+    "ethereum_public": "https://ethereum-rpc.publicnode.com"
+  },
+  "prices": {
+    "coingecko": "https://api.coingecko.com/api/v3/simple/price",
+    "dexscreener": "https://api.dexscreener.com/latest/dex/tokens"
+  },
+  "links": {
+    "opensea_collection": "https://opensea.io/collection/good-vibes-club",
+    "badges": "https://www.goodvibesclub.io/badges/explore",
+    "website": "https://www.goodvibesclub.io"
+  }
+}
