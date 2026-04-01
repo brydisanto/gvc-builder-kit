@@ -45,7 +45,7 @@ export default function HeroStep({ onNext }: HeroStepProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="flex flex-col lg:flex-row items-center justify-center w-full px-6 sm:px-12 gap-10 lg:gap-20 min-h-[85vh]"
+      className="flex flex-col lg:flex-row items-center justify-center w-full px-6 sm:px-12 gap-10 lg:gap-32 min-h-[85vh]"
     >
       {/* Background embers */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
