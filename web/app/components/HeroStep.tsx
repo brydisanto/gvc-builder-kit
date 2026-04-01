@@ -84,12 +84,12 @@ export default function HeroStep({ onNext }: HeroStepProps) {
           <div className="badge-marquee-track portrait-speed">
             {[...GVC_PORTRAITS, ...GVC_PORTRAITS].map((tokenId, i) => (
               <div key={`p-${i}`} className="badge-marquee-item">
-                <div className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] rounded-2xl overflow-hidden opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300">
+                <div className="w-[130px] h-[130px] rounded-2xl overflow-hidden opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300">
                   <Image
                     src={`/portraits/gvc-${tokenId}.jpg`}
                     alt={`GVC #${tokenId}`}
-                    width={120}
-                    height={120}
+                    width={130}
+                    height={130}
                     className="w-full h-full object-cover"
                     unoptimized
                   />
