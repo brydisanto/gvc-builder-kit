@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import { useState, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowLeft,
   Copy,
   Check,
   ExternalLink,
-  Terminal,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
 import Image from "next/image";
 
@@ -26,19 +27,19 @@ const TEMPLATE_LABELS: Record<string, string> = {
 
 // Addon label map
 const ADDON_LABELS: Record<string, string> = {
-  "collection-data": "GVC Collection data",
-  "token-prices": "Token prices",
-  "web3-wallet": "Web3 wallet connect",
-  "stats-panel": "Animated stats panel",
-  leaderboard: "Leaderboard system",
-  auth: "Auth sessions",
-  "game-engine": "Game engine scaffold",
-  "audio-mixer": "Audio mixer",
-  toasts: "Toast notifications",
-  "ipfs-images": "IPFS image loading",
-  "on-chain-reads": "On-chain reads",
+  "collection-data": "GVC Collection info",
+  "token-prices": "Live token prices",
+  "web3-wallet": "Wallet connection",
+  "stats-panel": "Stats and charts",
+  leaderboard: "Leaderboard",
+  auth: "User accounts",
+  "game-engine": "Game starter kit",
+  "audio-mixer": "Sound and music",
+  toasts: "Pop-up notifications",
+  "ipfs-images": "NFT image loading",
+  "on-chain-reads": "Blockchain lookups",
   "badge-collection": "Badge collection",
-  "vercel-kv": "Vercel KV storage",
+  "vercel-kv": "Save and store data",
 };
 
 interface ReadyStepProps {
@@ -49,48 +50,6 @@ interface ReadyStepProps {
   onBack: () => void;
 }
 
-function ConfettiEffect() {
-  const [particles, setParticles] = useState<
-    { id: number; x: number; color: string; delay: number; size: number }[]
-  >([]);
-
-  useEffect(() => {
-    const colors = ["#FFE048", "#fff8b8", "#FF6B9D", "#FF5F1F", "#2EFF2E"];
-    const newParticles = Array.from({ length: 40 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      delay: Math.random() * 1.5,
-      size: 4 + Math.random() * 6,
-    }));
-    setParticles(newParticles);
-
-    // Clean up after animation
-    const timer = setTimeout(() => setParticles([]), 4000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  return (
-    <>
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          className="confetti-particle"
-          style={{
-            left: `${p.x}%`,
-            top: "-10px",
-            width: `${p.size}px`,
-            height: `${p.size}px`,
-            backgroundColor: p.color,
-            borderRadius: Math.random() > 0.5 ? "50%" : "2px",
-            animationDelay: `${p.delay}s`,
-          }}
-        />
-      ))}
-    </>
-  );
-}
-
 export default function ReadyStep({
   projectName,
   template,
@@ -99,7 +58,7 @@ export default function ReadyStep({
   onBack,
 }: ReadyStepProps) {
   const [copied, setCopied] = useState(false);
-  const [showConfetti, setShowConfetti] = useState(true);
+  const [terminalHelpOpen, setTerminalHelpOpen] = useState(false);
 
   // Build the CLI command
   const buildCommand = useCallback(() => {
@@ -130,11 +89,6 @@ export default function ReadyStep({
     }
   }
 
-  useEffect(() => {
-    const timer = setTimeout(() => setShowConfetti(false), 4000);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
@@ -143,21 +97,19 @@ export default function ReadyStep({
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className="flex flex-col items-center px-4 max-w-2xl mx-auto w-full"
     >
-      {showConfetti && <ConfettiEffect />}
-
-      {/* Celebration: Shaka + text */}
+      {/* Shaka icon */}
       <motion.div
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 12 }}
-        className="flex items-center gap-4 mb-6"
+        className="flex items-center gap-4 mb-4"
       >
         <Image
           src="/shaka.png"
           alt="GVC Shaka"
-          width={64}
-          height={64}
-          className="wiggle-infinite drop-shadow-[0_0_20px_rgba(255,224,72,0.3)]"
+          width={56}
+          height={56}
+          className="drop-shadow-[0_0_20px_rgba(255,224,72,0.3)]"
         />
       </motion.div>
 
@@ -167,7 +119,7 @@ export default function ReadyStep({
         transition={{ delay: 0.3, duration: 0.4 }}
         className="text-3xl sm:text-4xl font-display font-black text-shimmer mb-3 text-center"
       >
-        Ready to build!
+        Your project is ready to build!
       </motion.h2>
 
       <motion.p
@@ -176,15 +128,15 @@ export default function ReadyStep({
         transition={{ delay: 0.4, duration: 0.4 }}
         className="text-white/50 font-body mb-8 text-center text-lg"
       >
-        You&apos;re about to ship something. Let&apos;s go.
+        Here is a summary of what you picked, and how to create it.
       </motion.p>
 
-      {/* Summary card with snake border */}
+      {/* Summary card */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.4 }}
-        className="w-full glass-card snake-border p-6 mb-6"
+        className="w-full glass-card snake-border p-6 mb-8"
       >
         <div className="space-y-4 relative z-10">
           <div className="flex items-start justify-between gap-4">
@@ -210,7 +162,7 @@ export default function ReadyStep({
 
           <div>
             <p className="text-white/40 text-xs font-body uppercase tracking-wider mb-1">
-              Description
+              Your idea
             </p>
             <p className="text-white/70 text-sm font-body leading-relaxed">
               {description}
@@ -222,7 +174,7 @@ export default function ReadyStep({
               <div className="h-px bg-white/[0.06]" />
               <div>
                 <p className="text-white/40 text-xs font-body uppercase tracking-wider mb-2">
-                  Power-ups ({addons.length})
+                  Extras ({addons.length})
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {addons.map((addon) => (
@@ -240,105 +192,166 @@ export default function ReadyStep({
         </div>
       </motion.div>
 
-      {/* Command block */}
+      {/* Step-by-step instructions */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6, duration: 0.4 }}
-        className="w-full mb-6"
+        className="w-full glass-card p-6 mb-6"
       >
-        <div className="flex items-center gap-2 mb-2">
-          <Terminal className="w-3.5 h-3.5 text-white/40" />
-          <span className="text-xs text-white/40 font-body">
-            Run this command in your terminal
-          </span>
+        <h3 className="text-white font-display font-bold text-base mb-5">
+          How to create your project
+        </h3>
+        <div className="space-y-5">
+          {/* Step 1 */}
+          <div className="flex items-start gap-4">
+            <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
+              1
+            </span>
+            <div>
+              <p className="text-white font-body font-semibold text-sm mb-1">
+                Open your terminal
+              </p>
+              <p className="text-white/50 text-sm font-body leading-relaxed">
+                On Mac, press <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Cmd + Space</kbd> and type <span className="text-white/70">Terminal</span>, then press Enter.
+              </p>
+              <p className="text-white/50 text-sm font-body leading-relaxed mt-1">
+                On Windows, press the <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Windows</kbd> key and type <span className="text-white/70">cmd</span>, then press Enter.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 2 */}
+          <div className="flex items-start gap-4">
+            <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
+              2
+            </span>
+            <div className="flex-1 min-w-0">
+              <p className="text-white font-body font-semibold text-sm mb-2">
+                Copy this command
+              </p>
+              <div className="code-block p-4 relative group">
+                <code className="text-gvc-green/90 text-sm break-all whitespace-pre-wrap">
+                  {command}
+                </code>
+              </div>
+              <button
+                onClick={copyCommand}
+                className={`
+                  mt-3 inline-flex items-center gap-2 px-5 py-2.5
+                  font-display font-bold text-sm rounded-xl
+                  transition-all duration-300
+                  ${
+                    copied
+                      ? "bg-gvc-green/20 text-gvc-green border border-gvc-green/30"
+                      : "bg-gvc-gold text-gvc-black hover:shadow-[0_0_30px_rgba(255,224,72,0.3)]"
+                  }
+                `}
+              >
+                {copied ? (
+                  <>
+                    <Check className="w-4 h-4" />
+                    Copied to clipboard!
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4" />
+                    Copy command
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Step 3 */}
+          <div className="flex items-start gap-4">
+            <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
+              3
+            </span>
+            <div>
+              <p className="text-white font-body font-semibold text-sm mb-1">
+                Paste it in your terminal and press Enter
+              </p>
+              <p className="text-white/50 text-sm font-body leading-relaxed">
+                Right-click in the terminal window to paste, or press <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Cmd + V</kbd> on Mac or <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Ctrl + V</kbd> on Windows.
+              </p>
+            </div>
+          </div>
+
+          {/* Step 4 */}
+          <div className="flex items-start gap-4">
+            <span className="flex-shrink-0 w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
+              4
+            </span>
+            <div>
+              <p className="text-white font-body font-semibold text-sm mb-1">
+                Follow the prompts
+              </p>
+              <p className="text-white/50 text-sm font-body leading-relaxed">
+                The tool will walk you through the rest. It will set everything up and tell you how to see your new project.
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="code-block p-5 relative group">
-          <code className="text-gvc-green/90 text-sm break-all whitespace-pre-wrap">
-            {command}
-          </code>
-          <button
-            onClick={copyCommand}
-            className={`
-              absolute top-3 right-3 p-2 rounded-lg
-              transition-all duration-300
-              ${
-                copied
-                  ? "bg-gvc-green/20 text-gvc-green"
-                  : "bg-white/5 text-white/40 opacity-0 group-hover:opacity-100 hover:bg-white/10 hover:text-white/70"
-              }
-            `}
-          >
-            {copied ? (
-              <Check className="w-4 h-4" />
-            ) : (
-              <Copy className="w-4 h-4" />
-            )}
-          </button>
-        </div>
-        {copied && (
-          <motion.p
-            initial={{ opacity: 0, y: -5 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-gvc-green text-xs mt-2 ml-2 font-body"
-          >
-            Copied to clipboard!
-          </motion.p>
-        )}
       </motion.div>
 
-      {/* What's next? */}
+      {/* What's a terminal? expandable section */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.65, duration: 0.4 }}
-        className="w-full glass-card p-5 mb-6"
+        className="w-full mb-6"
       >
-        <h3 className="text-white font-display font-bold text-sm mb-4">
-          What&apos;s next?
-        </h3>
-        <div className="space-y-3">
-          {[
-            { num: "1", text: "Open your terminal and paste the command above" },
-            { num: "2", text: "Run gvc dev to see your project" },
-            { num: "3", text: "Open it in Claude and tell it what you want to change" },
-          ].map((step) => (
-            <div key={step.num} className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gvc-gold/15 text-gvc-gold text-xs font-bold flex items-center justify-center mt-0.5">
-                {step.num}
-              </span>
-              <p className="text-white/60 text-sm font-body">
-                {step.num === "2" ? (
-                  <>Run <code className="text-gvc-gold/70 font-mono text-xs bg-gvc-gold/10 px-1.5 py-0.5 rounded">gvc dev</code> to see your project</>
-                ) : (
-                  step.text
-                )}
-              </p>
-            </div>
-          ))}
-        </div>
+        <button
+          onClick={() => setTerminalHelpOpen(!terminalHelpOpen)}
+          className="w-full flex items-center justify-between px-5 py-4 rounded-xl border border-white/[0.06] bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.03] transition-all duration-200"
+        >
+          <span className="text-white/60 font-body text-sm font-semibold">
+            What is a terminal?
+          </span>
+          {terminalHelpOpen ? (
+            <ChevronUp className="w-4 h-4 text-white/40" />
+          ) : (
+            <ChevronDown className="w-4 h-4 text-white/40" />
+          )}
+        </button>
+
+        <AnimatePresence>
+          {terminalHelpOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.3 }}
+              className="overflow-hidden"
+            >
+              <div className="px-5 py-4 border border-t-0 border-white/[0.06] rounded-b-xl bg-white/[0.02]">
+                <p className="text-white/50 text-sm font-body leading-relaxed mb-3">
+                  A terminal is a text-based app that comes built into every computer. You type commands into it instead of clicking buttons. It might sound intimidating, but you only need to do two things: paste the command above and press Enter. That is it.
+                </p>
+                <p className="text-white/50 text-sm font-body leading-relaxed mb-3">
+                  On a Mac, it is called <span className="text-white/70 font-semibold">Terminal</span> and you can find it by pressing <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Cmd + Space</kbd> and typing &ldquo;Terminal&rdquo;.
+                </p>
+                <p className="text-white/50 text-sm font-body leading-relaxed">
+                  On Windows, it is called <span className="text-white/70 font-semibold">Command Prompt</span>. Press the <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Windows</kbd> key and type &ldquo;cmd&rdquo; to find it.
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.div>
 
-      {/* Help links */}
+      {/* Prerequisites */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.7, duration: 0.4 }}
         className="w-full glass-card p-5 mb-8"
       >
         <p className="text-white/50 text-sm font-body mb-3">
-          New to coding? No worries.
+          Before you start, make sure you have these installed:
         </p>
         <div className="space-y-2">
-          <a
-            href="https://docs.anthropic.com/en/docs/claude-code/overview"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-gvc-gold/80 text-sm font-body hover:text-gvc-gold transition-colors"
-          >
-            <ExternalLink className="w-3.5 h-3.5" />
-            Install Claude Code (your AI coding assistant)
-          </a>
           <a
             href="https://nodejs.org/"
             target="_blank"
@@ -346,7 +359,16 @@ export default function ReadyStep({
             className="flex items-center gap-2 text-gvc-gold/80 text-sm font-body hover:text-gvc-gold transition-colors"
           >
             <ExternalLink className="w-3.5 h-3.5" />
-            Install Node.js (required to run the command)
+            Node.js (needed to run the command above)
+          </a>
+          <a
+            href="https://docs.anthropic.com/en/docs/claude-code/overview"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-gvc-gold/80 text-sm font-body hover:text-gvc-gold transition-colors"
+          >
+            <ExternalLink className="w-3.5 h-3.5" />
+            Claude Code (your AI coding assistant, optional but recommended)
           </a>
         </div>
       </motion.div>
@@ -374,13 +396,16 @@ export default function ReadyStep({
 
         <button
           onClick={copyCommand}
-          className="
+          className={`
             inline-flex items-center gap-2 px-6 py-3
-            bg-gvc-gold text-gvc-black font-display font-bold
-            rounded-xl
+            font-display font-bold rounded-xl
             transition-all duration-300
-            hover:shadow-[0_0_30px_rgba(255,224,72,0.3)]
-          "
+            ${
+              copied
+                ? "bg-gvc-green/20 text-gvc-green border border-gvc-green/30"
+                : "bg-gvc-gold text-gvc-black hover:shadow-[0_0_30px_rgba(255,224,72,0.3)]"
+            }
+          `}
         >
           {copied ? (
             <>
@@ -390,7 +415,7 @@ export default function ReadyStep({
           ) : (
             <>
               <Copy className="w-4 h-4" />
-              Copy Command
+              Copy command
             </>
           )}
         </button>

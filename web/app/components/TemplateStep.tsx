@@ -134,7 +134,7 @@ export default function TemplateStep({
         transition={{ delay: 0.2, duration: 0.4 }}
         className="text-white/40 font-body mb-8 text-center"
       >
-        Pick the template closest to your idea
+        Pick the one closest to your idea. You can always change it later.
       </motion.p>
 
       {/* Card Grid */}

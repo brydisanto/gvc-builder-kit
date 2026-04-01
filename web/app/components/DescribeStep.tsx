@@ -9,32 +9,32 @@ const SUGGESTION_RULES = [
   {
     keywords: ["nft", "collection", "floor", "listing", "opensea", "mint"],
     addon: "collection-data",
-    label: "GVC Collection data",
+    label: "GVC collection info",
   },
   {
     keywords: ["price", "token", "vibestr", "eth", "pnkstr", "crypto"],
     addon: "token-prices",
-    label: "Token prices",
+    label: "Live token prices",
   },
   {
     keywords: ["wallet", "connect", "web3", "metamask", "ethereum"],
     addon: "web3-wallet",
-    label: "Web3 wallet connect",
+    label: "Wallet connection",
   },
   {
     keywords: ["track", "stat", "dashboard", "counter", "analytics", "chart"],
     addon: "stats-panel",
-    label: "Animated stats panel",
+    label: "Stats and charts",
   },
   {
     keywords: ["vote", "rank", "leaderboard", "elo", "bracket", "competition"],
     addon: "leaderboard",
-    label: "Leaderboard system",
+    label: "Leaderboard",
   },
   {
     keywords: ["game", "score", "play", "level", "quest", "arcade"],
     addon: "game-engine",
-    label: "Game engine scaffold",
+    label: "Game starter kit",
   },
   {
     keywords: ["badge", "collect", "tier", "achievement", "unlock"],
@@ -44,36 +44,36 @@ const SUGGESTION_RULES = [
   {
     keywords: ["chain", "contract", "balance", "onchain", "on-chain"],
     addon: "on-chain-reads",
-    label: "On-chain reads",
+    label: "Blockchain data",
   },
   {
     keywords: ["ipfs", "image", "metadata", "pinata"],
     addon: "ipfs-images",
-    label: "IPFS image loading",
+    label: "NFT image loading",
   },
   {
     keywords: ["sound", "audio", "music", "beat", "mix"],
     addon: "audio-mixer",
-    label: "Audio mixer",
+    label: "Sound and music",
   },
   {
     keywords: ["login", "auth", "session", "sign in", "account"],
     addon: "auth",
-    label: "Authentication",
+    label: "User accounts",
   },
   {
     keywords: ["store", "save", "database", "cache", "persist", "redis"],
     addon: "vercel-kv",
-    label: "Vercel KV storage",
+    label: "Save and store data",
   },
 ];
 
 const EXAMPLE_DESCRIPTIONS = [
-  "A sweep tracker that shows who's buying the most GVCs",
-  "A game where you vote on the best GVC art",
-  "A leaderboard that ranks holders by badge count",
-  "A dashboard showing floor prices and collection stats",
-  "A community hub where holders share their GVC stories",
+  "A page that shows who has been buying the most GVCs lately",
+  "A fun voting game where people pick their favorite GVC art",
+  "A leaderboard that ranks holders by how many badges they have",
+  "A live page showing floor prices and collection stats",
+  "A community page where GVC holders share their stories",
 ];
 
 function getSuggestions(text: string): { addon: string; label: string }[] {
@@ -157,7 +157,7 @@ export default function DescribeStep({
         transition={{ delay: 0.1, duration: 0.4 }}
         className="text-3xl sm:text-4xl font-display font-black text-white mb-3 text-center"
       >
-        Describe your idea
+        Tell us about your idea
       </motion.h2>
 
       <motion.p
@@ -166,7 +166,7 @@ export default function DescribeStep({
         transition={{ delay: 0.2, duration: 0.4 }}
         className="text-white/40 font-body mb-2 text-center"
       >
-        This helps Claude understand what you&apos;re going for
+        Just describe it in your own words. A sentence or two is perfect.
       </motion.p>
 
       {/* Cycling example */}
@@ -216,7 +216,7 @@ export default function DescribeStep({
               onChange(e.target.value);
               if (error) setError("");
             }}
-            placeholder="A dashboard that tracks GVC floor prices and shows my NFT collection..."
+            placeholder="A page that shows my GVC collection with big glowing cards and a leaderboard..."
             rows={4}
             className="
               w-full bg-transparent px-6 py-5
@@ -239,7 +239,7 @@ export default function DescribeStep({
         )}
 
         <p className="text-white/25 text-xs mt-3 ml-2 font-body">
-          This gets saved in your project so Claude knows what you&apos;re building.
+          Don&apos;t overthink it. You can always update this later.
         </p>
 
         {/* Smart suggestions */}
@@ -255,7 +255,7 @@ export default function DescribeStep({
               <div className="flex items-center gap-2 mb-2">
                 <Lightbulb className="w-3.5 h-3.5 text-gvc-gold/70" />
                 <span className="text-xs text-gvc-gold/70 font-body">
-                  We&apos;ll recommend these add-ons based on your description
+                  Based on what you wrote, we think you might want these
                 </span>
               </div>
               <div className="flex flex-wrap gap-2">

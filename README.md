@@ -30,49 +30,94 @@
 
 The GVC Builder Kit gets you from idea to live project in minutes. No coding experience needed. The GVC brand is baked in, Claude knows the design rules, and deploying is one command.
 
-Every template and power-up is extracted from **5 real, shipped GVC projects**: the Gallery, Smash the Wall, Vibepool, VibeOff, and VibeMatch. Nothing is made up. Everything is battle-tested.
+---
+
+## Want to skip the setup? Start here.
+
+Not ready to open a terminal? No problem at all.
+
+Use the **[Web Builder](https://web-seven-tan-85.vercel.app)** to plan your project visually. Pick your template, describe your idea, choose power-ups, and see everything come together on screen. When you're ready to build it for real, it gives you the exact command to run.
+
+This is the easiest way to get started, especially if you've never used a terminal before.
+
+---
+
+## What You'll Need
+
+Before you start, here's what you need. That's it.
+
+- **A computer.** Mac or Windows both work.
+- **About 10 minutes.** That's all the setup takes.
+- **No coding experience.** Seriously. You'll be guided through every step.
 
 ---
 
 ## Getting Started
 
-### Step 1: Install the basics
+This section walks you through everything from scratch. If you've never opened a terminal before, you're in the right place. We'll tell you exactly what to type at every step.
 
-You need two things on your computer. If you already have them, skip to Step 2.
+### Step 1: Open your terminal
 
-**Node.js** (makes everything run)
-1. Go to [nodejs.org](https://nodejs.org)
-2. Download the **LTS version** (the big green button)
-3. Open the installer and follow the steps
-4. When it's done, open your terminal and type `node -v` and you should see a version number
+A terminal is an app on your computer where you type commands. It looks like a text window with a blinking cursor. You type a command, press Enter, and the computer does something. That's all there is to it.
 
-**Claude** (your AI building partner)
-1. Go to [claude.ai/download](https://claude.ai/download) and install Claude for desktop
-2. Or install Claude Code in your terminal: `npm install -g @anthropic-ai/claude-code`
+**If you're on a Mac:**
+Open the Terminal app. You can find it by pressing Cmd+Space to open Spotlight search, then typing "Terminal" and pressing Enter.
 
-### Step 2: Create your project
+**If you're on Windows:**
+Open Command Prompt. Press the Windows key on your keyboard and type "cmd", then press Enter.
 
-Open your terminal and run:
+You should see a window with a blinking cursor. This is where you'll type commands to create and run your project. Don't worry. We'll tell you exactly what to type every step of the way.
+
+### Step 2: Install Node.js
+
+Node.js is what makes your project run on your computer. Think of it like an engine for your website. Without it, the project can't start. You only need to install it once.
+
+1. Go to [nodejs.org](https://nodejs.org) in your browser
+2. Click the big green button that says **LTS** (this is the stable version)
+3. Open the file you downloaded and follow the installer steps. Just click "Next" or "Continue" until it's done.
+4. Once it's installed, go back to your terminal and type `node -v` then press Enter. You should see a version number like `v20.11.0`. If you do, you're all set.
+
+### Step 3: Install Claude
+
+Claude is your AI building partner. It reads the brand guide in your project and helps you customize everything without writing code yourself. You just tell it what you want in plain English, and it does the work.
+
+There are two ways to get Claude:
+
+**Option A: Claude for Desktop (easiest)**
+Go to [claude.ai/download](https://claude.ai/download) and install the desktop app, just like installing any other app.
+
+**Option B: Claude Code in your terminal**
+If you want to use Claude right from your terminal, type this command and press Enter:
+
+```
+npm install -g @anthropic-ai/claude-code
+```
+
+Either option works. Pick whichever feels more comfortable.
+
+### Step 4: Create your project
+
+This is the fun part. Copy the command below, paste it into your terminal, and press Enter. The Builder Kit will ask you a few questions about what you want to build.
 
 ```
 npx gvc create
 ```
 
-The Builder Kit walks you through everything:
+Here's what it looks like:
 
 ```
 ? What's your project called? my-gvc-tracker
 
 ? What do you want to build?
-  ● A website for my project
-  ○ A tool that tracks something
-  ○ A game or interactive experience
-  ○ A place to show off my collection
-  ○ A voting or ranking page
-  ○ A community hub
-  ○ A blog or content page
-  ○ A simple links page
-  ○ I have my own idea (blank start)
+  * A website for my project
+    A tool that tracks something
+    A game or interactive experience
+    A place to show off my collection
+    A voting or ranking page
+    A community hub
+    A blog or content page
+    A simple links page
+    I have my own idea (blank start)
 
 ? Describe your idea in a sentence or two:
   > A dashboard that shows which GVCs are listed
@@ -84,18 +129,30 @@ The Builder Kit walks you through everything:
 
 You describe what you want. The Builder Kit figures out the rest.
 
-### Step 3: Start building
+### Step 5: Start building
+
+Now let's get your project running so you can see it. Type these two commands in your terminal, one at a time, pressing Enter after each:
 
 ```
 cd my-gvc-tracker
 gvc dev
 ```
 
-Your project is now running on your computer. Open it in the browser to see it.
+The first command moves you into your project folder. The second command starts your project on your computer so you can see it in your browser.
 
-### Step 4: Customize with Claude
+Once it's running, open your web browser and go to:
+
+```
+http://localhost:3000
+```
+
+What is localhost:3000? It just means "your project, running on your own computer." It's not on the internet yet. Only you can see it. This is where you preview your work as you build.
+
+### Step 6: Customize with Claude
 
 Open your project folder in Claude and start telling it what you want. Your project already includes a brand guide so Claude knows the GVC style.
+
+You don't need to know any programming. Just tell Claude what you want in plain English. Talk to it like you'd talk to a designer or a friend who knows how to code.
 
 Try things like:
 
@@ -109,9 +166,9 @@ Try things like:
 
 Claude will keep everything on-brand automatically.
 
-### Step 5: Ship it
+### Step 7: Ship it
 
-When you're ready to go live:
+When you're ready to go live, type this in your terminal and press Enter:
 
 ```
 gvc deploy
@@ -120,14 +177,6 @@ gvc deploy
 Your project is now live on the internet with a shareable URL.
 
 **That's it. You just built and shipped something.**
-
----
-
-## Try it in the browser first
-
-Not ready for the terminal? No worries.
-
-Use the **[Web Builder](https://web-seven-tan-85.vercel.app)** to walk through the setup visually. Pick your template, describe your idea, choose power-ups, then get a command to run when you're ready.
 
 ---
 
@@ -221,87 +270,6 @@ The Builder Kit reads your description and picks the right setup:
 | `gvc dev` | Run your project locally |
 | `gvc deploy` | Ship it live |
 | `gvc templates` | See all available templates |
-
----
-
-## Where it all comes from
-
-Every template and power-up is extracted from real GVC projects that are live right now:
-
-| Project | What it is |
-|---|---|
-| **GVC Gallery** | Community art gallery with submissions and shaka voting |
-| **Smash the Wall** | Real-time NFT market analytics dashboard |
-| **Vibepool** | Crypto portfolio tracker with badge system |
-| **VibeOff** | 1v1 voting game with Elo rankings |
-| **VibeMatch** | Match-3 puzzle game with badge collection and leaderboards |
-
-The patterns are proven. The brand system is battle-tested.
-
----
-
-## Prompts Cheat Sheet
-
-A quick reference for things you can ask Claude when building your project. Just open your project in Claude and try any of these.
-
-### Getting Started
-
-- "Change the main title to say [your project name]"
-- "Update the description text to say [what your project does]"
-- "Change the subtitle to [your tagline]"
-- "Make the hero section taller with more space"
-- "Add my Twitter handle @[handle] to the footer"
-- "Replace the placeholder logo with this image: [paste URL or file path]"
-
-### Customizing the Look
-
-- "Make the background even darker"
-- "Change the accent color from gold to purple"
-- "Add floating gold particles behind the hero section"
-- "Make the cards have a stronger gold glow on hover"
-- "Add a shimmer animation to the main title"
-- "Make the layout two columns instead of three on desktop"
-
-### Adding Content
-
-- "Add an About section that explains what this project does"
-- "Create a new page called Leaderboard"
-- "Add a FAQ section with 5 questions about GVC"
-- "Add a grid of team member cards with photos and names"
-- "Add a section that shows the GVC badges I've earned"
-- "Add a countdown timer section for our next community event"
-
-### Working with Data
-
-- "Show the current GVC floor price in a gold stats card"
-- "Add a live feed of recent GVC sales"
-- "Display how many GVCs are currently listed on OpenSea"
-- "Show the top 10 GVC holders in a leaderboard table"
-- "Add a section that shows the VIBESTR token price"
-- "Show my wallet's VIBESTR balance when I connect"
-
-### Interactive Features
-
-- "Add a voting section where people can pick between two GVCs"
-- "Create a simple scoring game with a leaderboard"
-- "Add a form where people can submit their Twitter handle"
-- "Add a search bar that filters the badge collection"
-- "Let users click a shaka button to upvote entries"
-
-### Making It Your Own
-
-- "Add wallet connect so users can log in with their Ethereum wallet"
-- "Create an API route that fetches all GVC listings under 0.5 ETH"
-- "Add a chart that shows floor price history over the last 30 days"
-- "Set up a database to save user votes"
-- "Add sound effects when someone clicks the shaka button"
-
-### Tips
-
-- Be specific about what you want. "Add a section" is okay, but "Add a section below the hero that shows 3 stats cards with floor price, total listed, and total owners" is better.
-- If something doesn't look right, tell Claude what's wrong. "The text is too small" or "The cards are overlapping on mobile" works great.
-- You can always say "undo that" or "go back to how it was before" if you don't like a change.
-- Try things! You can't break anything permanently. Claude can always fix it.
 
 ---
 

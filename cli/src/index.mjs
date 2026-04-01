@@ -200,29 +200,273 @@ function suggestAddons(description) {
   return suggested;
 }
 
+// ── Template-specific starting instructions ─────────────────────────
+const TEMPLATE_INSTRUCTIONS = {
+  "project-site":
+    "Build a landing page with: hero section with gold shimmer title, about section, features grid (3 columns), CTA section, footer with social links. Use the GVC brand system throughout.",
+  "tracker":
+    "Build a dashboard with: stats panel showing 3-4 key metrics with animated counters, a data table or card grid for tracked items, auto-refresh every 60 seconds. If GVC Collection data is selected, fetch live floor price and listing count from OpenSea.",
+  "mini-game":
+    "Build a browser game with: a game board or play area, score display, moves/lives counter, game-over screen with final score, and a restart button. Add a leaderboard if that add-on is selected.",
+  "gallery":
+    "Build a gallery page with: responsive image grid (3 columns desktop, 2 mobile) with gold glow cards on hover, filtering or search, and an upload/submit form. If IPFS images is selected, load NFT images with fallback handling.",
+  "vote-and-rank":
+    "Build a voting page with: 1v1 card matchups where users pick a winner, a results leaderboard sorted by wins, keyboard shortcuts (left/right arrows) for fast voting. If the leaderboard add-on is selected, add daily/weekly/all-time tabs.",
+  "community-page":
+    "Build a community hub with: member spotlight grid, activity feed or recent updates section, badge showcase wall, and links to GVC socials and resources.",
+  "blog-journal":
+    "Build a blog with: post list page showing title, date, and preview text, individual post pages with full content, and a simple way to add new posts (markdown files in a /posts directory).",
+  "link-in-bio":
+    "Build a links page with: profile section (avatar, name, bio), vertical list of link buttons with hover effects, social icons at the bottom. Keep it single-page and mobile-first.",
+  "blank-canvas":
+    "This is a blank start with the GVC brand system ready to go. Ask me what you'd like to build and I'll help you create it from scratch.",
+};
+
+// ── Add-on code snippets (included in CLAUDE.md when relevant) ──────
+const ADDON_SNIPPETS = {
+  "collection-data": `### Fetching GVC Floor Price & Listings
+
+\`\`\`ts
+// app/api/collection/route.ts
+import { NextResponse } from "next/server";
+
+export async function GET() {
+  const res = await fetch(
+    "https://api.opensea.io/api/v2/collections/good-vibes-club/stats",
+    { headers: { "x-api-key": process.env.OPENSEA_API_KEY ?? "" }, next: { revalidate: 60 } }
+  );
+  const data = await res.json();
+  return NextResponse.json({
+    floorPrice: data.total?.floor_price ?? 0,
+    totalVolume: data.total?.volume ?? 0,
+    numOwners: data.total?.num_owners ?? 0,
+    totalSupply: data.total?.count ?? 0,
+  });
+}
+\`\`\``,
+
+  "token-prices": `### Fetching Token Prices
+
+\`\`\`ts
+// ETH price
+const ethRes = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd");
+const ethData = await ethRes.json();
+const ethPrice = ethData.ethereum.usd;
+
+// VIBESTR price
+const vibeRes = await fetch("https://api.dexscreener.com/latest/dex/tokens/0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196");
+const vibeData = await vibeRes.json();
+const vibePrice = vibeData.pairs?.[0]?.priceUsd ?? "0";
+\`\`\``,
+
+  "web3-wallet": `### Web3 Wallet Connect
+Use **RainbowKit** + **wagmi** for wallet connection. Install with:
+\`\`\`bash
+npm install @rainbow-me/rainbowkit wagmi viem @tanstack/react-query
+\`\`\`
+Follow the RainbowKit quickstart: https://www.rainbowkit.com/docs/installation`,
+
+  "on-chain-reads": `### On-Chain Reads (Wallet Balances)
+
+\`\`\`ts
+import { createPublicClient, http, formatEther } from "viem";
+import { mainnet } from "viem/chains";
+
+const client = createPublicClient({ chain: mainnet, transport: http("https://ethereum-rpc.publicnode.com") });
+
+// Read ETH balance
+const balance = await client.getBalance({ address: "0x..." });
+console.log(formatEther(balance));
+\`\`\``,
+
+  "stats-panel": `### Animated Stat Card Component
+
+\`\`\`tsx
+"use client";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+
+export function StatCard({ label, value, suffix = "" }: { label: string; value: number; suffix?: string }) {
+  const [display, setDisplay] = useState(0);
+  useEffect(() => {
+    let start = 0;
+    const step = value / 40;
+    const timer = setInterval(() => {
+      start += step;
+      if (start >= value) { setDisplay(value); clearInterval(timer); }
+      else setDisplay(Math.floor(start));
+    }, 25);
+    return () => clearInterval(timer);
+  }, [value]);
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="card-glow rounded-2xl bg-[#121212] p-6">
+      <p className="font-body text-sm text-gray-400">{label}</p>
+      <p className="font-display text-3xl text-[#FFE048]">{display.toLocaleString()}{suffix}</p>
+    </motion.div>
+  );
+}
+\`\`\``,
+
+  "leaderboard": `### Leaderboard Pattern
+Use **Vercel KV** (Redis) for persistent leaderboard storage. Install with:
+\`\`\`bash
+npm install @vercel/kv
+\`\`\`
+Store scores as sorted sets: \`await kv.zadd("leaderboard:daily", { score: points, member: oderId })\`
+Read top entries: \`await kv.zrange("leaderboard:daily", 0, 9, { rev: true, withScores: true })\``,
+
+  "toasts": `### Toast Notifications
+Use **react-hot-toast** for feedback messages. Install with:
+\`\`\`bash
+npm install react-hot-toast
+\`\`\`
+Add \`<Toaster position="bottom-center" />\` in your layout, then call \`toast.success("Saved!")\` anywhere.`,
+
+  "ipfs-images": `### NFT Image with IPFS Fallback
+
+\`\`\`tsx
+export function NftImage({ tokenId, className }: { tokenId: number; className?: string }) {
+  const gateways = [
+    \`https://ipfs.io/ipfs/\`,
+    \`https://cloudflare-ipfs.com/ipfs/\`,
+    \`https://gateway.pinata.cloud/ipfs/\`,
+  ];
+  // Fetch metadata from OpenSea, extract image URL, try gateways in order
+  // Replace ipfs:// prefix with gateway URL, use <img> with onError fallback
+  return <img src={src} alt={\`GVC #\${tokenId}\`} className={className} onError={handleFallback} />;
+}
+\`\`\``,
+
+  "badge-collection": `### Badge Card with Tier Glow
+
+\`\`\`tsx
+const TIER_COLORS: Record<string, string> = {
+  bronze: "shadow-orange-400/30",
+  silver: "shadow-gray-300/30",
+  gold: "shadow-[#FFE048]/40",
+  diamond: "shadow-cyan-300/50",
+};
+
+export function BadgeCard({ name, tier, image }: { name: string; tier: string; image: string }) {
+  return (
+    <div className={\`rounded-2xl bg-[#121212] p-4 shadow-lg \${TIER_COLORS[tier] ?? ""} hover:scale-105 transition-transform\`}>
+      <img src={image} alt={name} className="w-full rounded-xl" />
+      <p className="mt-2 font-display text-sm text-[#FFE048]">{name}</p>
+      <span className="text-xs text-gray-400 capitalize">{tier}</span>
+    </div>
+  );
+}
+\`\`\``,
+};
+
+// ── Generate example prompts based on template + addons ─────────────
+function generateExamplePrompts(templateType, addons) {
+  const prompts = [];
+
+  // Template-specific prompts
+  const templatePrompts = {
+    "project-site": [
+      '"Add a team member grid with photos and role titles"',
+      '"Create a timeline section showing GVC milestones"',
+      '"Add a newsletter signup form at the bottom"',
+    ],
+    "tracker": [
+      '"Add a chart showing price history over the last 7 days"',
+      '"Create a notification when floor price drops below a threshold"',
+      '"Add a table that shows the most recent sales"',
+    ],
+    "mini-game": [
+      '"Add sound effects when the player scores"',
+      '"Create a difficulty selector (easy, medium, hard)"',
+      '"Add a share button that posts your score to Twitter"',
+    ],
+    "gallery": [
+      '"Add a lightbox that opens when you click an image"',
+      '"Create filter buttons by trait or category"',
+      '"Add infinite scroll to load more items"',
+    ],
+    "vote-and-rank": [
+      '"Add an animation when a card wins"',
+      '"Show total votes and win percentage on the leaderboard"',
+      '"Add a share button for matchup results"',
+    ],
+    "community-page": [
+      '"Add a section for upcoming community events"',
+      '"Create a wall of member badges and achievements"',
+      '"Add links to the Discord, Twitter, and OpenSea"',
+    ],
+    "blog-journal": [
+      '"Add a search bar to filter posts by keyword"',
+      '"Create a sidebar with recent posts and categories"',
+      '"Add reading time estimates to each post"',
+    ],
+    "link-in-bio": [
+      '"Add an animated background with floating embers"',
+      '"Create a toggle between dark and light mode"',
+      '"Add a music player widget that plays a vibe track"',
+    ],
+    "blank-canvas": [
+      '"Build me a homepage with a hero section and GVC branding"',
+      '"Create a dashboard that shows NFT collection stats"',
+      '"Add a responsive navigation bar with the GVC logo"',
+    ],
+  };
+
+  prompts.push(...(templatePrompts[templateType] || templatePrompts["blank-canvas"]));
+
+  // Addon-specific prompts
+  if (addons.includes("collection-data")) prompts.push('"Show the GVC floor price and total volume in the header"');
+  if (addons.includes("token-prices")) prompts.push('"Add a live ETH and VIBESTR price ticker"');
+  if (addons.includes("web3-wallet")) prompts.push('"Add a connect wallet button that shows my address and ETH balance"');
+  if (addons.includes("stats-panel")) prompts.push('"Build an animated stats row with counters that tick up on load"');
+  if (addons.includes("leaderboard")) prompts.push('"Create a leaderboard with daily, weekly, and all-time tabs"');
+  if (addons.includes("badge-collection")) prompts.push('"Display all 90 GVC badges in a grid with tier filtering"');
+  if (addons.includes("game-engine")) prompts.push('"Set up a canvas-based game loop with keyboard controls"');
+
+  // Always include these general prompts
+  prompts.push('"Make everything responsive and look great on mobile"');
+  prompts.push('"Add smooth page transitions with Framer Motion"');
+
+  // Return 5-8 unique prompts
+  return [...new Set(prompts)].slice(0, 8);
+}
+
 // ── CLAUDE.md generation ─────────────────────────────────────────────
 function generateClaudeMd(projectName, templateType, description, addons) {
-  const addonLabels = addons
+  const templateLabel = TEMPLATE_CHOICES.find((t) => t.value === templateType)?.label ?? templateType;
+
+  const addonDescriptions = addons
     .map((a) => {
       const found = ADDONS.find((ad) => ad.value === a);
-      return found ? `- ${found.label}` : `- ${a}`;
+      return found ? `- **${found.label}** -- ${found.hint}` : `- ${a}`;
     })
+    .join("\n");
+
+  // Build code snippets section from selected addons
+  const snippetSections = addons
+    .filter((a) => ADDON_SNIPPETS[a])
+    .map((a) => ADDON_SNIPPETS[a])
+    .join("\n\n");
+
+  const examplePrompts = generateExamplePrompts(templateType, addons)
+    .map((p) => `- ${p}`)
     .join("\n");
 
   return `# ${projectName}
 
-## What This Project Is About
+## What to Build
 ${description}
 
-## Template
-Built from the **${templateType}** template in the GVC Builder Kit.
+## Starting Point
+This project uses the **${templateLabel}** pattern. Here's what Claude should build first:
 
-## Selected Add-ons
-${addonLabels || "None selected"}
+${TEMPLATE_INSTRUCTIONS[templateType] || TEMPLATE_INSTRUCTIONS["blank-canvas"]}
 
----
+## Selected Power-ups
+${addonDescriptions || "None selected -- you can always add capabilities later by editing this file."}
 
-## GVC Brand Rules
+## GVC Brand System
 
 ### Colors
 - **Gold (primary):** #FFE048
@@ -250,104 +494,74 @@ ${addonLabels || "None selected"}
 - Micro-animations on hover/interaction (scale, glow, fade)
 - Use Framer Motion for entry animations
 
-### Available CSS Utilities
+### CSS Utilities
 - \`.text-shimmer\` -- animated gold gradient text
 - \`.card-glow\` -- gold glow box shadow with hover enhancement
 - \`.ember\` -- floating gold particle dot
 - \`.font-display\` -- Brice headline font
 - \`.font-body\` -- Mundial body font
 
-### Assets
-- GVC fonts in \`/public/fonts/\` (Brice, Mundial)
-- Badge images can be loaded from IPFS or local \`/public/badges/\`
-
----
+## Smart Contract & API Reference
+- GVC NFT: 0xB8Ea78fcaCEf50d41375E44E6814ebbA36Bb33c4
+- VIBESTR Token: 0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196
+- WETH: 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+- Burn Address: 0x000000000000000000000000000000000000dEaD
+- OpenSea Collection: good-vibes-club
+- OpenSea API: https://api.opensea.io/api/v2 (needs x-api-key header from OPENSEA_API_KEY env var)
+  - To get a key: go to https://opensea.io/account/settings, sign in, scroll to Developer, click Create API Key
+- ETH price: https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd
+- VIBESTR price: https://api.dexscreener.com/latest/dex/tokens/0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196
+- Public RPC: https://ethereum-rpc.publicnode.com
+${snippetSections ? `\n## Code Patterns\n\n${snippetSections}` : ""}
 
 ## Example Prompts to Try
+${examplePrompts}
 
-Here are some things you can ask Claude to help you build:
-
-### Getting started
-- "Set up the homepage with a hero section using GVC brand colors"
-- "Add a responsive navigation bar with the GVC logo"
-- "Create a footer with social links and GVC branding"
-
-### Features
-${addons.includes("collection-data") ? '- "Fetch and display GVC NFT collection data with floor price"\n' : ""}${addons.includes("token-prices") ? '- "Add a live ETH/VIBESTR price ticker to the header"\n' : ""}${addons.includes("web3-wallet") ? '- "Add a connect wallet button that shows the user\'s address"\n' : ""}${addons.includes("stats-panel") ? '- "Build an animated stats dashboard with counters and charts"\n' : ""}${addons.includes("leaderboard") ? '- "Create a leaderboard with daily/weekly/all-time tabs"\n' : ""}${addons.includes("game-engine") ? '- "Set up a basic game loop with canvas rendering"\n' : ""}${addons.includes("badge-collection") ? '- "Display the GVC badge collection with tier filtering"\n' : ""}${addons.includes("auth") ? '- "Add authentication with edge-compatible sessions"\n' : ""}- "Make the page responsive for mobile"
-- "Add smooth scroll animations"
-- "Deploy this to Vercel"
-
----
+## Assets
+- Fonts: /public/fonts/ (Brice for headlines, Mundial for body)
+- Shaka icon: /public/shaka.png
+- GVC logotype: /public/gvc-logotype.svg
+- Background grid: /public/grid.svg
 
 ## Tech Stack
-- **Framework:** Next.js 14 (App Router)
-- **Styling:** Tailwind CSS
-- **Language:** TypeScript
-- **Deployment:** Vercel (recommended)
+- Next.js (App Router), React, TypeScript, Tailwind CSS, Framer Motion
 
 ## Project Structure
-\`\`\`
-${projectName}/
-  app/           → Pages and layouts (App Router)
-  components/    → Reusable UI components
-  public/        → Static assets (images, fonts)
-  CLAUDE.md      → This file (context for Claude)
-  README.md      → Human-readable docs
-\`\`\`
+app/ -> Pages and layouts
+components/ -> Reusable UI components
+public/ -> Static assets
+CLAUDE.md -> This file
+README.md -> Human-readable docs
 `;
 }
 
 // ── README.md generation ─────────────────────────────────────────────
-function generateReadme(projectName, templateType, description) {
+function generateReadme(projectName, templateType, description, addons) {
+  const examplePrompts = generateExamplePrompts(templateType, addons)
+    .slice(0, 6)
+    .map((p) => `- ${p}`)
+    .join("\n");
+
   return `# ${projectName}
 
 ${description}
 
-Built with the [GVC Builder Kit](https://github.com/gvc-builder-kit) for the Good Vibes Club community.
+## What to do next
 
-## Getting Started
+You're all set! Here's how to start building:
 
-\`\`\`bash
-# Install dependencies (already done for you)
-npm install
+1. Open this folder in Claude (just type \`claude\` in your terminal)
+2. Tell Claude what you want to change or add
+3. When you're happy, run \`gvc deploy\` to put it live
 
-# Start the dev server
-npm run dev
-\`\`\`
+## Things to try
 
-Open [http://localhost:3000](http://localhost:3000) to see your project.
+${examplePrompts}
 
-## Working with Claude
+## Need help?
 
-This project includes a \`CLAUDE.md\` file that gives Claude context about your project, the GVC brand, and what you're building.
-
-**To use it:**
-1. Open this project folder in your terminal
-2. Run \`claude\` to start a conversation
-3. Ask Claude to help you build features — it already knows your project context
-
-**Example:**
-\`\`\`
-claude "Add a hero section with the GVC gold color scheme"
-\`\`\`
-
-## Template: ${templateType}
-
-This project was scaffolded from the **${templateType}** template. You can customize everything — the template is just a starting point.
-
-## Deploying
-
-The easiest way to deploy is with [Vercel](https://vercel.com):
-
-1. Push your code to GitHub
-2. Connect the repo to Vercel
-3. It auto-detects Next.js and deploys
-
-## Learn More
-
-- [Next.js Docs](https://nextjs.org/docs)
-- [Tailwind CSS Docs](https://tailwindcss.com/docs)
-- [Good Vibes Club](https://goodvibesclub.io)
+- Just ask Claude! It knows your project and the GVC brand.
+- Check out the GVC Discord for community support.
 `;
 }
 
@@ -508,16 +722,8 @@ async function main() {
   const s = p.spinner();
   s.start("Setting up your project...");
 
-  // Determine template source — fall back to blank-canvas if selected template doesn't exist
-  let templateSrc = path.join(TEMPLATES_DIR, templateType);
-  let usedFallback = false;
-
-  if (!fs.existsSync(templateSrc) || fs.readdirSync(templateSrc).filter((f) => !f.startsWith(".")).length === 0) {
-    templateSrc = path.join(TEMPLATES_DIR, "blank-canvas");
-    if (templateType !== "blank-canvas") {
-      usedFallback = true;
-    }
-  }
+  // Always use blank-canvas as the base — the template choice shapes the CLAUDE.md instructions
+  const templateSrc = path.join(TEMPLATES_DIR, "blank-canvas");
 
   // Create project directory
   await fs.ensureDir(projectDir);
@@ -545,7 +751,7 @@ async function main() {
   await fs.writeFile(path.join(projectDir, "CLAUDE.md"), claudeMd, "utf-8");
 
   // Write README.md
-  const readme = generateReadme(projectName, templateType, description);
+  const readme = generateReadme(projectName, templateType, description, selectedAddons);
   await fs.writeFile(path.join(projectDir, "README.md"), readme, "utf-8");
 
   // Create directories for add-ons if they don't exist
@@ -613,45 +819,36 @@ async function main() {
 
   // ── Success message ──
   console.log();
-
-  if (usedFallback) {
-    p.note(
-      `The ${gold(templateType)} template isn't built yet, so we used the ${gold("blank-canvas")} starter.\nNo worries -- Claude knows what you're building and can help shape it!`,
-      "Heads up"
-    );
-  }
-
-  const addonCount = selectedAddons.length;
-  if (addonCount > 0) {
-    p.note(
-      `${gold(`${addonCount} add-on${addonCount === 1 ? "" : "s"}`)} noted in your CLAUDE.md.\nWhen you open Claude, ask it to set up any add-on -- it knows what you picked.`,
-      "Add-ons"
-    );
-  }
+  console.log(brand("  Your project is ready!"));
+  console.log();
 
   const nextSteps = [
-    `${info("cd")} ${projectName}`,
-    `${info("npm run dev")}          ${dim("Start the dev server")}`,
+    `  ${info("cd")} ${projectName}`,
+    `  ${info("npm run dev")}          ${dim("Open your project in the browser")}`,
   ];
 
   if (hasClaude) {
     nextSteps.push(
-      `${info("claude")}              ${dim("Open Claude and start building")}`
+      `  ${info("claude")}              ${dim("Start building with Claude")}`
     );
   } else {
     nextSteps.push(
-      `${dim("Install Claude CLI:")} ${info("https://docs.anthropic.com/claude-code")}`
+      `\n  ${dim("Install Claude CLI:")} ${info("https://docs.anthropic.com/claude-code")}`
     );
   }
 
   p.note(nextSteps.join("\n"), "Next steps");
 
-  if (!hasClaude) {
-    p.note(
-      `The Claude CLI makes building way easier.\nIt reads your ${gold("CLAUDE.md")} and knows your project context.\n\nGet it at: ${info("https://docs.anthropic.com/claude-code")}`,
-      "Pro tip"
-    );
-  }
+  console.log(
+    dim("  Open your project in Claude and describe what you")
+  );
+  console.log(
+    dim("  want to change. It already knows the GVC brand")
+  );
+  console.log(
+    dim("  and what you're building.")
+  );
+  console.log();
 
   p.outro(
     gold("Good vibes only. Go build something amazing! ") +

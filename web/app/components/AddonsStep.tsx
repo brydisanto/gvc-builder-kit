@@ -29,22 +29,22 @@ interface AddonDef {
 }
 
 const ADDONS: AddonDef[] = [
-  // Blockchain & Data
-  { value: "collection-data", label: "GVC Collection data", hint: "Fetch NFT metadata, floor prices", category: "Blockchain & Data" },
-  { value: "token-prices", label: "Token prices (ETH, VIBESTR)", hint: "Live price feeds", category: "Blockchain & Data" },
-  { value: "web3-wallet", label: "Web3 wallet connect", hint: "Connect wallet, read address", category: "Blockchain & Data" },
-  { value: "on-chain-reads", label: "On-chain reads", hint: "Wallet balances, contract reads", category: "Blockchain & Data" },
-  { value: "ipfs-images", label: "IPFS image loading", hint: "Load images from IPFS gateways", category: "Blockchain & Data" },
-  // Game & Social
-  { value: "game-engine", label: "Game engine scaffold", hint: "Canvas, game loop, sprites", category: "Game & Social" },
-  { value: "audio-mixer", label: "Audio mixer (Web Audio API)", hint: "Sounds, music, mixing", category: "Game & Social" },
-  { value: "leaderboard", label: "Leaderboard system", hint: "Daily/weekly/all-time rankings", category: "Game & Social" },
-  { value: "badge-collection", label: "Badge collection (90 GVC badges)", hint: "Collect, display, tier up", category: "Game & Social" },
-  { value: "auth", label: "Auth (edge-compatible sessions)", hint: "Login, sessions, protected pages", category: "Game & Social" },
-  // UI Components
-  { value: "stats-panel", label: "Animated stats panel", hint: "Counters, charts, dashboards", category: "UI Components" },
-  { value: "toasts", label: "Toast notifications", hint: "Alerts, success/error messages", category: "UI Components" },
-  { value: "vercel-kv", label: "Vercel KV (Redis) setup", hint: "Key-value storage, caching", category: "UI Components" },
+  // Connect to blockchain data
+  { value: "collection-data", label: "GVC Collection info", hint: "Show NFT details and floor prices on your page", category: "Connect to blockchain data" },
+  { value: "token-prices", label: "Live token prices", hint: "Display current prices for ETH, VIBESTR, and more", category: "Connect to blockchain data" },
+  { value: "web3-wallet", label: "Wallet connection", hint: "Let visitors connect their crypto wallet", category: "Connect to blockchain data" },
+  { value: "on-chain-reads", label: "Blockchain lookups", hint: "Check wallet balances and other on-chain info", category: "Connect to blockchain data" },
+  { value: "ipfs-images", label: "NFT image loading", hint: "Display NFT artwork stored on IPFS", category: "Connect to blockchain data" },
+  // Games and community features
+  { value: "game-engine", label: "Game starter kit", hint: "Everything you need to build a simple game", category: "Games and community features" },
+  { value: "audio-mixer", label: "Sound and music", hint: "Add sound effects and background music", category: "Games and community features" },
+  { value: "leaderboard", label: "Leaderboard", hint: "Rank people by score, daily or all-time", category: "Games and community features" },
+  { value: "badge-collection", label: "Badge collection", hint: "Let people collect and show off GVC badges", category: "Games and community features" },
+  { value: "auth", label: "User accounts", hint: "Let people sign in and save their progress", category: "Games and community features" },
+  // Extra features
+  { value: "stats-panel", label: "Stats and charts", hint: "Animated counters, charts, and dashboards", category: "Extra features" },
+  { value: "toasts", label: "Pop-up notifications", hint: "Show success messages, alerts, and updates", category: "Extra features" },
+  { value: "vercel-kv", label: "Save and store data", hint: "Remember things between visits, like scores or settings", category: "Extra features" },
 ];
 
 function getSuggestedAddons(description: string): Set<string> {
@@ -97,7 +97,7 @@ export default function AddonsStep({
     }
   }
 
-  const categories = ["Blockchain & Data", "Game & Social", "UI Components"];
+  const categories = ["Connect to blockchain data", "Games and community features", "Extra features"];
 
   return (
     <motion.div
@@ -113,7 +113,7 @@ export default function AddonsStep({
         transition={{ delay: 0.1, duration: 0.4 }}
         className="text-3xl sm:text-4xl font-display font-black text-white mb-3 text-center"
       >
-        Power-ups
+        Want any extras?
       </motion.h2>
 
       <motion.p
@@ -122,7 +122,7 @@ export default function AddonsStep({
         transition={{ delay: 0.2, duration: 0.4 }}
         className="text-white/40 font-body mb-8 text-center"
       >
-        We picked some based on your idea. Toggle whatever sounds cool.
+        We picked a few based on your idea. Turn on whatever sounds useful, or skip this step entirely.
       </motion.p>
 
       {/* Categories */}
