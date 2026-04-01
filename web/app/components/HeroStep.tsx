@@ -32,14 +32,12 @@ const ALL_BADGES = [
   "vibetown_social_club","visooor_enjoyooor","yin_n_yang","zoom_in_vibe_out",
 ];
 
-
 interface HeroStepProps {
   onNext: () => void;
 }
 
 export default function HeroStep({ onNext }: HeroStepProps) {
-  // Shuffle badges for the marquee
-  const row1 = useMemo(() => shuffleArray([...ALL_BADGES]).slice(0, 30), []);
+  const gridBadges = useMemo(() => shuffleArray([...ALL_BADGES]).slice(0, 12), []);
 
   return (
     <motion.div
@@ -47,151 +45,191 @@ export default function HeroStep({ onNext }: HeroStepProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="flex flex-col items-center justify-center text-center w-full px-4"
+      className="flex flex-col lg:flex-row items-center justify-center w-full px-6 sm:px-12 gap-10 lg:gap-20 min-h-[85vh]"
     >
       {/* Background embers */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(22)].map((_, i) => (
+        {[...Array(16)].map((_, i) => (
           <div
             key={i}
             className="ember"
             style={{
-              left: `${5 + (i * 4.3) % 90}%`,
+              left: `${5 + (i * 6) % 90}%`,
               top: `${8 + ((i * 17) % 75)}%`,
-              animationDelay: `${i * 0.4}s`,
+              animationDelay: `${i * 0.5}s`,
               animationDuration: `${3.5 + (i % 5) * 0.8}s`,
               width: `${2 + (i % 4) * 1.5}px`,
               height: `${2 + (i % 4) * 1.5}px`,
-              opacity: 0.3 + (i % 4) * 0.15,
+              opacity: 0.3 + (i % 4) * 0.12,
             }}
           />
         ))}
       </div>
 
-      {/* Shaka */}
+      {/* Left: Content */}
+      <div className="flex flex-col items-center lg:items-start text-center lg:text-left max-w-lg relative z-10">
+        {/* Shaka */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          transition={{ delay: 0.1, duration: 0.6, type: "spring", stiffness: 150, damping: 14 }}
+          className="wiggle-hover mb-4 cursor-default"
+        >
+          <Image
+            src="/shaka.png"
+            alt="GVC Shaka"
+            width={80}
+            height={80}
+            className="drop-shadow-[0_0_30px_rgba(255,224,72,0.3)]"
+            priority
+          />
+        </motion.div>
+
+        {/* Presents */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="text-xs text-gvc-gold/40 font-body uppercase tracking-[0.25em] mb-3"
+        >
+          Good Vibes Club Presents
+        </motion.p>
+
+        {/* Title */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          className="text-5xl sm:text-6xl lg:text-7xl font-display font-black text-shimmer leading-[1.0] mb-4 tracking-wide"
+        >
+          The
+          <br />
+          Playground
+        </motion.h1>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="text-lg text-white/60 font-body mb-1"
+        >
+          A builder toolkit for the GVC community
+        </motion.p>
+
+        {/* Italic tagline */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45, duration: 0.5 }}
+          className="text-sm text-white/25 font-body italic mb-6"
+        >
+          Built by the community, for the community
+        </motion.p>
+
+        {/* Description */}
+        <motion.p
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+          className="text-base text-white/35 font-body mb-8"
+        >
+          Go from idea to live project in minutes. No coding experience needed.
+        </motion.p>
+
+        {/* CTA Button */}
+        <motion.button
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          whileHover={{ scale: 1.04, y: -2 }}
+          whileTap={{ scale: 0.97 }}
+          onClick={onNext}
+          className="
+            group relative inline-flex items-center gap-3 px-10 py-5
+            bg-gvc-gold text-gvc-black font-display font-bold text-xl
+            rounded-2xl transition-all duration-300 glow-pulse
+          "
+        >
+          Start Building
+          <ArrowRight className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1" />
+        </motion.button>
+
+        {/* Terminal link */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          className="mt-5 text-sm text-white/25 font-body inline-flex items-center gap-2 hover:text-white/40 transition-colors cursor-default"
+        >
+          <Terminal className="w-3.5 h-3.5" />
+          Or try it in your terminal with <code className="text-gvc-gold/50 font-mono text-xs ml-1">npx create-gvc-app</code>
+        </motion.p>
+      </div>
+
+      {/* Right: Badge Grid with gentle float */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
-        animate={{ opacity: 1, scale: 1, rotate: 0 }}
-        transition={{ delay: 0.1, duration: 0.6, type: "spring", stiffness: 150, damping: 14 }}
-        className="wiggle-hover mb-4 cursor-default"
+        initial={{ opacity: 0, x: 40, rotate: 3 }}
+        animate={{ opacity: 1, x: 0, rotate: 3 }}
+        transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="hidden lg:grid grid-cols-3 gap-3 relative z-10"
       >
-        <Image
-          src="/shaka.png"
-          alt="GVC Shaka"
-          width={100}
-          height={100}
-          className="drop-shadow-[0_0_30px_rgba(255,224,72,0.3)]"
-          priority
-        />
+        {gridBadges.map((badge, i) => (
+          <motion.div
+            key={badge}
+            initial={{ opacity: 0, scale: 0.7 }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              y: [0, -6 + (i % 3) * 3, 0],
+            }}
+            transition={{
+              opacity: { delay: 0.7 + i * 0.06, duration: 0.4 },
+              scale: { delay: 0.7 + i * 0.06, duration: 0.4, type: "spring", stiffness: 120 },
+              y: {
+                delay: 1.2 + i * 0.15,
+                duration: 3 + (i % 4) * 0.5,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+              },
+            }}
+            className="group"
+          >
+            <Image
+              src={`/badges/${badge}.webp`}
+              alt={badge}
+              width={110}
+              height={110}
+              className="rounded-2xl border border-white/8 opacity-65 group-hover:opacity-100 group-hover:scale-110 group-hover:border-gvc-gold/30 group-hover:shadow-[0_0_20px_rgba(255,224,72,0.15)] transition-all duration-300"
+            />
+          </motion.div>
+        ))}
       </motion.div>
 
-      {/* "Good Vibes Club Presents:" */}
-      <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.5 }}
-        className="text-sm text-gvc-gold/50 font-body uppercase tracking-[0.2em] mb-3"
-      >
-        Good Vibes Club Presents
-      </motion.p>
-
-      {/* Title: THE PLAYGROUND */}
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        className="text-5xl sm:text-7xl lg:text-8xl font-display font-black text-shimmer leading-[1.05] mb-3 tracking-wide"
-      >
-        The
-        <br />
-        Playground
-      </motion.h1>
-
-      {/* Subtitle */}
-      <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.5 }}
-        className="text-lg sm:text-xl text-white/60 font-body mb-1"
-      >
-        A builder toolkit for the GVC community
-      </motion.p>
-
-      {/* Italic tagline */}
-      <motion.p
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.45, duration: 0.5 }}
-        className="text-sm text-white/30 font-body italic mb-2"
-      >
-        Built by the community, for the community
-      </motion.p>
-
-      {/* Description */}
-      <motion.p
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.6 }}
-        className="text-base text-white/40 font-body max-w-lg mx-auto mb-8"
-      >
-        Go from idea to live project in minutes. No coding experience needed.
-      </motion.p>
-
-      {/* CTA Button */}
-      <motion.button
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 0.5 }}
-        whileHover={{ scale: 1.04, y: -2 }}
-        whileTap={{ scale: 0.97 }}
-        onClick={onNext}
-        className="
-          group relative inline-flex items-center gap-3 px-10 py-5
-          bg-gvc-gold text-gvc-black font-display font-bold text-xl
-          rounded-2xl
-          transition-all duration-300
-          glow-pulse
-        "
-      >
-        Start Building
-        <ArrowRight className="w-6 h-6 transition-transform duration-300 group-hover:translate-x-1" />
-      </motion.button>
-
-      {/* Terminal link */}
-      <motion.p
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8, duration: 0.5 }}
-        className="mt-5 text-sm text-white/30 font-body inline-flex items-center gap-2 hover:text-white/50 transition-colors cursor-default"
-      >
-        <Terminal className="w-3.5 h-3.5" />
-        Or try it in your terminal with <code className="text-gvc-gold/60 font-mono text-xs ml-1">npx create-gvc-app</code>
-      </motion.p>
-
-      {/* Badge Marquee */}
+      {/* Mobile: Show badge ribbon instead of grid */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 0.8 }}
-        className="w-screen mt-10 overflow-hidden badge-marquee-container"
+        className="lg:hidden w-screen overflow-hidden badge-marquee-container mt-6"
       >
         <div className="badge-marquee">
           <div className="badge-marquee-track">
-            {[...row1, ...row1].map((badge, i) => (
-              <div key={`r1-${i}`} className="badge-marquee-item">
+            {[...gridBadges, ...gridBadges, ...gridBadges].map((badge, i) => (
+              <div key={`m-${i}`} className="badge-marquee-item">
                 <Image
                   src={`/badges/${badge}.webp`}
                   alt={badge}
-                  width={120}
-                  height={120}
-                  className="rounded-2xl opacity-60 hover:opacity-100 hover:scale-110 transition-all duration-300"
+                  width={90}
+                  height={90}
+                  className="rounded-xl opacity-50 hover:opacity-100 hover:scale-110 transition-all duration-300"
                 />
               </div>
             ))}
           </div>
         </div>
       </motion.div>
-
     </motion.div>
   );
 }
