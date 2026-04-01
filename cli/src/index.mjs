@@ -572,6 +572,45 @@ async function main() {
 
   s.stop(success("Project created!"));
 
+  // ── API key setup (if blockchain/data add-ons selected) ──
+  const needsOpenseaKey = selectedAddons.some((a) =>
+    ["collection-data", "ipfs-images", "on-chain-reads"].includes(a)
+  );
+
+  if (needsOpenseaKey) {
+    console.log();
+    p.note(
+      `Some of your add-ons need an OpenSea API key to fetch NFT data.\n` +
+      `It's free and takes about 2 minutes to get one:\n\n` +
+      `  1. Go to ${info("https://opensea.io/account/settings")}\n` +
+      `  2. Sign in (or create a free account)\n` +
+      `  3. Scroll to ${gold("Developer")} and click ${gold("Create API Key")}\n` +
+      `  4. Give it a name like "My GVC Project" and submit\n` +
+      `  5. Copy the key\n`,
+      "OpenSea API Key"
+    );
+
+    const apiKey = await p.text({
+      message: "Paste your OpenSea API key (or press Enter to skip for now):",
+      placeholder: "you can always add this later in .env.local",
+      defaultValue: "",
+    });
+
+    if (!p.isCancel(apiKey) && apiKey && apiKey.trim().length > 0) {
+      // Write .env.local with the key
+      const envContent = `# GVC Builder Kit - Environment Variables\nOPENSEA_API_KEY=${apiKey.trim()}\n`;
+      await fs.writeFile(path.join(projectDir, ".env.local"), envContent, "utf-8");
+      p.log.success(success("API key saved to .env.local"));
+    } else {
+      p.log.info(
+        dim("No worries! When you're ready, create a file called ") +
+        gold(".env.local") +
+        dim(" in your project folder and add:\n\n") +
+        info("OPENSEA_API_KEY=your_key_here")
+      );
+    }
+  }
+
   // ── Success message ──
   console.log();
 

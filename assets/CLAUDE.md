@@ -54,6 +54,7 @@ This project was created with the GVC Builder Kit. It uses the Good Vibes Club b
   - Collection stats: `GET /collection/good-vibes-club`
   - NFT by token: `GET /chain/ethereum/contract/{address}/nfts/{tokenId}`
   - Requires header: `x-api-key: {OPENSEA_API_KEY}`
+  - To get a key: go to https://opensea.io/account/settings, sign in, scroll to Developer, click Create API Key
 - **Token Prices:**
   - ETH: `https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd`
   - VIBESTR: `https://api.dexscreener.com/latest/dex/tokens/0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196`
