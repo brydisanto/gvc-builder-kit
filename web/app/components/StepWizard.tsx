@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import StepIndicator from "./StepIndicator";
 import HeroStep from "./HeroStep";
 import NameStep from "./NameStep";
@@ -98,16 +97,6 @@ export default function StepWizard() {
         </AnimatePresence>
       </div>
 
-      {/* Footer */}
-      <div className="py-4 flex justify-center">
-        <Image
-          src="/gvc-logotype.svg"
-          alt="Good Vibes Club"
-          width={130}
-          height={8}
-          className="opacity-20 hover:opacity-40 transition-opacity duration-300"
-        />
-      </div>
     </div>
   );
 }
