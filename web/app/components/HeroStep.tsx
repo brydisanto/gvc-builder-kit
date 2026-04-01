@@ -201,7 +201,7 @@ export default function HeroStep({ onNext }: HeroStepProps) {
               alt={badge}
               width={110}
               height={110}
-              className="rounded-2xl border border-white/8 opacity-65 group-hover:opacity-100 group-hover:scale-110 group-hover:border-gvc-gold/30 group-hover:shadow-[0_0_20px_rgba(255,224,72,0.15)] transition-all duration-300"
+              className="rounded-2xl opacity-90 group-hover:opacity-100 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,224,72,0.15)] transition-all duration-300"
             />
           </motion.div>
         ))}
@@ -223,7 +223,7 @@ export default function HeroStep({ onNext }: HeroStepProps) {
                   alt={badge}
                   width={90}
                   height={90}
-                  className="rounded-xl opacity-50 hover:opacity-100 hover:scale-110 transition-all duration-300"
+                  className="rounded-xl opacity-85 hover:opacity-100 hover:scale-110 transition-all duration-300"
                 />
               </div>
             ))}
