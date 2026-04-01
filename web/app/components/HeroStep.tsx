@@ -32,30 +32,37 @@ const ALL_BADGES = [
   "vibetown_social_club","visooor_enjoyooor","yin_n_yang","zoom_in_vibe_out",
 ];
 
+// GVC portrait token IDs for the scrolling row
+const GVC_PORTRAITS = [
+  142, 1337, 888, 2222, 500, 77, 1111, 369, 1969,
+  420, 707, 999, 1234, 555, 808, 2000, 1500, 333,
+  666, 1776, 2100, 900, 1010, 750, 1600,
+];
+
 interface HeroStepProps {
   onNext: () => void;
 }
 
 export default function HeroStep({ onNext }: HeroStepProps) {
-  const gridBadges = useMemo(() => shuffleArray([...ALL_BADGES]).slice(0, 12), []);
+  const badges = useMemo(() => shuffleArray([...ALL_BADGES]).slice(0, 25), []);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="flex flex-col lg:flex-row items-center justify-center w-full px-6 sm:px-12 gap-10 lg:gap-32 min-h-[85vh]"
+      className="flex flex-col items-center justify-center w-full min-h-screen"
     >
       {/* Background embers */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(16)].map((_, i) => (
+        {[...Array(14)].map((_, i) => (
           <div
             key={i}
             className="ember"
             style={{
-              left: `${5 + (i * 6) % 90}%`,
-              top: `${8 + ((i * 17) % 75)}%`,
+              left: `${5 + (i * 7) % 90}%`,
+              top: `${10 + ((i * 19) % 70)}%`,
               animationDelay: `${i * 0.5}s`,
               animationDuration: `${3.5 + (i % 5) * 0.8}s`,
               width: `${2 + (i % 4) * 1.5}px`,
@@ -66,8 +73,35 @@ export default function HeroStep({ onNext }: HeroStepProps) {
         ))}
       </div>
 
-      {/* Left: Content */}
-      <div className="flex flex-col items-center lg:items-start text-center lg:text-left max-w-lg relative z-10">
+      {/* Top: GVC Portrait Marquee */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.8 }}
+        className="w-screen overflow-hidden badge-marquee-container pt-6"
+      >
+        <div className="badge-marquee">
+          <div className="badge-marquee-track portrait-speed">
+            {[...GVC_PORTRAITS, ...GVC_PORTRAITS].map((tokenId, i) => (
+              <div key={`p-${i}`} className="badge-marquee-item">
+                <div className="w-[100px] h-[100px] sm:w-[120px] sm:h-[120px] rounded-2xl overflow-hidden opacity-80 hover:opacity-100 hover:scale-105 transition-all duration-300">
+                  <Image
+                    src={`/portraits/gvc-${tokenId}.jpg`}
+                    alt={`GVC #${tokenId}`}
+                    width={120}
+                    height={120}
+                    className="w-full h-full object-cover"
+                    unoptimized
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Center: Content */}
+      <div className="flex flex-col items-center text-center px-6 py-12 sm:py-16 relative z-10">
         {/* Shaka */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5, rotate: -20 }}
@@ -100,7 +134,7 @@ export default function HeroStep({ onNext }: HeroStepProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl sm:text-6xl lg:text-7xl font-display font-black text-shimmer leading-[1.0] mb-4 tracking-wide"
+          className="text-5xl sm:text-7xl lg:text-8xl font-display font-black text-shimmer leading-[1.0] mb-4 tracking-wide"
         >
           The
           <br />
@@ -112,7 +146,7 @@ export default function HeroStep({ onNext }: HeroStepProps) {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.5 }}
-          className="text-lg text-white/60 font-body mb-1"
+          className="text-lg sm:text-xl text-white/60 font-body mb-1"
         >
           A builder toolkit for the GVC community
         </motion.p>
@@ -132,7 +166,7 @@ export default function HeroStep({ onNext }: HeroStepProps) {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          className="text-base text-white font-body mb-8"
+          className="text-base text-white font-body max-w-lg mx-auto mb-8"
         >
           Go from idea to live project in minutes. No coding experience needed.
         </motion.p>
@@ -167,63 +201,23 @@ export default function HeroStep({ onNext }: HeroStepProps) {
         </motion.p>
       </div>
 
-      {/* Right: Badge Grid with gentle float */}
-      <motion.div
-        initial={{ opacity: 0, x: 40, rotate: 3 }}
-        animate={{ opacity: 1, x: 0, rotate: 3 }}
-        transition={{ delay: 0.5, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="hidden lg:grid grid-cols-3 gap-3 relative z-10"
-      >
-        {gridBadges.map((badge, i) => (
-          <motion.div
-            key={badge}
-            initial={{ opacity: 0, scale: 0.7 }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              y: [0, -6 + (i % 3) * 3, 0],
-            }}
-            transition={{
-              opacity: { delay: 0.7 + i * 0.06, duration: 0.4 },
-              scale: { delay: 0.7 + i * 0.06, duration: 0.4, type: "spring", stiffness: 120 },
-              y: {
-                delay: 1.2 + i * 0.15,
-                duration: 3 + (i % 4) * 0.5,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut",
-              },
-            }}
-            className="group"
-          >
-            <Image
-              src={`/badges/${badge}.webp`}
-              alt={badge}
-              width={110}
-              height={110}
-              className="rounded-2xl opacity-90 group-hover:opacity-100 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(255,224,72,0.15)] transition-all duration-300"
-            />
-          </motion.div>
-        ))}
-      </motion.div>
-
-      {/* Mobile: Show badge ribbon instead of grid */}
+      {/* Bottom: Badge Marquee */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 0.8 }}
-        className="lg:hidden w-screen overflow-hidden badge-marquee-container mt-6"
+        transition={{ delay: 0.8, duration: 0.8 }}
+        className="w-screen overflow-hidden badge-marquee-container pb-6"
       >
-        <div className="badge-marquee">
+        <div className="badge-marquee badge-marquee-reverse">
           <div className="badge-marquee-track">
-            {[...gridBadges, ...gridBadges, ...gridBadges].map((badge, i) => (
-              <div key={`m-${i}`} className="badge-marquee-item">
+            {[...badges, ...badges].map((badge, i) => (
+              <div key={`b-${i}`} className="badge-marquee-item">
                 <Image
                   src={`/badges/${badge}.webp`}
                   alt={badge}
-                  width={90}
-                  height={90}
-                  className="rounded-xl opacity-85 hover:opacity-100 hover:scale-110 transition-all duration-300"
+                  width={100}
+                  height={100}
+                  className="rounded-2xl opacity-85 hover:opacity-100 hover:scale-110 transition-all duration-300"
                 />
               </div>
             ))}
