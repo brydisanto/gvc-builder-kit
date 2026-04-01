@@ -32,18 +32,6 @@ const ALL_BADGES = [
   "vibetown_social_club","visooor_enjoyooor","yin_n_yang","zoom_in_vibe_out",
 ];
 
-// 9 GVC gallery images (local)
-const GVC_IMAGES = [
-  "2034306220593750066.jpg",
-  "2034315288645128218.jpg",
-  "2034320169258856509.jpg",
-  "2034323998054429000.jpg",
-  "2034349201962713319.jpg",
-  "2034356077412647346.jpg",
-  "2034363151689417122.jpg",
-  "2034372569923493986.jpg",
-  "2034372656573616404.jpg",
-];
 
 interface HeroStepProps {
   onNext: () => void;
@@ -204,31 +192,6 @@ export default function HeroStep({ onNext }: HeroStepProps) {
         </div>
       </motion.div>
 
-      {/* GVC Image Grid - 3x3 */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        className="mt-8 mb-4 grid grid-cols-3 gap-2 sm:gap-3 max-w-sm mx-auto"
-      >
-        {GVC_IMAGES.map((img, i) => (
-          <motion.div
-            key={img}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 1.3 + i * 0.06, duration: 0.4, type: "spring", stiffness: 120 }}
-            className="aspect-square rounded-xl overflow-hidden border border-white/10 hover:border-gvc-gold/30 transition-all duration-300 card-glow cursor-default"
-          >
-            <Image
-              src={`/gallery/${img}`}
-              alt="GVC"
-              width={200}
-              height={200}
-              className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-            />
-          </motion.div>
-        ))}
-      </motion.div>
     </motion.div>
   );
 }
