@@ -394,6 +394,7 @@ body::after {
 .badge-marquee {
   overflow: hidden;
   width: 100%;
+  padding: 12px 0;
 }
 
 .badge-marquee-track {
