@@ -132,7 +132,7 @@ export default function HeroStep({ onNext }: HeroStepProps) {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.6 }}
-          className="text-base text-white/35 font-body mb-8"
+          className="text-base text-white font-body mb-8"
         >
           Go from idea to live project in minutes. No coding experience needed.
         </motion.p>
