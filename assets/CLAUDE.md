@@ -121,6 +121,39 @@ result.totalUniqueBadges; // total count
 
 Also available: `getVibestrTier(balance)`, `getCollectorMilestones(count)`, `getTokensForBadge(id, map)`, `getBadgesForToken(id, map)`
 
+## Community Database (`lib/db-helpers.ts`)
+
+Read-only access to the GVC community database with live collection analytics. Requires `DATABASE_URL` in `.env.local`.
+
+Available functions:
+
+| Function | Returns |
+|---|---|
+| `getCollectionStats()` | Floor price, market cap, 24h volume, total owners, total sales |
+| `getHolders()` | All holders ranked by token count, diamond hands %, concentration |
+| `getRecentSales(limit?)` | Recent sales with buyer, seller, price, token ID, image |
+| `getSalesHistory(limit?)` | 11,000+ historical sales from price cache |
+| `getCommunityActivity()` | 30-day buys/sells, accumulator leaderboard, new collectors |
+| `getVibestrSnapshots()` | 91 daily VIBESTR snapshots (price, liquidity, volume, burned) |
+| `getTraderAnalysis()` | Profitable flips with buy/sell prices and holding periods |
+| `getMarketDepth()` | Bid/offer depth at each price level |
+| `resolveWallet(address)` | ENS name, Twitter handle, and account tag for a wallet |
+| `getXMentions()` | Twitter/X mentions with engagement stats |
+
+Example:
+```ts
+import { getCollectionStats, getHolders } from "@/lib/db-helpers";
+
+// In an API route
+export async function GET() {
+  const stats = await getCollectionStats();
+  const holders = await getHolders();
+  return Response.json({ stats, topHolders: holders?.holders.slice(0, 10) });
+}
+```
+
+Requires `pg` package: `npm install pg @types/pg`
+
 ## Code Snippets
 
 If you need to add blockchain data or GVC-specific features, reference the snippets in `snippets.ts`. Available patterns:
