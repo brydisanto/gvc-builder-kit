@@ -348,9 +348,16 @@ The project includes \`badge_token_map.json\` which maps every GVC NFT (by token
 Use it to look up a holder's badges, build leaderboards, or filter the collection by badge.
 
 \`\`\`ts
+import { getHolderBadges } from "@/lib/badge-helpers";
+
 const map = await fetch('/badge_token_map.json').then(r => r.json());
-const badges = map.tokenToBadges["142"]; // badges for token #142
-const holders = map.badgeToTokens["one_of_one"]; // all One of One tokens
+
+// Get ALL badges for a holder (individual + combos + milestones + VIBESTR tier)
+const result = getHolderBadges(["142", "572", "3933"], map, 150000);
+// result.allBadges includes everything
+// result.comboBadges e.g. ["gradient_hatrick"] if 3+ gradient tokens
+// result.collectorBadges e.g. ["five_badges"] if 5+ unique badges
+// result.vibestrTierBadge e.g. "vibestr_silver_tier"
 \`\`\`
 
 ### Badge Card with Tier Glow

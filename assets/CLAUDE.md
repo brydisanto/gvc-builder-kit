@@ -95,17 +95,31 @@ Use cases:
 - Filter the collection by badge (e.g. "show me all One of One holders")
 - Create badge-gated features or content
 
-Example:
-```ts
-// Check which badges token #142 has
-const map = await fetch('/badge_token_map.json').then(r => r.json());
-const badges = map.tokenToBadges["142"];
-// ["ladies_night", "visooor_enjoyooor", "any_gvc", "gradient_lover"]
+### Badge Helpers (`lib/badge-helpers.ts`)
 
-// Find all tokens with the "one_of_one" badge
-const oneOfOneTokens = map.badgeToTokens["one_of_one"];
-// ["4113", "4889", "975", "2943", "1151", "1400", "430", "5275", "6731"]
+`getHolderBadges(tokenIds, map, vibestrBalance?)` returns ALL badges for a holder, including derived badges:
+- Individual token badges (from the map)
+- Combo badges (3+ or 5+ tokens with gradient_lover, plastic_lover, or robot_lover)
+- Collector milestones (5, 10, 15, 20, 30, 40, 50, 60+ unique badges)
+- VIBESTR tier badge (based on token balance: 10K blue through 10M cosmic)
+
+```ts
+import { getHolderBadges } from "@/lib/badge-helpers";
+
+const map = await fetch('/badge_token_map.json').then(r => r.json());
+
+// Get all badges for a holder who owns these 5 tokens and has 150K VIBESTR
+const result = getHolderBadges(["142", "572", "3933", "668", "1082"], map, 150000);
+
+result.individualBadges;  // badges from their tokens
+result.comboBadges;       // e.g. ["gradient_hatrick"] if 3+ gradient_lover tokens
+result.collectorBadges;   // e.g. ["five_badges"] if 5+ total badges
+result.vibestrTierBadge;  // "vibestr_silver_tier" (150K >= 100K threshold)
+result.allBadges;         // everything combined
+result.totalUniqueBadges; // total count
 ```
+
+Also available: `getVibestrTier(balance)`, `getCollectorMilestones(count)`, `getTokensForBadge(id, map)`, `getBadgesForToken(id, map)`
 
 ## Code Snippets
 
