@@ -79,6 +79,34 @@ There are 101 GVC badges across multiple tiers. Badge images are in `/public/bad
 
 The full badge manifest with IDs, names, tiers, and categories is in `badges.json` if included with the project.
 
+### Badge-Token Map
+
+`badge_token_map.json` maps every GVC NFT (by token ID) to its earned badges, and every badge to its qualifying token IDs. This is the core data for determining which holders earn which badges based on their NFT traits.
+
+Structure:
+- `badgeToTokens`: badge ID -> array of token IDs that qualify for that badge
+- `tokenToBadges`: token ID -> array of badge IDs that token has earned
+
+68 badges mapped across all 6,969 GVC tokens (21,856 total assignments).
+
+Use cases:
+- Look up a wallet's NFTs, then check `tokenToBadges` to show which badges they've earned
+- Build a badge leaderboard by counting how many badges each holder has
+- Filter the collection by badge (e.g. "show me all One of One holders")
+- Create badge-gated features or content
+
+Example:
+```ts
+// Check which badges token #142 has
+const map = await fetch('/badge_token_map.json').then(r => r.json());
+const badges = map.tokenToBadges["142"];
+// ["ladies_night", "visooor_enjoyooor", "any_gvc", "gradient_lover"]
+
+// Find all tokens with the "one_of_one" badge
+const oneOfOneTokens = map.badgeToTokens["one_of_one"];
+// ["4113", "4889", "975", "2943", "1151", "1400", "430", "5275", "6731"]
+```
+
 ## Code Snippets
 
 If you need to add blockchain data or GVC-specific features, reference the snippets in `snippets.ts`. Available patterns:

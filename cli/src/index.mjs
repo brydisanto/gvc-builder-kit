@@ -338,7 +338,22 @@ export function NftImage({ tokenId, className }: { tokenId: number; className?: 
 }
 \`\`\``,
 
-  "badge-collection": `### Badge Card with Tier Glow
+  "badge-collection": `### Badge-Token Map
+
+The project includes \`badge_token_map.json\` which maps every GVC NFT (by token ID) to its earned badges.
+- \`badgeToTokens\`: badge ID -> array of qualifying token IDs
+- \`tokenToBadges\`: token ID -> array of earned badge IDs
+- 68 badges across all 6,969 tokens (21,856 assignments)
+
+Use it to look up a holder's badges, build leaderboards, or filter the collection by badge.
+
+\`\`\`ts
+const map = await fetch('/badge_token_map.json').then(r => r.json());
+const badges = map.tokenToBadges["142"]; // badges for token #142
+const holders = map.badgeToTokens["one_of_one"]; // all One of One tokens
+\`\`\`
+
+### Badge Card with Tier Glow
 
 \`\`\`tsx
 const TIER_COLORS: Record<string, string> = {
