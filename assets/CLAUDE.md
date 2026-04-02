@@ -121,38 +121,42 @@ result.totalUniqueBadges; // total count
 
 Also available: `getVibestrTier(balance)`, `getCollectorMilestones(count)`, `getTokensForBadge(id, map)`, `getBadgesForToken(id, map)`
 
-## Community Database (`lib/db-helpers.ts`)
+## GVC Community API (`lib/gvc-api.ts`)
 
-Read-only access to the GVC community database with live collection analytics. Requires `DATABASE_URL` in `.env.local`.
+Live GVC data. No API key needed. No database setup. Just import and use.
 
-Available functions:
+```ts
+import { getStats, getHolders, getRecentSales } from "@/lib/gvc-api";
+```
 
 | Function | Returns |
 |---|---|
-| `getCollectionStats()` | Floor price, market cap, 24h volume, total owners, total sales |
-| `getHolders()` | All holders ranked by token count, diamond hands %, concentration |
+| `getStats()` | Floor price, market cap, 24h volume, total owners, total sales |
+| `getHolders(limit?)` | All holders ranked by token count, diamond hands %, concentration |
 | `getRecentSales(limit?)` | Recent sales with buyer, seller, price, token ID, image |
-| `getSalesHistory(limit?)` | 11,000+ historical sales from price cache |
-| `getCommunityActivity()` | 30-day buys/sells, accumulator leaderboard, new collectors |
-| `getVibestrSnapshots()` | 91 daily VIBESTR snapshots (price, liquidity, volume, burned) |
-| `getTraderAnalysis()` | Profitable flips with buy/sell prices and holding periods |
+| `getSalesHistory(limit?)` | 11,000+ historical sales |
+| `getActivity()` | 30-day buys/sells, accumulator leaderboard, new collectors |
+| `getVibestr()` | Latest VIBESTR token data |
+| `getVibestrHistory()` | 91 daily VIBESTR snapshots (price, liquidity, volume, burned) |
 | `getMarketDepth()` | Bid/offer depth at each price level |
-| `resolveWallet(address)` | ENS name, Twitter handle, and account tag for a wallet |
-| `getXMentions()` | Twitter/X mentions with engagement stats |
+| `getTraders()` | Profitable flips with buy/sell prices and holding periods |
+| `resolveWallet(address)` | ENS name, Twitter handle, and community tag for a wallet |
+| `getMentions()` | Twitter/X mentions with engagement stats |
 
 Example:
 ```ts
-import { getCollectionStats, getHolders } from "@/lib/db-helpers";
+// In a server component or API route
+const stats = await getStats();
+// { floorPrice: 0.65, numOwners: 1513, marketCapUsd: 9247054, ... }
 
-// In an API route
-export async function GET() {
-  const stats = await getCollectionStats();
-  const holders = await getHolders();
-  return Response.json({ stats, topHolders: holders?.holders.slice(0, 10) });
-}
+const holders = await getHolders(10);
+// { stats: { totalHolders: 1513, diamondHandsPercent: 96.6, ... }, holders: [...] }
+
+const sales = await getRecentSales(5);
+// [{ tokenId: "3101", priceEth: 0.611, buyer: "0x...", imageUrl: "...", ... }]
 ```
 
-Requires `pg` package: `npm install pg @types/pg`
+Data refreshes every 60 seconds. No setup required.
 
 ## Code Snippets
 
