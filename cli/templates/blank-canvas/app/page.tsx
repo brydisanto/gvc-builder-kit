@@ -67,95 +67,30 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="text-left max-w-lg mx-auto mb-10"
-        >
-          <h2 className="text-lg font-display font-bold text-white mb-4">
-            What to do next
-          </h2>
-
-          <div className="space-y-4">
-            <div className="flex items-start gap-4">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
-                1
-              </span>
-              <div>
-                <p className="text-white font-body font-semibold text-sm">
-                  Open a new terminal tab
-                </p>
-                <p className="text-white/40 text-sm font-body">
-                  Keep this one running. It powers the page you're looking at.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
-                2
-              </span>
-              <div>
-                <p className="text-white font-body font-semibold text-sm">
-                  Navigate to your project
-                </p>
-                <div className="mt-1 bg-black/40 rounded-lg px-3 py-2 font-mono text-xs text-gvc-green/80">
-                  cd {{PROJECT_NAME}}
-                </div>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
-                3
-              </span>
-              <div>
-                <p className="text-white font-body font-semibold text-sm">
-                  Start building with Claude
-                </p>
-                <div className="mt-1 bg-black/40 rounded-lg px-3 py-2 font-mono text-xs text-gvc-green/80">
-                  claude
-                </div>
-                <p className="text-white/40 text-sm font-body mt-1">
-                  Claude already knows your project and the GVC brand. Just tell it what you want.
-                </p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Example prompts */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4, duration: 0.6 }}
-          className="text-left max-w-lg mx-auto mb-10"
+          className="text-left max-w-md mx-auto mb-10 rounded-2xl bg-[#121212] border border-white/[0.08] p-6"
         >
           <h2 className="text-lg font-display font-bold text-white mb-3">
-            Try saying
+            Start building
           </h2>
-          <div className="space-y-2">
-            {[
-              "Build what's described in my CLAUDE.md",
-              "Add a hero section with a big gold title",
-              "Show the current GVC floor price in a stats card",
-              "Make it look like the GVC Gallery",
-            ].map((prompt) => (
-              <div
-                key={prompt}
-                className="bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3 text-white/50 text-sm font-body hover:border-gvc-gold/20 hover:text-white/70 transition-all duration-200 cursor-default"
-              >
-                &ldquo;{prompt}&rdquo;
-              </div>
-            ))}
+          <p className="text-white/40 font-body text-sm mb-4">
+            Open a new terminal tab and run:
+          </p>
+          <div className="bg-black/40 rounded-lg px-4 py-3 font-mono text-sm text-[#2EFF2E]/80 mb-3">
+            claude
           </div>
+          <p className="text-white/40 font-body text-sm">
+            Claude already knows your project, brand, and what features you picked. Just tell it what you want to change.
+          </p>
         </motion.div>
 
         {/* Footer */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
           className="text-white/20 text-xs font-body"
         >
-          Built with the GVC Builder Kit. This page will be replaced by whatever you build.
+          Built with the GVC Builder Kit
         </motion.p>
       </div>
     </main>

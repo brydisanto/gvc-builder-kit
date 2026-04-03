@@ -245,6 +245,29 @@ If you need to add blockchain data or GVC-specific features, reference the snipp
 7. **Animated stats card** component
 8. **Toast notifications** setup
 
+### Token Metadata (`public/gvc-metadata.json`)
+
+Complete metadata for all 6,969 GVC tokens. Keyed by token ID (0-6968).
+
+```ts
+const metadata = await fetch('/gvc-metadata.json').then(r => r.json());
+
+// Look up any token
+const token = metadata["142"];
+// token.name    → "Citizen of Vibetown #142"
+// token.traits  → { Type: "Robot", Face: "Laser Eyes", Hair: "Mohawk Gold", Body: "Hoodie Black", Background: "BG Mint" }
+// token.image   → "ipfs://QmY6JpwTYx6zZHgfJb3gPJRh1U897NX4RudtK5jhJ3sNDS/142.jpg"
+
+// Trait types: Type, Face, Hair, Body, Background
+// To display image: replace "ipfs://" with a gateway like "https://ipfs.io/ipfs/"
+```
+
+Use cases:
+- Build a rarity checker (count trait occurrences across all 6,969 tokens)
+- Show token details without hitting OpenSea API
+- Filter/search collection by trait
+- Build trait-based leaderboards or galleries
+
 ## Project Structure
 
 ```
@@ -260,6 +283,7 @@ public/
   gvc-logotype.svg  Good Vibes Club wordmark
   grid.svg          Background grid texture
   badges/           Badge images (if add-on installed)
+  gvc-metadata.json All 6,969 token traits and images
 ```
 
 ## Inspiration

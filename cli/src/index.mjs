@@ -403,6 +403,241 @@ export function BadgeCard({ name, tier, image }: { name: string; tier: string; i
 \`\`\``,
 };
 
+// ── Starter page ────────────────────────────────────────────────────
+// Universal landing page that shows the user's idea and walks them
+// step-by-step into Claude to build it.
+
+function generateStarterPage(templateType, projectName, description, addons) {
+  const TEMPLATE_LABELS = {
+    'project-site': 'Project Website',
+    'tracker': 'Tracker / Dashboard',
+    'mini-game': 'Game',
+    'gallery': 'Gallery',
+    'vote-and-rank': 'Vote & Rank',
+    'badge-wallet-tool': 'Badge / Wallet Lookup',
+    'rarity-checker': 'Rarity / Price Checker',
+    'leaderboard': 'Community Leaderboard',
+    'sweep-tracker': 'Sweep / Floor Tracker',
+    'card-maker': 'Card / Image Maker',
+    'profile-page': 'Personal GVC Profile',
+    'blank-canvas': 'Blank Canvas',
+  };
+
+  const ADDON_LABELS = {
+    'collection-data': 'GVC Collection info',
+    'token-prices': 'Live token prices',
+    'web3-wallet': 'Wallet connection',
+    'stats-panel': 'Stats and charts',
+    'leaderboard': 'Leaderboard',
+    'auth': 'User accounts',
+    'game-engine': 'Game starter kit',
+    'audio-mixer': 'Sound and music',
+    'toasts': 'Pop-up notifications',
+    'ipfs-images': 'NFT image loading',
+    'on-chain-reads': 'Blockchain lookups',
+    'badge-collection': 'Badge collection',
+    'vercel-kv': 'Save and store data',
+  };
+
+  const templateLabel = TEMPLATE_LABELS[templateType] || templateType;
+  const addonLabels = addons.map((a) => ADDON_LABELS[a] || a);
+  const addonListStr = addonLabels.join(", ");
+
+  const addonCountHtml = addonLabels.length > 0
+    ? `<span className="text-white/20">&middot;</span><span className="text-white/40 font-body text-xs">${addonLabels.length} add-on${addonLabels.length !== 1 ? "s" : ""}</span>`
+    : '';
+
+  const addonPromptLine = addonLabels.length > 0
+    ? `I also want these features: ${addonListStr}`
+    : '';
+
+  // Use {{PLACEHOLDER}} style and .replaceAll() to avoid nested template literal escaping issues
+  const page = `"use client";
+
+import { useState, useCallback } from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+
+const CLAUDE_PROMPT = [
+  'I want to build a project called "{{SAFE_NAME}}" for the Good Vibes Club (GVC) community.',
+  '',
+  'Here is what I want to build:',
+  '{{SAFE_DESC}}',
+  '',
+  'Starting point: {{TEMPLATE_LABEL}}',
+  '{{ADDON_PROMPT_LINE}}',
+  'Please read my CLAUDE.md file first — it has the full brand system, API references, and code patterns. Then build me a working prototype based on my description above. Use the GVC brand system throughout (dark backgrounds, gold accents, Brice/Mundial fonts, Framer Motion animations).',
+].join("\\n");
+
+export default function Home() {
+  const [copied, setCopied] = useState(false);
+
+  async function doCopy() {
+    try {
+      await navigator.clipboard.writeText(CLAUDE_PROMPT);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = CLAUDE_PROMPT;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+  }
+
+  async function copyAndOpen() {
+    await doCopy();
+    setCopied(true);
+    setTimeout(() => window.open("https://claude.ai/new", "_blank"), 400);
+    setTimeout(() => setCopied(false), 3000);
+  }
+
+  async function copyOnly() {
+    await doCopy();
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2500);
+  }
+
+  return (
+    <main className="min-h-screen flex flex-col items-center justify-center px-6 py-16 relative overflow-hidden">
+      {/* Background embers */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="ember"
+            style={{
+              left: (10 + i * 11) + "%",
+              top: (15 + (i % 4) * 20) + "%",
+              animationDelay: (i * 0.7) + "s",
+              animationDuration: (4 + i * 0.6) + "s",
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="max-w-2xl mx-auto text-center relative z-10 w-full">
+        {/* Shaka */}
+        <motion.div initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: "spring", stiffness: 150 }} className="mb-6">
+          <Image src="/shaka.png" alt="GVC" width={80} height={80} className="mx-auto drop-shadow-[0_0_25px_rgba(255,224,72,0.3)]" />
+        </motion.div>
+
+        {/* Title */}
+        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl sm:text-6xl font-display font-black text-shimmer leading-tight mb-4">
+          {{SAFE_NAME}}
+        </motion.h1>
+
+        {/* Status */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#2EFF2E]/10 border border-[#2EFF2E]/20 mb-8">
+          <div className="w-2 h-2 rounded-full bg-[#2EFF2E] animate-pulse" />
+          <span className="text-sm text-[#2EFF2E] font-body">Your project is running</span>
+        </motion.div>
+
+        {/* What you described */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.08] p-6 mb-6">
+          <p className="text-white/40 font-body text-xs uppercase tracking-wider mb-2">Your idea</p>
+          <p className="text-white/80 font-body text-base leading-relaxed">{{SAFE_DESC}}</p>
+          <div className="flex items-center gap-3 mt-3">
+            <span className="text-[#FFE048] font-body text-xs font-semibold">{{TEMPLATE_LABEL}}</span>{{ADDON_COUNT_HTML}}
+          </div>
+        </motion.div>
+
+        {/* CTA — Open in Claude */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-left rounded-2xl bg-[#121212] border border-[#FFE048]/20 p-6 mb-6">
+          <h2 className="text-lg font-display font-bold text-white mb-2">Now let&apos;s build it</h2>
+          <p className="text-white/50 font-body text-sm mb-5 leading-relaxed">
+            Your project is set up with the GVC brand system, fonts, and everything you picked.
+            Now you need Claude to turn your idea into a working prototype.
+          </p>
+
+          <div className="space-y-4 mb-6">
+            <div className="flex items-start gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-sm font-bold flex items-center justify-center mt-0.5">1</span>
+              <div>
+                <p className="text-white font-body font-semibold text-sm">Click the button below</p>
+                <p className="text-white/40 text-sm font-body">It copies your project prompt and opens Claude in a new tab.</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-sm font-bold flex items-center justify-center mt-0.5">2</span>
+              <div>
+                <p className="text-white font-body font-semibold text-sm">Paste into Claude</p>
+                <p className="text-white/40 text-sm font-body">
+                  Press{" "}
+                  <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Cmd + V</kbd>{" "}
+                  on Mac or{" "}
+                  <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Ctrl + V</kbd>{" "}
+                  on Windows, then press Enter.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-start gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-sm font-bold flex items-center justify-center mt-0.5">3</span>
+              <div>
+                <p className="text-white font-body font-semibold text-sm">Claude builds your prototype</p>
+                <p className="text-white/40 text-sm font-body">It already knows your idea, the GVC brand, and what features you want. It takes it from here.</p>
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={copyAndOpen}
+            className={
+              copied
+                ? "w-full inline-flex items-center justify-center gap-3 px-6 py-4 font-display font-bold text-base rounded-xl transition-all duration-300 bg-[#2EFF2E]/20 text-[#2EFF2E] border border-[#2EFF2E]/30"
+                : "w-full inline-flex items-center justify-center gap-3 px-6 py-4 font-display font-bold text-base rounded-xl transition-all duration-300 bg-[#FFE048] text-[#050505] hover:shadow-[0_0_30px_rgba(255,224,72,0.3)]"
+            }
+          >
+            {copied ? (
+              <>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                Copied! Opening Claude...
+              </>
+            ) : (
+              <>
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
+                Open in Claude
+                <svg className="w-4 h-4 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              </>
+            )}
+          </button>
+
+          <p className="text-white/30 text-xs font-body text-center mt-3">
+            Or{" "}
+            <button onClick={copyOnly} className="text-[#FFE048]/60 hover:text-[#FFE048] underline underline-offset-2 transition-colors">
+              copy the prompt
+            </button>{" "}
+            to paste it yourself.
+          </p>
+        </motion.div>
+
+        {/* Claude Code alternative */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-6 mb-8">
+          <h3 className="text-sm font-display font-bold text-white/60 mb-2">Already have Claude Code?</h3>
+          <p className="text-white/40 font-body text-sm mb-3">Open a new terminal tab and run:</p>
+          <div className="bg-black/40 rounded-lg px-4 py-3 font-mono text-sm text-[#2EFF2E]/80 mb-2">claude</div>
+          <p className="text-white/30 font-body text-xs">Claude reads your CLAUDE.md automatically and knows exactly what to build.</p>
+        </motion.div>
+
+        {/* Footer */}
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} className="text-white/20 text-xs font-body">
+          Built with the GVC Builder Kit
+        </motion.p>
+      </div>
+    </main>
+  );
+}
+`;
+
+  // Replace all placeholders
+  return page
+    .replaceAll('{{SAFE_NAME}}', projectName.replace(/'/g, "\\'").replace(/"/g, '\\"'))
+    .replaceAll('{{SAFE_DESC}}', description.replace(/'/g, "\\'").replace(/"/g, '\\"'))
+    .replaceAll('{{TEMPLATE_LABEL}}', templateLabel)
+    .replaceAll('{{ADDON_COUNT_HTML}}', addonCountHtml)
+    .replaceAll('{{ADDON_PROMPT_LINE}}', addonPromptLine);
+}
+
 // ── Generate example prompts based on template + addons ─────────────
 function generateExamplePrompts(templateType, addons) {
   const prompts = [];
@@ -560,11 +795,30 @@ ${snippetSections ? `\n## Code Patterns\n\n${snippetSections}` : ""}
 ## Example Prompts to Try
 ${examplePrompts}
 
+## Token Metadata (\`public/gvc-metadata.json\`)
+
+Complete metadata for all 6,969 GVC tokens. Keyed by token ID (0-6968).
+
+\`\`\`ts
+const metadata = await fetch('/gvc-metadata.json').then(r => r.json());
+
+const token = metadata["142"];
+// token.name    -> "Citizen of Vibetown #142"
+// token.traits  -> { Type: "Robot", Face: "Laser Eyes", Hair: "Mohawk Gold", Body: "Hoodie Black", Background: "BG Mint" }
+// token.image   -> "ipfs://QmY6JpwTYx6zZHgfJb3gPJRh1U897NX4RudtK5jhJ3sNDS/142.jpg"
+
+// Trait types: Type, Face, Hair, Body, Background
+// To display image: replace "ipfs://" with "https://ipfs.io/ipfs/"
+\`\`\`
+
+Use cases: rarity checker, token lookup, trait filtering, collection search, trait-based galleries.
+
 ## Assets
 - Fonts: /public/fonts/ (Brice for headlines, Mundial for body)
 - Shaka icon: /public/shaka.png
 - GVC logotype: /public/gvc-logotype.svg
 - Background grid: /public/grid.svg
+- Token metadata: /public/gvc-metadata.json (all 6,969 tokens with traits + images)
 
 ## Tech Stack
 - Next.js (App Router), React, TypeScript, Tailwind CSS, Framer Motion
@@ -713,7 +967,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.1.4");
+    console.log("create-gvc-app v0.1.6");
     return;
   }
 
@@ -853,6 +1107,10 @@ async function main() {
 
   s.message("Writing project files...");
 
+  // Write template-specific starter page
+  const starterPage = generateStarterPage(templateType, projectName.trim(), description.trim(), selectedAddons);
+  await fs.writeFile(path.join(projectDir, "app", "page.tsx"), starterPage, "utf-8");
+
   // Write CLAUDE.md
   const claudeMd = generateClaudeMd(projectName, templateType, description, selectedAddons);
   await fs.writeFile(path.join(projectDir, "CLAUDE.md"), claudeMd, "utf-8");
@@ -895,10 +1153,11 @@ async function main() {
   console.log(`  ${info("cd " + projectName)}`);
   console.log(`  ${info("npm run dev")}`);
   console.log(`  ${dim("Then open")} ${info("http://localhost:3000")} ${dim("in your browser")}`);
+  console.log(`  ${dim("Your starter prototype is already built and ready to go!")}`);
   console.log();
   console.log(`  ${pc.bold("Step 2:")} Open a ${pc.bold("new")} terminal tab (keep the first one running)`);
   console.log();
-  console.log(`  ${pc.bold("Step 3:")} Start building with Claude`);
+  console.log(`  ${pc.bold("Step 3:")} Start customizing with Claude`);
   console.log(`  ${info("cd " + projectName)}`);
   if (hasClaude) {
     console.log(`  ${info("claude")}`);
@@ -906,15 +1165,16 @@ async function main() {
     console.log(`  ${dim("Install Claude first:")} ${info("https://docs.anthropic.com/claude-code")}`);
   }
   console.log();
-  console.log(`  ${pc.bold("Step 4:")} Tell Claude what to build`);
-  console.log(`  ${dim('Try:')} ${gold('"Build what\'s described in my CLAUDE.md"')}`);
+  console.log(`  ${pc.bold("Step 4:")} Tell Claude what to change`);
+  console.log(`  ${dim("Your prototype is running. Now tell Claude what to improve:")}`);
+  console.log(`  ${dim('Try:')} ${gold('"Change the hero headline and add a team section"')}`);
   console.log(`  ${dim("Claude already knows your project, the GVC brand,")}`);
   console.log(`  ${dim("and what features you picked. Just talk to it.")}`);
   console.log();
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.1.4")
+      dim("// gvc-builder-kit v0.1.6")
   );
 }
 
