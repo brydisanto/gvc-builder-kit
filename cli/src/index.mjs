@@ -69,6 +69,11 @@ function checkClaudeCLI() {
 // ── Template types ───────────────────────────────────────────────────
 const TEMPLATE_CHOICES = [
   {
+    value: "blank-canvas",
+    label: "I have my own idea (blank start)",
+    hint: "just the brand system, ready for anything",
+  },
+  {
     value: "project-site",
     label: "A website for my project",
     hint: "landing page, about section, features, CTA",
@@ -122,11 +127,6 @@ const TEMPLATE_CHOICES = [
     value: "profile-page",
     label: "A personal GVC profile page",
     hint: "connect wallet, show your GVCs, badges, stats",
-  },
-  {
-    value: "blank-canvas",
-    label: "I have my own idea (blank start)",
-    hint: "just the brand system, ready for anything",
   },
 ];
 

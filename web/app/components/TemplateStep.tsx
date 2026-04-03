@@ -19,6 +19,15 @@ import {
 
 const TEMPLATES = [
   {
+    value: "blank-canvas",
+    icon: Sparkles,
+    title: "Blank Canvas",
+    description: "I have my own idea",
+    example: "Just the brand system, ready for anything",
+    color: "text-gvc-gold",
+    bgColor: "bg-gvc-gold/10",
+  },
+  {
     value: "project-site",
     icon: Globe,
     title: "Project Website",
@@ -116,15 +125,6 @@ const TEMPLATES = [
     example: "Connect wallet, show your GVCs, badges, stats",
     color: "text-indigo-400",
     bgColor: "bg-indigo-400/10",
-  },
-  {
-    value: "blank-canvas",
-    icon: Sparkles,
-    title: "Blank Canvas",
-    description: "I have my own idea",
-    example: "Just the brand system, ready for anything",
-    color: "text-gvc-gold",
-    bgColor: "bg-gvc-gold/10",
   },
 ];
 
