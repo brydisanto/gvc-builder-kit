@@ -967,7 +967,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.1.7");
+    console.log("create-gvc-app v0.1.8");
     return;
   }
 
@@ -1145,36 +1145,28 @@ async function main() {
 
   // ── Success message ──
   console.log();
-  console.log(brand("  Your project is ready!"));
+  console.log(brand("  You're all set! Copy and paste these two commands:"));
   console.log();
-  console.log(gold("  Follow these steps to start building:"));
+  const cdLine = "cd " + projectName;
+  const devLine = "npm run dev";
+  const innerWidth = Math.max(cdLine.length, devLine.length) + 4;
+  const pad = (text) => text + " ".repeat(innerWidth - text.length);
+  console.log(`  ┌${"─".repeat(innerWidth)}┐`);
+  console.log(`  │${" ".repeat(innerWidth)}│`);
+  console.log(`  │  ${info(cdLine)}${" ".repeat(innerWidth - cdLine.length - 2)}│`);
+  console.log(`  │  ${info(devLine)}${" ".repeat(innerWidth - devLine.length - 2)}│`);
+  console.log(`  │${" ".repeat(innerWidth)}│`);
+  console.log(`  └${"─".repeat(innerWidth)}┘`);
   console.log();
-  console.log(`  ${pc.bold("Step 1:")} See your project in the browser`);
-  console.log(`  ${info("cd " + projectName)}`);
-  console.log(`  ${info("npm run dev")}`);
-  console.log(`  ${dim("Then open")} ${info("http://localhost:3000")} ${dim("in your browser")}`);
-  console.log(`  ${dim("Your starter prototype is already built and ready to go!")}`);
+  console.log(`  ${dim("This starts your project. When you see")} ${success("✓ Ready")}${dim(",")}`);
+  console.log(`  ${dim("open")} ${info("http://localhost:3000")} ${dim("in your browser.")}`);
   console.log();
-  console.log(`  ${pc.bold("Step 2:")} Open a ${pc.bold("new")} terminal tab (keep the first one running)`);
-  console.log();
-  console.log(`  ${pc.bold("Step 3:")} Start customizing with Claude`);
-  console.log(`  ${info("cd " + projectName)}`);
-  if (hasClaude) {
-    console.log(`  ${info("claude")}`);
-  } else {
-    console.log(`  ${dim("Install Claude first:")} ${info("https://docs.anthropic.com/claude-code")}`);
-  }
-  console.log();
-  console.log(`  ${pc.bold("Step 4:")} Tell Claude what to change`);
-  console.log(`  ${dim("Your prototype is running. Now tell Claude what to improve:")}`);
-  console.log(`  ${dim('Try:')} ${gold('"Change the hero headline and add a team section"')}`);
-  console.log(`  ${dim("Claude already knows your project, the GVC brand,")}`);
-  console.log(`  ${dim("and what features you picked. Just talk to it.")}`);
+  console.log(`  ${dim("The page will show you exactly what to do next.")}`);
   console.log();
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.1.7")
+      dim("// gvc-builder-kit v0.1.8")
   );
 }
 
