@@ -713,7 +713,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.1.3");
+    console.log("create-gvc-app v0.1.4");
     return;
   }
 
@@ -914,7 +914,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.1.3")
+      dim("// gvc-builder-kit v0.1.4")
   );
 }
 
