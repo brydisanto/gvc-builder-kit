@@ -516,14 +516,14 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="max-w-2xl mx-auto text-center relative z-10 w-full">
+      <div className="max-w-2xl mx-auto text-center relative z-10 w-full overflow-hidden">
         {/* Shaka */}
         <motion.div initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: "spring", stiffness: 150 }} className="mb-6">
           <Image src="/shaka.png" alt="GVC" width={80} height={80} className="mx-auto drop-shadow-[0_0_25px_rgba(255,224,72,0.3)]" />
         </motion.div>
 
         {/* Title */}
-        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-4xl sm:text-6xl font-display font-black text-shimmer leading-tight mb-4">
+        <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-3xl sm:text-5xl font-display font-black text-shimmer leading-tight mb-4 break-words overflow-hidden">
           {{SAFE_NAME}}
         </motion.h1>
 
@@ -534,9 +534,9 @@ export default function Home() {
         </motion.div>
 
         {/* What you described */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.08] p-6 mb-6">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.08] p-6 mb-6 overflow-hidden">
           <p className="text-white/40 font-body text-xs uppercase tracking-wider mb-2">Your idea</p>
-          <p className="text-white/80 font-body text-base leading-relaxed">{{SAFE_DESC}}</p>
+          <p className="text-white/80 font-body text-base leading-relaxed break-words">{{SAFE_DESC}}</p>
           <div className="flex items-center gap-3 mt-3">
             <span className="text-[#FFE048] font-body text-xs font-semibold">{{TEMPLATE_LABEL}}</span>{{ADDON_COUNT_HTML}}
           </div>
@@ -967,7 +967,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.1.6");
+    console.log("create-gvc-app v0.1.7");
     return;
   }
 
@@ -1174,7 +1174,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.1.6")
+      dim("// gvc-builder-kit v0.1.7")
   );
 }
 
