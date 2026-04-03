@@ -4,7 +4,8 @@
   "description": "Scaffold branded Next.js projects for the Good Vibes Club community",
   "type": "module",
   "bin": {
-    "gvc": "./src/index.mjs"
+    "gvc": "./src/index.mjs",
+    "create-gvc-app": "./src/index.mjs"
   },
   "files": [
     "src",
@@ -18,7 +19,12 @@
     "scaffold",
     "cli"
   ],
+  "author": "Good Vibes Club",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brydisanto/gvc-builder-kit"
+  },
   "dependencies": {
     "@clack/prompts": "^0.9.1",
     "fs-extra": "^11.2.0",

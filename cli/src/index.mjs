@@ -631,8 +631,72 @@ async function replaceTemplateVars(dir, vars) {
   }
 }
 
+// ── Subcommands ─────────────────────────────────────────────────────
+function runDev() {
+  console.log();
+  console.log(gold("  Starting your GVC project..."));
+  console.log();
+  try {
+    execSync("npm run dev", { cwd: process.cwd(), stdio: "inherit" });
+  } catch {
+    console.log();
+    console.log(pc.red("  Could not start the dev server."));
+    console.log(dim(`  Make sure you're inside your project folder and ran ${info("npm install")} first.`));
+    process.exit(1);
+  }
+}
+
+function runDeploy() {
+  console.log();
+  console.log(gold("  Deploying your GVC project..."));
+  console.log();
+
+  // Check if vercel CLI is available
+  try {
+    execSync("npx vercel --version", { stdio: "ignore" });
+  } catch {
+    console.log(pc.red("  Vercel CLI not found."));
+    console.log(dim(`  Run ${info("npm i -g vercel")} to install it, then try again.`));
+    process.exit(1);
+  }
+
+  try {
+    execSync("npx vercel --prod", { cwd: process.cwd(), stdio: "inherit" });
+  } catch {
+    console.log();
+    console.log(pc.red("  Deploy failed. Check the output above for details."));
+    process.exit(1);
+  }
+}
+
+function showTemplates() {
+  showHeader();
+  console.log(brand("  Available templates:"));
+  console.log();
+  for (const t of TEMPLATE_CHOICES) {
+    console.log(`  ${gold("●")} ${pc.bold(t.label)}`);
+    console.log(`    ${dim(t.hint)}`);
+    console.log();
+  }
+  console.log(dim("  Run ") + info("gvc create") + dim(" to start a new project."));
+  console.log();
+}
+
 // ── Main CLI flow ────────────────────────────────────────────────────
 async function main() {
+  const args = process.argv.slice(2);
+  const command = args[0];
+
+  // Route subcommands
+  if (command === "dev") return runDev();
+  if (command === "deploy") return runDeploy();
+  if (command === "templates") return showTemplates();
+  if (command === "--version" || command === "-v") {
+    console.log("create-gvc-app v0.1.0");
+    return;
+  }
+
+  // "create" or no command runs the scaffold flow
   showHeader();
 
   // ── Preflight ──
@@ -846,7 +910,7 @@ async function main() {
 
   const nextSteps = [
     `  ${info("cd")} ${projectName}`,
-    `  ${info("npm run dev")}          ${dim("Open your project in the browser")}`,
+    `  ${info("gvc dev")}              ${dim("Start your project in the browser")}`,
   ];
 
   if (hasClaude) {
@@ -858,6 +922,11 @@ async function main() {
       `\n  ${dim("Install Claude CLI:")} ${info("https://docs.anthropic.com/claude-code")}`
     );
   }
+
+  nextSteps.push(
+    `\n  ${dim("When you're ready to go live:")}`,
+    `  ${info("gvc deploy")}           ${dim("Ship it to the internet")}`
+  );
 
   p.note(nextSteps.join("\n"), "Next steps");
 
