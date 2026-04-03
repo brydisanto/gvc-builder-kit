@@ -1,0 +1,2300 @@
+[
+  {
+    "id": "multi_type_master",
+    "badgeId": "multi_type_master",
+    "name": "Multi-Type Master",
+    "description": "Awarded for owning one Plastic, Gradient, and Robot type Citizens of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/multi_type_master_1759173898608.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/multi_type_master_1759173898608_hq.webp",
+    "category": "Collection",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "collection",
+      "config": {
+        "minCount": 3,
+        "uniqueTypeRequirements": {
+          "traitType": "Type",
+          "requiredValues": [
+            "Plastic",
+            "Gradient",
+            "Robot"
+          ]
+        }
+      }
+    },
+    "enabled": true,
+    "sortOrder": 35
+  },
+  {
+    "id": "five_badges",
+    "badgeId": "five_badges",
+    "name": "Collector of Epic Vibes",
+    "description": "Awarded for collecting 5 different badges.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/five_badges_1759173901700.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/five_badges_1759173901700_hq.webp",
+    "category": "Collection",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "badge_count",
+      "config": {
+        "count": 5
+      }
+    },
+    "enabled": true,
+    "sortOrder": 36
+  },
+  {
+    "id": "ten_badges",
+    "badgeId": "ten_badges",
+    "name": "Collector of Exquisite Vibes",
+    "description": "Awarded for collecting 10 different badges.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/ten_badges_1759173905051.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/ten_badges_1759173905051_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "badge_count",
+      "config": {
+        "count": 10
+      }
+    },
+    "enabled": true,
+    "sortOrder": 37
+  },
+  {
+    "id": "fifteen_badges",
+    "badgeId": "fifteen_badges",
+    "name": "Collector of Legendary Vibes",
+    "description": "Awarded for collecting 15 different badges.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/fifteen_badges_1759173908432.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/fifteen_badges_1759173908432_hq.webp",
+    "category": "Collection",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "badge_count",
+      "config": {
+        "count": 15
+      }
+    },
+    "enabled": true,
+    "sortOrder": 38
+  },
+  {
+    "id": "thirty_badges",
+    "badgeId": "thirty_badges",
+    "name": "Collector of Pristine Vibes",
+    "description": "Awarded for collecting 30 different badges.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/thirty_badges_1760378215065.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/thirty_badges_1760378215065_hq.webp",
+    "category": "Collection",
+    "rarity": "Legendary",
+    "requirement": {
+      "type": "badge_count",
+      "config": {
+        "count": 30
+      }
+    },
+    "enabled": true,
+    "sortOrder": 39
+  },
+  {
+    "id": "forty_badges",
+    "badgeId": "forty_badges",
+    "name": "Collector of Transcendent Vibes",
+    "description": "Awarded for collecting 40 different badges.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/forty_badges_1760378218029.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/forty_badges_1760378218029_hq.webp",
+    "category": "Collection",
+    "rarity": "Legendary",
+    "requirement": {
+      "type": "badge_count",
+      "config": {
+        "count": 40
+      }
+    },
+    "enabled": true,
+    "sortOrder": 39
+  },
+  {
+    "id": "twenty_badges",
+    "badgeId": "twenty_badges",
+    "name": "Collector of Immaculate Vibes",
+    "description": "Awarded for collecting 20 different badges.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/twenty_badges_1760372854419.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/twenty_badges_1760372854419_hq.webp",
+    "category": "Collection",
+    "rarity": "Legendary",
+    "requirement": {
+      "type": "badge_count",
+      "config": {
+        "count": 20
+      }
+    },
+    "enabled": true,
+    "sortOrder": 39
+  },
+  {
+    "id": "fifty_badges",
+    "badgeId": "fifty_badges",
+    "name": "Collector of Magnificent Vibes",
+    "description": "Awarded for collecting 50 different badges.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/fifty_badges_1760378221304.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/fifty_badges_1760378221304_hq.webp",
+    "category": "Collection",
+    "rarity": "Legendary",
+    "requirement": {
+      "type": "badge_count",
+      "config": {
+        "count": 50
+      }
+    },
+    "enabled": true,
+    "sortOrder": 39
+  },
+  {
+    "id": "unfathomable_vibes",
+    "badgeId": "unfathomable_vibes",
+    "name": "Collector of Unfathomable Vibes",
+    "description": "Awarded for collecting 69 different badges",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/unfathomable_vibes_1771355005301.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/unfathomable_vibes_1771355005301_hq.webp",
+    "category": "Collection",
+    "rarity": "Legendary",
+    "requirement": {
+      "type": "badge_count",
+      "config": {
+        "count": 69
+      }
+    },
+    "enabled": true,
+    "sortOrder": 40
+  },
+  {
+    "id": "gradient_hatrick",
+    "badgeId": "gradient_hatrick",
+    "name": "Gradient Hatrick",
+    "description": "Own 3 different colored gradient type Citizens of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/gradient_hatrick_1759173915751.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/gradient_hatrick_1759173915751_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "count_unique_trait_values",
+      "config": {
+        "traitType": "Type",
+        "valueSubstring": "Gradient",
+        "minCount": 3
+      }
+    },
+    "enabled": true,
+    "sortOrder": 41
+  },
+  {
+    "id": "plastic_hatrick",
+    "badgeId": "plastic_hatrick",
+    "name": "Plastic Hatrick",
+    "description": "Own 3 different colored plastic type Citizens of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/plastic_hatrick_1759173918553.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/plastic_hatrick_1759173918553_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "count_unique_trait_values",
+      "config": {
+        "traitType": "Type",
+        "valueSubstring": "Plastic",
+        "minCount": 3
+      }
+    },
+    "enabled": true,
+    "sortOrder": 42
+  },
+  {
+    "id": "robot_hatrick",
+    "badgeId": "robot_hatrick",
+    "name": "Robot Hatrick",
+    "description": "Own 3 different colored robot type Citizens of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/robot_hatrick_1759173921703.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/robot_hatrick_1759173921703_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "count_unique_trait_values",
+      "config": {
+        "traitType": "Type",
+        "valueSubstring": "Robot",
+        "minCount": 3
+      }
+    },
+    "enabled": true,
+    "sortOrder": 43
+  },
+  {
+    "id": "gradient_high_five",
+    "badgeId": "gradient_high_five",
+    "name": "Gradient High Five",
+    "description": "Own 5 different colored gradient type Citizens of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/gradient_high_five_1759173924809.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/gradient_high_five_1759173924809_hq.webp",
+    "category": "Collection",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "count_unique_trait_values",
+      "config": {
+        "traitType": "Type",
+        "valueSubstring": "Gradient",
+        "minCount": 5
+      }
+    },
+    "enabled": true,
+    "sortOrder": 44
+  },
+  {
+    "id": "plastic_high_five",
+    "badgeId": "plastic_high_five",
+    "name": "Plastic High Five",
+    "description": "Own 5 different colored plastic type Citizens of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/plastic_high_five_1759173927856.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/plastic_high_five_1759173927856_hq.webp",
+    "category": "Collection",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "count_unique_trait_values",
+      "config": {
+        "traitType": "Type",
+        "valueSubstring": "Plastic",
+        "minCount": 5
+      }
+    },
+    "enabled": true,
+    "sortOrder": 45
+  },
+  {
+    "id": "robot_high_five",
+    "badgeId": "robot_high_five",
+    "name": "Robot High Five",
+    "description": "Own 5 different colored robot type Citizens of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/robot_high_five_1759173931029.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/robot_high_five_1759173931029_hq.webp",
+    "category": "Collection",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "count_unique_trait_values",
+      "config": {
+        "traitType": "Type",
+        "valueSubstring": "Robot",
+        "minCount": 5
+      }
+    },
+    "enabled": true,
+    "sortOrder": 46
+  },
+  {
+    "id": "yin_n_yang",
+    "badgeId": "yin_n_yang",
+    "name": "Yin N' Yang",
+    "description": "Own both a Grayscale and Rainbow type Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/yin_n_yang_1759173942484.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/yin_n_yang_1759173942484_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "collection",
+      "config": {
+        "minCount": 2,
+        "uniqueTypeRequirements": {
+          "traitType": "Type",
+          "requiredValues": [
+            "Grayscale",
+            "Rainbow"
+          ]
+        }
+      }
+    },
+    "enabled": true,
+    "sortOrder": 50
+  },
+  {
+    "id": "power_duo",
+    "badgeId": "power_duo",
+    "name": "Power Duo",
+    "description": "Own any two Citizens of Vibetown of the same type and color.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/power_duo_1759173963251.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/power_duo_1759173963251_hq.webp",
+    "category": "Collection",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "duplicate_trait",
+      "config": {
+        "traitType": "Type",
+        "minCount": 2
+      }
+    },
+    "enabled": true,
+    "sortOrder": 57
+  },
+  {
+    "id": "chris_favorite_badge",
+    "badgeId": "chris_favorite_badge",
+    "name": "Chris' Favorite Badge",
+    "description": "Own any two Grailscale Citizens of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/chris_favorite_badge_1759173988815.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/chris_favorite_badge_1759173988815_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "count_unique_trait_values",
+      "config": {
+        "traitType": "Type",
+        "valueSubstring": "Grayscale",
+        "minCount": 2
+      }
+    },
+    "enabled": true,
+    "sortOrder": 65
+  },
+  {
+    "id": "elite_rainbow_ranger",
+    "badgeId": "elite_rainbow_ranger",
+    "name": "Elite Rainbow Ranger",
+    "description": "Own one token with Type including Rainbow and another with Body including Plastic Armor OR Hair including Plastic Helmet.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/elite_rainbow_ranger_1759174003980.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/elite_rainbow_ranger_1759174003980_hq.webp",
+    "category": "Collection",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "custom_elite_rainbow_ranger"
+    },
+    "enabled": true,
+    "sortOrder": 70
+  },
+  {
+    "id": "vibestr_blue_tier",
+    "badgeId": "vibestr_blue_tier",
+    "name": "$VIBESTR Blue Tier",
+    "description": "Own at least 69k $VIBESTR.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/vibestr_blue_tier_1762440817215.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/vibestr_blue_tier_1762440817215_hq.webp",
+    "category": "Collection",
+    "rarity": "Common",
+    "requirement": {
+      "type": "erc20_balance_range",
+      "config": {
+        "tokenAddress": "0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196",
+        "min": "69000",
+        "decimals": 18
+      }
+    },
+    "enabled": true,
+    "sortOrder": 77
+  },
+  {
+    "id": "vibestr_pink_tier",
+    "badgeId": "vibestr_pink_tier",
+    "name": "$VIBESTR Pink Tier",
+    "description": "Own at least 250k $VIBESTR.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/vibestr_pink_tier_1759174030384.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/vibestr_pink_tier_1759174030384_hq.webp",
+    "category": "Collection",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "erc20_balance_range",
+      "config": {
+        "tokenAddress": "0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196",
+        "min": "250000",
+        "decimals": 18
+      }
+    },
+    "enabled": true,
+    "sortOrder": 78
+  },
+  {
+    "id": "vibestr_purple_tier",
+    "badgeId": "vibestr_purple_tier",
+    "name": "$VIBESTR Purple Tier",
+    "description": "Own at least 500k $VIBESTR.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/vibestr_purple_tier_1764590442681.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/vibestr_purple_tier_1764590442681_hq.webp",
+    "category": "Collection",
+    "rarity": "Common",
+    "requirement": {
+      "type": "erc20_balance_range",
+      "config": {
+        "tokenAddress": "0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196",
+        "min": "500000",
+        "decimals": 18
+      }
+    },
+    "enabled": true,
+    "sortOrder": 79
+  },
+  {
+    "id": "vibestr_bronze_tier",
+    "badgeId": "vibestr_bronze_tier",
+    "name": "$VIBESTR Bronze Tier",
+    "description": "Own at least 1M $VIBESTR.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/vibestr_bronze_tier_1759174034267.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/vibestr_bronze_tier_1759174034267_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "erc20_balance_range",
+      "config": {
+        "tokenAddress": "0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196",
+        "min": "1000000",
+        "decimals": 18
+      }
+    },
+    "enabled": true,
+    "sortOrder": 80
+  },
+  {
+    "id": "vibestr_silver_tier",
+    "badgeId": "vibestr_silver_tier",
+    "name": "$VIBESTR Silver Tier",
+    "description": "Own at least 2.5M $VIBESTR.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/vibestr_silver_tier_1759174037847.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/vibestr_silver_tier_1759174037847_hq.webp",
+    "category": "Collection",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "erc20_balance_range",
+      "config": {
+        "tokenAddress": "0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196",
+        "min": "2500000",
+        "decimals": 18
+      }
+    },
+    "enabled": true,
+    "sortOrder": 81
+  },
+  {
+    "id": "vibestr_gold_tier",
+    "badgeId": "vibestr_gold_tier",
+    "name": "$VIBESTR Gold Tier",
+    "description": "Own at least 4.2M $VIBESTR.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/vibestr_gold_tier_1759174041345.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/vibestr_gold_tier_1759174041345_hq.webp",
+    "category": "Collection",
+    "rarity": "Legendary",
+    "requirement": {
+      "type": "erc20_balance_range",
+      "config": {
+        "tokenAddress": "0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196",
+        "min": "4200000",
+        "decimals": 18
+      }
+    },
+    "enabled": true,
+    "sortOrder": 82
+  },
+  {
+    "id": "vibestr_diamond_tier",
+    "badgeId": "vibestr_diamond_tier",
+    "name": "$VIBESTR Diamond Tier",
+    "description": "Own at least 6.9M $VIBESTR.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/vibestr_diamond_tier_1764590445999.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/vibestr_diamond_tier_1764590445999_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "erc20_balance_range",
+      "config": {
+        "tokenAddress": "0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196",
+        "min": "6900000",
+        "decimals": 18
+      }
+    },
+    "enabled": true,
+    "sortOrder": 83
+  },
+  {
+    "id": "vibestr_cosmic_tier",
+    "badgeId": "vibestr_cosmic_tier",
+    "name": "$VIBESTR Cosmic Tier",
+    "description": "Own at least 10M $VIBESTR.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/vibestr_cosmic_tier_1764590448508.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/vibestr_cosmic_tier_1764590448508_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "erc20_balance_range",
+      "config": {
+        "tokenAddress": "0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196",
+        "min": "10000000",
+        "decimals": 18
+      }
+    },
+    "enabled": true,
+    "sortOrder": 84
+  },
+  {
+    "id": "mountain_goat",
+    "badgeId": "mountain_goat",
+    "name": "Mountain GOAT",
+    "description": "Own any two Citizens of Vibetown with a Snowboard Goggles or a Puffy Jacket.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/mountain_goat_1759174026593.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/mountain_goat_1759174026593_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "custom_mountain_goat",
+      "config": {
+        "conditions": [
+          {
+            "traitType": "Body",
+            "value": "Puffy Jacket",
+            "matchSubstring": true
+          },
+          {
+            "traitType": "Face",
+            "value": "Snowboard Goggles",
+            "matchSubstring": true
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 85
+  },
+  {
+    "id": "highkeymoments_1",
+    "badgeId": "highkeymoments_1",
+    "name": "HighKey Moments I",
+    "description": "Own any Open Edition from the Vibetown Highkey Moments collection.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/highkeymoments_1_1771433768524.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/highkeymoments_1_1771433768524_hq.webp",
+    "category": "Collection",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "erc1155_contract_any",
+      "config": {
+        "contractAddress": "0x74fcb6eb2a2d02207b36e804d800687ce78d210c"
+      }
+    },
+    "enabled": true,
+    "sortOrder": 1001
+  },
+  {
+    "id": "highkeymoments_2",
+    "badgeId": "highkeymoments_2",
+    "name": "HighKey Moments II",
+    "description": "Own all Open Editions from the Vibetown Highkey Moments collection.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/highkeymoments_2_1771433773068.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/highkeymoments_2_1771433773068_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "erc1155_contract_all",
+      "config": {
+        "contractAddress": "0x74fcb6eb2a2d02207b36e804d800687ce78d210c"
+      }
+    },
+    "enabled": true,
+    "sortOrder": 1002
+  },
+  {
+    "id": "patch_powerhouse",
+    "badgeId": "patch_powerhouse",
+    "name": "Patch Powerhouse",
+    "description": "Own a Citizen of Vibetown with the Denim Jacket Trait",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/patch_powerhouse_1771354988189.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/patch_powerhouse_1771354988189_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Hooded Jacket BlueDenim",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 1003
+  },
+  {
+    "id": "hue_too_fresh",
+    "badgeId": "hue_too_fresh",
+    "name": "Hue Too Fresh",
+    "description": "Own a Citizen of Vibetown with Rainbow Clothing.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/hue_too_fresh_1771355000776.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/hue_too_fresh_1771355000776_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "alternative_traits",
+      "config": {
+        "alternatives": [
+          {
+            "traitType": "Body",
+            "value": "Retro Windbreaker Rainbow",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Body",
+            "value": "Suit Rainbow",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Body",
+            "value": "Hoodie Rainbow",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Body",
+            "value": "Driving Jacket Rainbow",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Body",
+            "value": "Leather Jacket Rainbow",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Body",
+            "value": "Puffy Vest Rainbow",
+            "matchSubstring": false
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 1004
+  },
+  {
+    "id": "flow_state",
+    "badgeId": "flow_state",
+    "name": "Flow State",
+    "description": "Own 5 Citizens of Vibetown with different hair styles.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/flow_state_1771355010910.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/flow_state_1771355010910_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "custom_flow_state",
+      "config": {
+        "hairGroups": [
+          "Mullet",
+          "Flat Top",
+          "Top Messy",
+          "Middle Part",
+          "Manbun",
+          "Mohawk",
+          "Afro",
+          "Female Bun",
+          "Female Ponytail",
+          "Female Bob Cut",
+          "Classic",
+          "Bowl Cut",
+          "Short",
+          "Slick Back",
+          "Comb Over"
+        ],
+        "requiredCount": 5
+      }
+    },
+    "enabled": true,
+    "sortOrder": 1005
+  },
+  {
+    "id": "trait_maxi",
+    "badgeId": "trait_maxi",
+    "name": "Trait Maxi",
+    "description": "Own 5 Citizens of Vibetown with identical body, hair, face, or type traits. Background omitted.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/trait_maxi_1771355017585.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/trait_maxi_1771355017585_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "custom_trait_maxi",
+      "config": {
+        "requiredCount": 5,
+        "traitTypes": [
+          "Body",
+          "Hair",
+          "Face",
+          "Type"
+        ],
+        "traitGroups": {
+          "Hair": [
+            "Afro",
+            "Backwards Hat",
+            "Ballcap Forward",
+            "Beanie",
+            "Bowl Cut",
+            "Bucket Hat",
+            "Classic",
+            "Comb Over",
+            "Dundee Hat",
+            "Female Bob Cut",
+            "Female Bun",
+            "Female Ponytail",
+            "Flat Top",
+            "Football Helmet",
+            "Headphones",
+            "Knight Helm",
+            "Manbun",
+            "Middle Part",
+            "Mohawk",
+            "Moto Helmet Visor Down",
+            "Moto Helmet Visor Up",
+            "Mullet",
+            "Plastic Helmet",
+            "Short",
+            "Slick Back",
+            "Top Messy",
+            "Wide Brim Hat"
+          ],
+          "Body": [
+            "Driving Jacket",
+            "Fur Jacket",
+            "Henley",
+            "Hooded Jacket",
+            "Hoodie Up",
+            "Hoodie",
+            "Leather Jacket",
+            "Letterman Jacket",
+            "Overalls Shirt",
+            "Overalls",
+            "Pilot Jacket",
+            "Plastic Armor",
+            "Puffy Jacket",
+            "Puffy Vest",
+            "Retro Windbreaker",
+            "Short Sleeve Button Up",
+            "Suit",
+            "Surfer",
+            "Tank Top",
+            "TShirt",
+            "Turtleneck"
+          ],
+          "Face": [
+            "80s Glasses",
+            "Aviator Sunglasses",
+            "Beard",
+            "Circle Glasses",
+            "Cosmic",
+            "Diver Mask",
+            "Library Glasses",
+            "Lined Glasses",
+            "Nouns Glasses",
+            "Robo Visor",
+            "Snowboard Goggles",
+            "Stache"
+          ]
+        }
+      }
+    },
+    "enabled": true,
+    "sortOrder": 1006
+  },
+  {
+    "id": "anchorman",
+    "badgeId": "anchorman",
+    "name": "Anchorman",
+    "description": "Own a Citizen of Vibetown with a suit and a facial hair.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/anchorman_1771355025752.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/anchorman_1771355025752_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "custom_anchorman",
+      "config": {
+        "bodyTraitValues": [
+          "Suit"
+        ],
+        "faceTraitValues": [
+          "Stache",
+          "Beard"
+        ],
+        "bodyMatchSubstring": true,
+        "faceMatchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 1007
+  },
+  {
+    "id": "tatted_up",
+    "badgeId": "tatted_up",
+    "name": "Tatted Up",
+    "description": "Own a Citizen of Vibetown with gold chains tattoos.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/tatted_up_1771355030286.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/tatted_up_1771355030286_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Gold Chains Tattoos",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 1008
+  },
+  {
+    "id": "shadow_funk_division",
+    "badgeId": "shadow_funk_division",
+    "name": "Shadow Funk Division",
+    "description": "Own a Citizen of Vibetown with a plastic helmet.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/shadow_funk_division_1771355038766.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/shadow_funk_division_1771355038766_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "alternative_traits",
+      "config": {
+        "alternatives": [
+          {
+            "traitType": "Hair",
+            "value": "Plastic Helmet Gold",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Hair",
+            "value": "Plastic Helmet Glass",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Hair",
+            "value": "Holographic Helmet",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Hair",
+            "value": "Plastic Helmet Pink",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Hair",
+            "value": "Plastic Helmet Purple",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Hair",
+            "value": "Plastic Helmet Red",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Hair",
+            "value": "Plastic Helmet Blue",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Hair",
+            "value": "Plastic Helmet Light Blue",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Hair",
+            "value": "Plastic Helmet Lime",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Hair",
+            "value": "Plastic Helmet Mint",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Hair",
+            "value": "Plastic Helmet Yellow",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Hair",
+            "value": "Plastic Helmet White",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Hair",
+            "value": "Plastic Helmet Black",
+            "matchSubstring": false
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 1009
+  },
+  {
+    "id": "kinky",
+    "badgeId": "kinky",
+    "name": "Kinky",
+    "description": "Own a Citizen of Vibetown with a black tank top.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/kinky_1771355046536.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/kinky_1771355046536_hq.webp",
+    "category": "Collection",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Tank Top Black",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 1010
+  },
+  {
+    "id": "the_completionist",
+    "badgeId": "the_completionist",
+    "name": "The Completionist",
+    "description": "Awarded for owning all of the badges that are available.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/the_completionist_1771355052089.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/the_completionist_1771355052089_hq.webp",
+    "category": "Collection",
+    "rarity": "Legendary",
+    "requirement": {
+      "type": "badge_count",
+      "config": {
+        "dynamic": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 1011
+  },
+  {
+    "id": "vibestr_bounty_hunter",
+    "badgeId": "vibestr_bounty_hunter",
+    "name": "VIBE Bounty Hunter",
+    "description": "Buy and hold any Strategy listed vibie from Gondi or NFT Strategy.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/vibestr_bounty_hunter_1759174044563.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/vibestr_bounty_hunter_1759174044563_hq.webp",
+    "category": "Earned",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "manual_assignment"
+    },
+    "enabled": true,
+    "sortOrder": 1000
+  },
+  {
+    "id": "one_of_one",
+    "badgeId": "one_of_one",
+    "name": "One of One",
+    "description": "Own a 1/1 Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/one_of_one_1771354994630.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/one_of_one_1771354994630_hq.webp",
+    "category": "Rarity",
+    "rarity": "Legendary",
+    "requirement": {
+      "type": "rank",
+      "config": {
+        "maxRank": 9
+      }
+    },
+    "enabled": true,
+    "sortOrder": 7
+  },
+  {
+    "id": "stone",
+    "badgeId": "stone",
+    "name": "Marble Potential",
+    "description": "Awarded for owning a Stone UnSculpted Bust Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/stone_1759173815165.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/stone_1759173815165_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Stone Smile",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 8
+  },
+  {
+    "id": "cosmic",
+    "badgeId": "cosmic",
+    "name": "Cosmic Guardian",
+    "description": "Awarded for owning a Cosmic Guardian Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/cosmic_1759173818340.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/cosmic_1759173818340_hq.webp",
+    "category": "Trait",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Background",
+        "value": "BG Cosmic",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 9
+  },
+  {
+    "id": "ranger",
+    "badgeId": "ranger",
+    "name": "Vibe Ranger",
+    "description": "Awarded for owning a Citizen of Vibetown with any Plastic Armor or Plastic Helmet traits.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/ranger_1759173821753.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/ranger_1759173821753_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "alternative_traits",
+      "config": {
+        "alternatives": [
+          {
+            "traitType": "Body",
+            "value": "Plastic Armor"
+          },
+          {
+            "traitType": "Hair",
+            "value": "Plastic Helmet"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 10
+  },
+  {
+    "id": "astro_bean",
+    "badgeId": "astro_bean",
+    "name": "AstroBean",
+    "description": "Awarded for owning a Citizen of Vibetown with the Astro Bean trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/astro_bean_1759173824578.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/astro_bean_1759173824578_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Hair",
+        "value": "Astro Bean Pink",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 11
+  },
+  {
+    "id": "pothead",
+    "badgeId": "pothead",
+    "name": "High Vibes",
+    "description": "Awarded for owning a Citizen of Vibetown with the Pothead trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/pothead_1759173827603.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/pothead_1759173827603_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Hair",
+        "value": "Pothead",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 12
+  },
+  {
+    "id": "surfer",
+    "badgeId": "surfer",
+    "name": "Get Pitted",
+    "description": "Awarded for owning a Citizen of Vibetown with the Surfer trait",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/surfer_1759173830462.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/surfer_1759173830462_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Surfer",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 13
+  },
+  {
+    "id": "super_rare",
+    "badgeId": "super_rare",
+    "name": "SuperRare",
+    "description": "Awarded for owning a Citizen of Vibetown with any SuperRare trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/super_rare_1759173833292.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/super_rare_1759173833292_hq.webp",
+    "category": "Trait",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "alternative_traits",
+      "config": {
+        "alternatives": [
+          {
+            "traitType": "Hair",
+            "value": "SuperRare"
+          },
+          {
+            "traitType": "Body",
+            "value": "SuperRare"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 14
+  },
+  {
+    "id": "science_goggles",
+    "badgeId": "science_goggles",
+    "name": "Atomic Aura",
+    "description": "Awarded for owning a Citizen of Vibetown with the Science Goggles trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/science_goggles_1759173835714.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/science_goggles_1759173835714_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Science Goggles",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 15
+  },
+  {
+    "id": "astro_balls",
+    "badgeId": "astro_balls",
+    "name": "Stellar Spheres",
+    "description": "Awarded for owning a Citizen of Vibetown with an Astronaut White Helmet trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/astro_balls_1759173838889.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/astro_balls_1759173838889_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Hair",
+        "value": "Astronaut White",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 16
+  },
+  {
+    "id": "doge",
+    "badgeId": "doge",
+    "name": "Shiba Syndicate",
+    "description": "Awarded for owning a Citizen of Vibetown with a Doge Hoodie.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/doge_1759173842640.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/doge_1759173842640_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Hoodie Up Doge",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 17
+  },
+  {
+    "id": "pepe",
+    "badgeId": "pepe",
+    "name": "Pepe Posse",
+    "description": "Awarded for owning a Citizen of Vibetown with a Pepe Hoodie.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/pepe_1759173846260.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/pepe_1759173846260_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Hoodie Up Pepe",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 18
+  },
+  {
+    "id": "rainbow_visor",
+    "badgeId": "rainbow_visor",
+    "name": "Hue Got This",
+    "description": "Awarded for owning a Citizen of Vibetown with a Rainbow Visor trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/rainbow_visor_1759173849941.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/rainbow_visor_1759173849941_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Rainbow Visor",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 19
+  },
+  {
+    "id": "rainbow_bubble_goggles",
+    "badgeId": "rainbow_bubble_goggles",
+    "name": "Bubble Visionary",
+    "description": "Awarded for owning a Citizen of Vibetown with a Rainbow Bubble Goggles trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/rainbow_bubble_goggles_1759173853819.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/rainbow_bubble_goggles_1759173853819_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Bubble Goggles",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 20
+  },
+  {
+    "id": "gamer",
+    "badgeId": "gamer",
+    "name": "360 No Scope",
+    "description": "Awarded for owning a Citizen of Vibetown with the Pro Gamer Glasses trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/gamer_1759173856821.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/gamer_1759173856821_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Pro Gamer Glasses",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 21
+  },
+  {
+    "id": "sweettooth",
+    "badgeId": "sweettooth",
+    "name": "Sugar Rush",
+    "description": "Awarded for owning a Citizen of Vibetown with a Sweettooth Beard.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/sweettooth_1759173860105.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/sweettooth_1759173860105_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Beard Sweettooth",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 22
+  },
+  {
+    "id": "checkmate",
+    "badgeId": "checkmate",
+    "name": "No Pawn Intended",
+    "description": "Awarded for owning a Citizen of Vibetown with the Checkmate Glasses trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/checkmate_1759173863329.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/checkmate_1759173863329_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Checkmate Glasses",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 23
+  },
+  {
+    "id": "shower",
+    "badgeId": "shower",
+    "name": "Soaked N' Stoked",
+    "description": "Awarded for owning a Citizen of Vibetown with a Shower trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/shower_1759173865972.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/shower_1759173865972_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Shower",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 24
+  },
+  {
+    "id": "baller",
+    "badgeId": "baller",
+    "name": "Vibetown Baller",
+    "description": "Awarded for owning a Citizen of Vibetown with a Baller trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/baller_1759173868839.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/baller_1759173868839_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Baller",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 25
+  },
+  {
+    "id": "plants",
+    "badgeId": "plants",
+    "name": "Aloe You Vera Much",
+    "description": "Awarded for owning a Citizen of Vibetown with the Plants trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/plants_1759173871973.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/plants_1759173871973_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Farmer Plants",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 26
+  },
+  {
+    "id": "rainbow_boombox",
+    "badgeId": "rainbow_boombox",
+    "name": "Bass in Your Face",
+    "description": "Awarded for owning a Citizen of Vibetown with a Rainbow Boombox trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/rainbow_boombox_1759173875165.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/rainbow_boombox_1759173875165_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Rainbow Boombox",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 27
+  },
+  {
+    "id": "electric_rings",
+    "badgeId": "electric_rings",
+    "name": "Watt's Up",
+    "description": "Awarded for owning a Citizen of Vibetown with the Blue Electric Rings trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/electric_rings_1759173878797.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/electric_rings_1759173878797_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Hair",
+        "value": "Blue Electric Rings",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 28
+  },
+  {
+    "id": "king",
+    "badgeId": "king",
+    "name": "Vibetown Royalty",
+    "description": "Awarded for owning a Citizen of Vibetown with a Royal Crown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/king_1759173882056.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/king_1759173882056_hq.webp",
+    "category": "Trait",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Hair",
+        "value": "Royal Crown Gold",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 29
+  },
+  {
+    "id": "poker_face",
+    "badgeId": "poker_face",
+    "name": "Pocket Rockets",
+    "description": "Awarded for owning a Citizen of Vibetown with the Poker Face trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/poker_face_1759173884906.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/poker_face_1759173884906_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Poker Face",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 30
+  },
+  {
+    "id": "toy_bricks",
+    "badgeId": "toy_bricks",
+    "name": "Brick By Brick",
+    "description": "Awarded for owning a Citizen of Vibetown with the Toy Bricks trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/toy_bricks_1759173887659.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/toy_bricks_1759173887659_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Toy Bricks",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 31
+  },
+  {
+    "id": "billiards",
+    "badgeId": "billiards",
+    "name": "Rack Em' Up",
+    "description": "Awarded for owning a Citizen of Vibetown with Billiards Glasses.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/billiards_1759173890603.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/billiards_1759173890603_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Billiards Glasses",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 32
+  },
+  {
+    "id": "lamp",
+    "badgeId": "lamp",
+    "name": "I Love Lamp",
+    "description": "Awarded for owning a Citizen of Vibetown with a Lamp trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/lamp_1759173892925.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/lamp_1759173892925_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Hair",
+        "value": "Lamp Red",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 33
+  },
+  {
+    "id": "captain",
+    "badgeId": "captain",
+    "name": "Oh Captain My Captain",
+    "description": "Awarded for owning a Citizen of Vibetown with a Captain Hat.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/captain_1759173895611.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/captain_1759173895611_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Hair",
+        "value": "Captain Hat",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 34
+  },
+  {
+    "id": "suited_up",
+    "badgeId": "suited_up",
+    "name": "Suited Up",
+    "description": "Own any Suited Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/suited_up_1759173934070.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/suited_up_1759173934070_hq.webp",
+    "category": "Trait",
+    "rarity": "Common",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Suit",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 47
+  },
+  {
+    "id": "gud_meat",
+    "badgeId": "gud_meat",
+    "name": "Gud Meat",
+    "description": "Own any Citizen of Vibetown with beef pin or print iconography.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/gud_meat_1759173936766.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/gud_meat_1759173936766_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "alternative_traits",
+      "config": {
+        "alternatives": [
+          {
+            "traitType": "Body",
+            "value": "Suit Red"
+          },
+          {
+            "traitType": "Body",
+            "value": "Leather Jacket Cream"
+          },
+          {
+            "traitType": "Body",
+            "value": "Short Sleeve Button Up Red Pepper Pattern"
+          },
+          {
+            "traitType": "Body",
+            "value": "Puffy Vest Cream"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 48
+  },
+  {
+    "id": "vibefoot_fan_club",
+    "badgeId": "vibefoot_fan_club",
+    "name": "Vibefoot Fan Club",
+    "description": "Own a Vibefoot Fan Club Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/vibefoot_fan_club_1759173939420.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/vibefoot_fan_club_1759173939420_hq.webp",
+    "category": "Trait",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "TShirt Vibefoot Fan Club",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 49
+  },
+  {
+    "id": "seas_the_day",
+    "badgeId": "seas_the_day",
+    "name": "Seas The Day",
+    "description": "Own a Citizen of Vibetown with an eyepatch.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/seas_the_day_1759173945252.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/seas_the_day_1759173945252_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Eyepatch",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 51
+  },
+  {
+    "id": "no_face_no_problem",
+    "badgeId": "no_face_no_problem",
+    "name": "No Face, No Problem",
+    "description": "Own a Citizen of Vibetown with a \"No Face\" trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/no_face_no_problem_1759173948247.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/no_face_no_problem_1759173948247_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "alternative_traits",
+      "config": {
+        "alternatives": [
+          {
+            "traitType": "Face",
+            "value": "No Face"
+          },
+          {
+            "traitType": "Face",
+            "value": "Glass Hexagon"
+          },
+          {
+            "traitType": "Face",
+            "value": "Gold Vibe Hand"
+          },
+          {
+            "traitType": "Hair",
+            "value": "Astronaut White"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 52
+  },
+  {
+    "id": "varsity_vibes",
+    "badgeId": "varsity_vibes",
+    "name": "Varsity Vibes",
+    "description": "Own a Citizen of Vibetown with a letterman jacket.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/varsity_vibes_1759173950723.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/varsity_vibes_1759173950723_hq.webp",
+    "category": "Trait",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Letterman Jacket",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 53
+  },
+  {
+    "id": "hail_mary_heroes",
+    "badgeId": "hail_mary_heroes",
+    "name": "Hail Mary Heroes",
+    "description": "Own a Citizen of Vibetown with a football helmet trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/hail_mary_heroes_1759173953534.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/hail_mary_heroes_1759173953534_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Hair",
+        "value": "Football Helmet",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 54
+  },
+  {
+    "id": "great_stacheby",
+    "badgeId": "great_stacheby",
+    "name": "Great 'Stacheby",
+    "description": "Own a Citizen of Vibetown with a stache or beard facial hair trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/great_stacheby_1759173956903.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/great_stacheby_1759173956903_hq.webp",
+    "category": "Trait",
+    "rarity": "Common",
+    "requirement": {
+      "type": "alternative_traits",
+      "config": {
+        "alternatives": [
+          {
+            "traitType": "Face",
+            "value": "Stache"
+          },
+          {
+            "traitType": "Face",
+            "value": "Beard"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 55
+  },
+  {
+    "id": "vibetown_social_club",
+    "badgeId": "vibetown_social_club",
+    "name": "Vibetown Social Club",
+    "description": "Own a Citizen of Vibetown with a \"Vibetown Social Club\" typography or pin element.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/vibetown_social_club_1759173960008.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/vibetown_social_club_1759173960008_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "alternative_traits",
+      "config": {
+        "alternatives": [
+          {
+            "traitType": "Body",
+            "value": "Hoodie White"
+          },
+          {
+            "traitType": "Body",
+            "value": "Overalls Shirt Pink Purple"
+          },
+          {
+            "traitType": "Body",
+            "value": "Hooded Jacket Pink"
+          },
+          {
+            "traitType": "Body",
+            "value": "Retro Windbreaker Pink"
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 56
+  },
+  {
+    "id": "necks_level",
+    "badgeId": "necks_level",
+    "name": "Necks Level",
+    "description": "Own a Citizen of Vibetown with a Turtleneck.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/necks_level_1759173966777.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/necks_level_1759173966777_hq.webp",
+    "category": "Trait",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Turtleneck",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 58
+  },
+  {
+    "id": "fur_the_win",
+    "badgeId": "fur_the_win",
+    "name": "Fur The Win",
+    "description": "Own a Citizen of Vibetown with a Fur Coat.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/fur_the_win_1759173969828.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/fur_the_win_1759173969828_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Fur Jacket",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 59
+  },
+  {
+    "id": "nounish_vibes",
+    "badgeId": "nounish_vibes",
+    "name": "Nounish Vibes",
+    "description": "Own a Citizen of Vibetown with Nouns glasses.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/nounish_vibes_1759173973218.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/nounish_vibes_1759173973218_hq.webp",
+    "category": "Trait",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Nouns Glasses",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 60
+  },
+  {
+    "id": "tanks_a_lot",
+    "badgeId": "tanks_a_lot",
+    "name": "Tanks A Lot",
+    "description": "Own a Citizen of Vibetown with a Diver Mask.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/tanks_a_lot_1759173976815.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/tanks_a_lot_1759173976815_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Diver Mask Black Chrome",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 61
+  },
+  {
+    "id": "sir_vibes_a_lot",
+    "badgeId": "sir_vibes_a_lot",
+    "name": "Sir Vibes-a-lot",
+    "description": "Own a Citizen of Vibetown with a Knight Helmet.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/sir_vibes_a_lot_1759173980023.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/sir_vibes_a_lot_1759173980023_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Hair",
+        "value": "Knight Helm",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 62
+  },
+  {
+    "id": "full_send_maverick",
+    "badgeId": "full_send_maverick",
+    "name": "Full Send Maverick",
+    "description": "Own a Citizen of Vibetown with a Pilot Jacket.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/full_send_maverick_1759173982959.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/full_send_maverick_1759173982959_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Pilot Jacket",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 63
+  },
+  {
+    "id": "straw_man",
+    "badgeId": "straw_man",
+    "name": "Straw Man",
+    "description": "Own a Citizen of Vibetown with a Straw Hat.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/straw_man_1759173985595.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/straw_man_1759173985595_hq.webp",
+    "category": "Trait",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Hair",
+        "value": "Straw Hat Cream",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 64
+  },
+  {
+    "id": "ladies_night",
+    "badgeId": "ladies_night",
+    "name": "Ladies Night",
+    "description": "Own any female Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/ladies_night_1759173991853.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/ladies_night_1759173991853_hq.webp",
+    "category": "Trait",
+    "rarity": "Common",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Hair",
+        "value": "Female",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 66
+  },
+  {
+    "id": "showtime",
+    "badgeId": "showtime",
+    "name": "Showtime",
+    "description": "Own a Citizen of Vibetown with Gold Clothing.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/showtime_1759173995136.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/showtime_1759173995136_hq.webp",
+    "category": "Trait",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Gold",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 67
+  },
+  {
+    "id": "party_in_the_back",
+    "badgeId": "party_in_the_back",
+    "name": "Party In The Back",
+    "description": "Own a Citizen of Vibetown with a Mullet.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/party_in_the_back_1759173998578.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/party_in_the_back_1759173998578_hq.webp",
+    "category": "Trait",
+    "rarity": "Common",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Hair",
+        "value": "Mullet",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 68
+  },
+  {
+    "id": "funky_fresh",
+    "badgeId": "funky_fresh",
+    "name": "Funky Fresh",
+    "description": "Own a Citizen of Vibetown with Headphones.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/funky_fresh_1759174001274.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/funky_fresh_1759174001274_hq.webp",
+    "category": "Trait",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Hair",
+        "value": "Headphones",
+        "matchSubstring": true
+      }
+    },
+    "enabled": true,
+    "sortOrder": 69
+  },
+  {
+    "id": "high_noon_hustler",
+    "badgeId": "high_noon_hustler",
+    "name": "High Noon Hustler",
+    "description": "Own a Citizen of Vibetown with either a Wide Brim or Dundee Hat.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/high_noon_hustler_1759174007143.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/high_noon_hustler_1759174007143_hq.webp",
+    "category": "Trait",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "alternative_traits",
+      "config": {
+        "alternatives": [
+          {
+            "traitType": "Hair",
+            "value": "Wide Brim",
+            "matchSubstring": true
+          },
+          {
+            "traitType": "Hair",
+            "value": "Dundee Hat",
+            "matchSubstring": true
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 71
+  },
+  {
+    "id": "visooor_enjoyooor",
+    "badgeId": "visooor_enjoyooor",
+    "name": "Visooor Enjoyooor",
+    "description": "Own a Citizen of Vibetown with any Visor face trait.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/visooor_enjoyooor_1759174010233.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/visooor_enjoyooor_1759174010233_hq.webp",
+    "category": "Trait",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "alternative_traits",
+      "config": {
+        "alternatives": [
+          {
+            "traitType": "Face",
+            "value": "Robo Visor Dot Eyes",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Face",
+            "value": "Robo Visor GVC",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Face",
+            "value": "Robo Visor Dots Full",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Face",
+            "value": "Laser Visor",
+            "matchSubstring": false
+          },
+          {
+            "traitType": "Face",
+            "value": "Rainbow Visor",
+            "matchSubstring": false
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 72
+  },
+  {
+    "id": "homerun",
+    "badgeId": "homerun",
+    "name": "Homerun",
+    "description": "Own any Citizen of Vibetown with either a Forwards or Backwards Ballcap.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/homerun_1759174013207.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/homerun_1759174013207_hq.webp",
+    "category": "Trait",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "alternative_traits",
+      "config": {
+        "alternatives": [
+          {
+            "traitType": "Hair",
+            "value": "Ballcap Forward",
+            "matchSubstring": true
+          },
+          {
+            "traitType": "Hair",
+            "value": "Backwards Hat",
+            "matchSubstring": true
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 73
+  },
+  {
+    "id": "hoodie_up_society",
+    "badgeId": "hoodie_up_society",
+    "name": "Hoodie Up Society",
+    "description": "Own a Citizen of Vibetown with a Hoodie Up.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/hoodie_up_society_1759174015984.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/hoodie_up_society_1759174015984_hq.webp",
+    "category": "Trait",
+    "rarity": "Common",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Body",
+        "value": "Hoodie Up",
+        "matchSubstring": true,
+        "excludeSubstrings": [
+          "Pepe",
+          "Doge"
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 74
+  },
+  {
+    "id": "zoom_in_vibe_out",
+    "badgeId": "zoom_in_vibe_out",
+    "name": "Zoom In, Vibe Out",
+    "description": "Own a Citizen of Vibetown with a Monocle.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/zoom_in_vibe_out_1759174018930.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/zoom_in_vibe_out_1759174018930_hq.webp",
+    "category": "Trait",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "trait_match",
+      "config": {
+        "traitType": "Face",
+        "value": "Monocle",
+        "matchSubstring": false
+      }
+    },
+    "enabled": true,
+    "sortOrder": 75
+  },
+  {
+    "id": "full_throttle",
+    "badgeId": "full_throttle",
+    "name": "Full Throttle",
+    "description": "Own a Citizen of Vibetown with a Motorcycle Helmet.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/full_throttle_1759174022912.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/full_throttle_1759174022912_hq.webp",
+    "category": "Trait",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "alternative_traits",
+      "config": {
+        "alternatives": [
+          {
+            "traitType": "Hair",
+            "value": "Moto Helmet Visor Up",
+            "matchSubstring": true
+          },
+          {
+            "traitType": "Hair",
+            "value": "Moto Helmet Visor Down",
+            "matchSubstring": true
+          }
+        ]
+      }
+    },
+    "enabled": true,
+    "sortOrder": 76
+  },
+  {
+    "id": "rainbow_citizen",
+    "badgeId": "rainbow_citizen",
+    "name": "Rainbow Maxi",
+    "description": "Awarded for owning a Rainbow type Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/rainbow_citizen_1759173791000.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/rainbow_citizen_1759173791000_hq.webp",
+    "category": "Type",
+    "rarity": "Rare",
+    "requirement": {
+      "type": "type_match",
+      "config": {
+        "value": "Rainbow"
+      }
+    },
+    "enabled": true,
+    "sortOrder": 0
+  },
+  {
+    "id": "gold_member",
+    "badgeId": "gold_member",
+    "name": "Golden Fever",
+    "description": "Awarded for owning a Gold type Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/gold_member_1759173793799.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/gold_member_1759173793799_hq.webp",
+    "category": "Type",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "type_match",
+      "config": {
+        "value": "Gold"
+      }
+    },
+    "enabled": true,
+    "sortOrder": 1
+  },
+  {
+    "id": "grayscale_seeker",
+    "badgeId": "grayscale_seeker",
+    "name": "Grailscale Hunter",
+    "description": "Awarded for owning a Grayscale type Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/grayscale_seeker_1759173797002.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/grayscale_seeker_1759173797002_hq.webp",
+    "category": "Type",
+    "rarity": "Uncommon",
+    "requirement": {
+      "type": "type_match",
+      "config": {
+        "value": "Grayscale"
+      }
+    },
+    "enabled": true,
+    "sortOrder": 2
+  },
+  {
+    "id": "any_gvc",
+    "badgeId": "any_gvc",
+    "name": "Official Citizen of Vibetown",
+    "description": "Awarded for owning any Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/any_gvc_1759173799963.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/any_gvc_1759173799963_hq.webp",
+    "category": "Type",
+    "rarity": "Common",
+    "requirement": {
+      "type": "type_match",
+      "config": {
+        "value": ""
+      }
+    },
+    "enabled": true,
+    "sortOrder": 3
+  },
+  {
+    "id": "robot_lover",
+    "badgeId": "robot_lover",
+    "name": "Love at First Byte",
+    "description": "Awarded for owning a Robot type Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/robot_lover_1759173802514.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/robot_lover_1759173802514_hq.webp",
+    "category": "Type",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "type_match",
+      "config": {
+        "value": "Robot"
+      }
+    },
+    "enabled": true,
+    "sortOrder": 4
+  },
+  {
+    "id": "plastic_lover",
+    "badgeId": "plastic_lover",
+    "name": "Plastic Pioneer",
+    "description": "Awarded for owning a Plastic type Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/plastic_lover_1759173806081.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/plastic_lover_1759173806081_hq.webp",
+    "category": "Type",
+    "rarity": "Epic",
+    "requirement": {
+      "type": "type_match",
+      "config": {
+        "value": "Plastic"
+      }
+    },
+    "enabled": true,
+    "sortOrder": 5
+  },
+  {
+    "id": "gradient_lover",
+    "badgeId": "gradient_lover",
+    "name": "Gradient Gatherer",
+    "description": "Awarded for owning a Gradient type Citizen of Vibetown.",
+    "image": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/optimized/gradient_lover_1759173808918.webp",
+    "highQualityImage": "https://sl1vlqqspml5zngx.public.blob.vercel-storage.com/badges/high-quality/gradient_lover_1759173808918_hq.webp",
+    "category": "Type",
+    "rarity": "Common",
+    "requirement": {
+      "type": "type_match",
+      "config": {
+        "value": "Gradient"
+      }
+    },
+    "enabled": true,
+    "sortOrder": 6
+  }
+]

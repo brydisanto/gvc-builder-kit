@@ -153,6 +153,30 @@ const batch = await getEarnedBadgesBatch(["0xabc...", "0xdef..."]);
 // { "0xabc...": ["vibestr_bounty_hunter"], "0xdef...": [] }
 ```
 
+### Badge Engine (`lib/badge-engine.ts`)
+
+For offline evaluation, what-if scenarios, or showing which specific token earned a badge. Zero dependencies.
+
+```ts
+import { BadgeRuleEngine } from "@/lib/badge-engine";
+import definitions from "@/public/badge-definitions.json";
+
+const engine = new BadgeRuleEngine();
+const earned = engine.evaluateAll(definitions, {
+  tokens: userNftTokens,           // NFT metadata with traits
+  erc20Balances: {                 // VIBESTR balance in base units
+    "0xd0cc2b0efb168bfe1f94a948d8df70fa10257196": 500000n * 10n ** 18n,
+  },
+  erc1155Holdings: {               // HighKey Moments token IDs
+    "0x74fcb6eb2a2d02207b36e804d800687ce78d210c": ["1", "2", "3"],
+  },
+  earnedBadgeIds: [],              // from getEarnedBadges() or []
+});
+// earned: [{ badgeId, tokenId, earnedAt }]
+```
+
+Use `getBadgeLeaderboard()` for current state. Use the engine for what the leaderboard can't do (new wallets, hypothetical scenarios, showing which token earned which badge).
+
 ### Badge Data Sources (101 total)
 
 | Source | Count |
