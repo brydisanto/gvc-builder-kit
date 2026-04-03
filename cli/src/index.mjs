@@ -32,7 +32,7 @@ function showHeader() {
   console.log();
   console.log(brand("  GVC BUILDER KIT"));
   console.log(dim("  ─────────────────────────────────"));
-  console.log(dim("  Build something cool for the Good Vibes Club"));
+  console.log(dim("  Build something cool for Good Vibes Club"));
   console.log();
 }
 
@@ -725,7 +725,7 @@ async function main() {
 
   const hasClaude = checkClaudeCLI();
 
-  p.intro(gold("Let's build something for the Good Vibes Club"));
+  p.intro(gold("Let's build something for Good Vibes Club"));
 
   // ── Project name ──
   const projectName = await p.text({
