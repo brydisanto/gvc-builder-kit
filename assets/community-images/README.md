@@ -1,6 +1,6 @@
 # GVC Community Images
 
-125 images and GIFs from the Good Vibes Club universe, organized for easy use in your projects.
+152 images and GIFs from the Good Vibes Club universe, organized for easy use in your projects.
 
 ## How to use
 
@@ -114,6 +114,26 @@ Ready-to-use banner images for headers and social.
 Tileable patterns for backgrounds.
 
 - `icon-pattern.jpg`
+
+### backgrounds/ (27 files)
+High-res background images for hero sections, headers, and full-bleed layouts.
+
+**Vibetown scenes**
+- `vibetown-wide.jpg`, `vibetown-aerial.jpg`, `vibetown-nature.jpg`
+- `vibetown-gold-beach.jpg`, `vibetown-vibestr-truck.jpg`
+
+**Chateau de GODL**
+- `chateau-backside-wide.jpg`, `chateau-throne-room.jpg`
+
+**Characters**
+- `craig-car-shot.jpg`, `craig-radio-close.jpg`, `craig-vibestr-mountaintop.jpg`
+- `official-citizen-01.jpg` through `official-citizen-05.jpg`
+- `closeup-11.jpg`, `closeup-15.jpg`, `closeup-18.jpg`, `closeup-21.jpg`, `closeup-32.jpg`
+
+**Locations**
+- `azuls-surf-shack.jpg`, `cloud-factory.jpg`, `flag-hurricane-day.jpg`
+- `surfing.jpg`, `surfing-wide.jpg`
+- `vibefoot-hammock.jpg`, `vibefoot-field.jpg`
 
 ### behind-the-scenes/ (1 file)
 Behind-the-scenes production shots.
