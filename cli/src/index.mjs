@@ -451,6 +451,94 @@ function generateStarterPage(templateType, projectName, description, addons) {
     ? `I also want these features: ${addonListStr}`
     : '';
 
+  const templateInstruction = TEMPLATE_INSTRUCTIONS[templateType] || TEMPLATE_INSTRUCTIONS["blank-canvas"];
+
+  // Build a self-contained prompt with all GVC context baked in
+  // so Claude.ai works without access to local CLAUDE.md
+  const promptParts = [
+    `I want to build a project called "${projectName}" for the Good Vibes Club (GVC) community.`,
+    ``,
+    `Here is what I want to build:`,
+    description,
+    ``,
+    `Starting point: ${templateLabel}`,
+    templateInstruction,
+    ``,
+  ];
+
+  if (addonPromptLine) promptParts.push(addonPromptLine, ``);
+
+  promptParts.push(
+    `Build me a complete, working, single-page prototype. Use Next.js App Router, TypeScript, Tailwind CSS, and Framer Motion.`,
+    ``,
+    `## GVC Brand System (use this exactly)`,
+    ``,
+    `Colors:`,
+    `- Gold (primary): #FFE048`,
+    `- Black (background): #050505`,
+    `- Dark (cards/panels): #121212`,
+    `- Gray (borders): #1F1F1F`,
+    `- Green (success): #2EFF2E`,
+    `- Pink accent: #FF6B9D`,
+    `- Orange accent: #FF5F1F`,
+    ``,
+    `Design:`,
+    `- Dark backgrounds with gold accents throughout`,
+    `- Rounded corners (12-16px for cards, full for pills)`,
+    `- Gold glow on hover: shadow-[0_0_20px_rgba(255,224,72,0.3)]`,
+    `- Generous whitespace, let things breathe`,
+    `- Framer Motion for entrance animations (fade up, stagger children)`,
+    `- Shimmer effect on key headlines (animated gold gradient text)`,
+    ``,
+    `Typography:`,
+    `- Headlines: bold serif font, premium feel (use a serif from Google Fonts as a stand-in)`,
+    `- Body: clean sans-serif, generous line height`,
+    ``,
+    `## GVC Data APIs (no API key needed, free to call)`,
+    ``,
+    `All data comes from: https://api-hazel-pi-72.vercel.app/api`,
+    ``,
+    `| Endpoint | Returns |`,
+    `|---|---|`,
+    `| GET /stats | Floor price, market cap, 24h volume, total owners, total sales |`,
+    `| GET /holders?limit=50 | All holders ranked by token count |`,
+    `| GET /recent-sales?limit=10 | Recent sales with buyer, seller, price, token ID, image URL |`,
+    `| GET /sales-history?limit=100 | Historical sales data |`,
+    `| GET /activity | 30-day buys/sells, accumulator leaderboard |`,
+    `| GET /vibestr | VIBESTR token data |`,
+    `| GET /vibestr-history | 91 daily VIBESTR snapshots |`,
+    `| GET /market-depth | Bid/offer depth at each price level |`,
+    `| GET /traders | Profitable flips with buy/sell prices |`,
+    `| GET /wallet?address=0x... | ENS name, Twitter handle for a wallet |`,
+    `| GET /mentions | Twitter/X mentions with engagement stats |`,
+    `| GET /badge-leaderboard | All wallets with their badges, rarity counts |`,
+    `| GET /earned-badges?wallet=0x... | Manually assigned badges for a wallet |`,
+    ``,
+    `Example:`,
+    `\`\`\`ts`,
+    `const stats = await fetch("https://api-hazel-pi-72.vercel.app/api/stats").then(r => r.json());`,
+    `// { floorPrice: 0.65, numOwners: 1513, marketCapUsd: 9247054, volume24h: 2.1, ... }`,
+    `\`\`\``,
+    ``,
+    `## Smart Contracts`,
+    `- GVC NFT: 0xB8Ea78fcaCEf50d41375E44E6814ebbA36Bb33c4 (ERC-721, 6969 tokens)`,
+    `- VIBESTR Token: 0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196`,
+    `- OpenSea Collection: good-vibes-club`,
+    `- Public RPC: https://ethereum-rpc.publicnode.com`,
+    ``,
+    `## Token Prices`,
+    `- ETH: https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd`,
+    `- VIBESTR: https://api.dexscreener.com/latest/dex/tokens/0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196`,
+    ``,
+    `## NFT Images`,
+    `Use the image URLs returned by the /recent-sales or /badge-leaderboard endpoints. They come from the OpenSea CDN (i.seadn.io).`,
+    ``,
+    `Now build the complete prototype. Make it look premium and polished. Use real data from the APIs above wherever relevant.`,
+  );
+
+  const fullPrompt = promptParts.join("\n");
+  const promptJson = JSON.stringify(fullPrompt);
+
   // Use {{PLACEHOLDER}} style and .replaceAll() to avoid nested template literal escaping issues
   const page = `"use client";
 
@@ -458,16 +546,7 @@ import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-const CLAUDE_PROMPT = [
-  'I want to build a project called "{{SAFE_NAME}}" for the Good Vibes Club (GVC) community.',
-  '',
-  'Here is what I want to build:',
-  '{{SAFE_DESC}}',
-  '',
-  'Starting point: {{TEMPLATE_LABEL}}',
-  '{{ADDON_PROMPT_LINE}}',
-  'Please read my CLAUDE.md file first — it has the full brand system, API references, and code patterns. Then build me a working prototype based on my description above. Use the GVC brand system throughout (dark backgrounds, gold accents, Brice/Mundial fonts, Framer Motion animations).',
-].join("\\n");
+const CLAUDE_PROMPT = {{PROMPT_JSON}};
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
@@ -635,7 +714,8 @@ export default function Home() {
     .replaceAll('{{SAFE_DESC}}', description.replace(/'/g, "\\'").replace(/"/g, '\\"'))
     .replaceAll('{{TEMPLATE_LABEL}}', templateLabel)
     .replaceAll('{{ADDON_COUNT_HTML}}', addonCountHtml)
-    .replaceAll('{{ADDON_PROMPT_LINE}}', addonPromptLine);
+    .replaceAll('{{ADDON_PROMPT_LINE}}', addonPromptLine)
+    .replaceAll('{{PROMPT_JSON}}', promptJson);
 }
 
 // ── Generate example prompts based on template + addons ─────────────
@@ -967,7 +1047,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.1.8");
+    console.log("create-gvc-app v0.1.9");
     return;
   }
 
@@ -1166,7 +1246,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.1.8")
+      dim("// gvc-builder-kit v0.1.9")
   );
 }
 

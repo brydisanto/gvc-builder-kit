@@ -124,23 +124,68 @@ ${instruction}
 
 ${addonList ? `I also want these features: ${addonList}` : ""}
 
-Please use the GVC brand system:
-- Colors: Gold #FFE048 (primary), Black #050505 (background), Dark #121212 (cards), Gray #1F1F1F (borders)
-- Typography: Brice font for headlines (bold, premium feel), Mundial font for body text
-- Design: Dark backgrounds, gold accents, rounded corners, gold glow effects on hover, generous whitespace
-- Animations: Use Framer Motion for entrance animations, shimmer effect on key headlines
-- Tech: Next.js with App Router, TypeScript, Tailwind CSS, Framer Motion
+Build me a complete, working, single-page prototype. Use Next.js App Router, TypeScript, Tailwind CSS, and Framer Motion.
 
-Smart Contract and API Reference:
-- GVC NFT Contract: 0xB8Ea78fcaCEf50d41375E44E6814ebbA36Bb33c4
+## GVC Brand System (use this exactly)
+
+Colors:
+- Gold (primary): #FFE048
+- Black (background): #050505
+- Dark (cards/panels): #121212
+- Gray (borders): #1F1F1F
+- Green (success): #2EFF2E
+- Pink accent: #FF6B9D
+- Orange accent: #FF5F1F
+
+Design:
+- Dark backgrounds with gold accents throughout
+- Rounded corners (12-16px for cards, full for pills)
+- Gold glow on hover: shadow-[0_0_20px_rgba(255,224,72,0.3)]
+- Generous whitespace, let things breathe
+- Framer Motion for entrance animations (fade up, stagger children)
+- Shimmer effect on key headlines (animated gold gradient text)
+
+Typography:
+- Headlines: bold serif font, premium feel (use a serif from Google Fonts as a stand-in)
+- Body: clean sans-serif, generous line height
+
+## GVC Data APIs (no API key needed, free to call)
+
+All data comes from: https://api-hazel-pi-72.vercel.app/api
+
+| Endpoint | Returns |
+|---|---|
+| GET /stats | Floor price, market cap, 24h volume, total owners, total sales |
+| GET /holders?limit=50 | All holders ranked by token count |
+| GET /recent-sales?limit=10 | Recent sales with buyer, seller, price, token ID, image URL |
+| GET /sales-history?limit=100 | Historical sales data |
+| GET /activity | 30-day buys/sells, accumulator leaderboard |
+| GET /vibestr | VIBESTR token data |
+| GET /market-depth | Bid/offer depth at each price level |
+| GET /traders | Profitable flips with buy/sell prices |
+| GET /wallet?address=0x... | ENS name, Twitter handle for a wallet |
+| GET /badge-leaderboard | All wallets with their badges, rarity counts |
+
+Example:
+\`\`\`ts
+const stats = await fetch("https://api-hazel-pi-72.vercel.app/api/stats").then(r => r.json());
+// { floorPrice: 0.65, numOwners: 1513, marketCapUsd: 9247054, volume24h: 2.1, ... }
+\`\`\`
+
+## Smart Contracts
+- GVC NFT: 0xB8Ea78fcaCEf50d41375E44E6814ebbA36Bb33c4 (ERC-721, 6969 tokens)
 - VIBESTR Token: 0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196
-- OpenSea Collection Slug: good-vibes-club
-- OpenSea API: https://api.opensea.io/api/v2
-- ETH Price: https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd
-- VIBESTR Price: https://api.dexscreener.com/latest/dex/tokens/0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196
+- OpenSea Collection: good-vibes-club
 - Public RPC: https://ethereum-rpc.publicnode.com
 
-Help me set up the project and start building. Walk me through each step.`;
+## Token Prices
+- ETH: https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd
+- VIBESTR: https://api.dexscreener.com/latest/dex/tokens/0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196
+
+## NFT Images
+Use the image URLs returned by the /recent-sales or /badge-leaderboard endpoints. They come from the OpenSea CDN (i.seadn.io).
+
+Now build the complete prototype. Make it look premium and polished. Use real data from the APIs above wherever relevant.`;
 
     return prompt;
   }, [projectName, template, description, addons]);
