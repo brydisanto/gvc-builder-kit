@@ -17,13 +17,16 @@ import Image from "next/image";
 // Template label map
 const TEMPLATE_LABELS: Record<string, string> = {
   "project-site": "Project Website",
-  tracker: "Tracker",
+  tracker: "Tracker / Dashboard",
   "mini-game": "Game",
   gallery: "Gallery",
   "vote-and-rank": "Vote & Rank",
-  "community-page": "Community Hub",
-  "blog-journal": "Blog / Journal",
-  "link-in-bio": "Links Page",
+  "badge-wallet-tool": "Badge / Wallet Lookup",
+  "rarity-checker": "Rarity / Price Checker",
+  leaderboard: "Community Leaderboard",
+  "sweep-tracker": "Sweep / Floor Tracker",
+  "card-maker": "Card / Image Maker",
+  "profile-page": "Personal GVC Profile",
   "blank-canvas": "Blank Canvas",
 };
 
@@ -39,12 +42,18 @@ const TEMPLATE_INSTRUCTIONS: Record<string, string> = {
     "Build a gallery page with: responsive image grid (3 columns desktop, 2 mobile) with gold glow cards on hover, filtering or search, and an upload/submit form.",
   "vote-and-rank":
     "Build a voting page with: 1v1 card matchups where users pick a winner, a results leaderboard sorted by wins, keyboard shortcuts for fast voting.",
-  "community-page":
-    "Build a community hub with: member spotlight grid, activity feed or recent updates section, badge showcase wall, and links to GVC socials.",
-  "blog-journal":
-    "Build a blog with: post list page showing title, date, and preview text, individual post pages with full content, and markdown support.",
-  "link-in-bio":
-    "Build a links page with: profile section (avatar, name, bio), vertical list of link buttons with hover effects, social icons at the bottom. Mobile-first.",
+  "badge-wallet-tool":
+    "Build a wallet lookup tool with: an input field where users paste an Ethereum address, a results section showing their GVC NFTs, earned badges with tier glow effects, and holder stats. Use getBadgeLeaderboard() and resolveWallet() from lib/gvc-api.ts.",
+  "rarity-checker":
+    "Build a token lookup tool with: an input field for GVC token ID, a display showing the NFT image, all traits, rarity rank, and recent sales history. Use badge-definitions.json to show which badges that token qualifies for.",
+  leaderboard:
+    "Build a community leaderboard with: a ranked table of holders sorted by token count or badge count, tabs for different views, and wallet identity resolution showing ENS names. Use getHolders() and getBadgeLeaderboard() from lib/gvc-api.ts.",
+  "sweep-tracker":
+    "Build a floor/sweep tracker with: a stats panel showing current floor price, 24h volume, and total listings, a live feed of recent sales, and a chart showing floor price history. Use getStats(), getRecentSales(), and getSalesHistory() from lib/gvc-api.ts.",
+  "card-maker":
+    "Build a shareable image maker with: a canvas area where users can pick a background, overlay GVC character images or badge icons, add custom text with Brice/Mundial fonts, and download as PNG. Include preset templates like profile cards and badge flex cards.",
+  "profile-page":
+    "Build a personal GVC profile page with: wallet connect button, a grid showing owned GVCs, earned badges with tier glow effects, holder stats, and a shareable URL. Use getBadgeLeaderboard() and getHolders() from lib/gvc-api.ts.",
   "blank-canvas":
     "This is a blank start with the GVC brand system. Help me build whatever I describe.",
 };
