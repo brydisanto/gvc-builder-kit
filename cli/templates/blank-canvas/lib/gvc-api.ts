@@ -202,3 +202,81 @@ export function getMentions() {
     }[];
   }>("/mentions");
 }
+
+// ── Badge Leaderboard (from goodvibesclub.io) ────────────────────────
+
+const GVC_BASE = "https://www.goodvibesclub.io/api";
+
+export interface BadgeLeaderboard {
+  /** Address -> array of badge IDs. Pre-computed across linked wallets. */
+  badges: Record<string, string[]>;
+  /** Badge ID -> holder count. Use for rarity. */
+  ledger: Record<string, number>;
+  /** Address -> profile info (custom name, avatar). */
+  profileData: Record<string, { customName?: string; profileImageUrl?: string }>;
+  /** Global totals. */
+  stats: {
+    addresses: number;
+    addressesWithBadges: number;
+    totalBadgeAssignments: number;
+  };
+}
+
+/**
+ * Get the complete badge leaderboard. This is the fastest way to look up
+ * any wallet's badges, build rankings, or check badge rarity.
+ * Data refreshes roughly every minute. Cache locally for at least 60 seconds.
+ */
+export async function getBadgeLeaderboard(): Promise<BadgeLeaderboard> {
+  const res = await fetch(`${GVC_BASE}/badges`, {
+    next: { revalidate: 60 },
+  });
+  if (!res.ok) throw new Error(`Badge API error: ${res.status}`);
+  return res.json();
+}
+
+/**
+ * Get earned/manual badges for a single wallet (e.g. vibestr_bounty_hunter).
+ * These are badges assigned by GVC admins, not derivable from on-chain data.
+ */
+export async function getEarnedBadges(address: string): Promise<string[]> {
+  const res = await fetch(
+    `${GVC_BASE}/cli/earned-badges?address=${address.toLowerCase()}`
+  );
+  if (!res.ok) return [];
+  const data = await res.json();
+  return data.success ? data.badgeIds : [];
+}
+
+/**
+ * Batch fetch earned badges for multiple wallets (up to 50 per request).
+ * Much more efficient than calling getEarnedBadges per wallet.
+ */
+export async function getEarnedBadgesBatch(
+  addresses: string[]
+): Promise<Record<string, string[]>> {
+  const res = await fetch(`${GVC_BASE}/cli/earned-badges`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ addresses: addresses.map((a) => a.toLowerCase()) }),
+  });
+  if (!res.ok) return {};
+  const data = await res.json();
+  return data.success ? data.results : {};
+}
+
+/**
+ * Look up a single wallet's badges from the leaderboard.
+ * Convenience wrapper around getBadgeLeaderboard().
+ */
+export async function getWalletBadges(address: string): Promise<{
+  badges: string[];
+  profile: { customName?: string; profileImageUrl?: string } | null;
+}> {
+  const lb = await getBadgeLeaderboard();
+  const lower = address.toLowerCase();
+  return {
+    badges: lb.badges[lower] || [],
+    profile: lb.profileData[lower] || null,
+  };
+}

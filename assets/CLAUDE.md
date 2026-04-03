@@ -121,6 +121,56 @@ result.totalUniqueBadges; // total count
 
 Also available: `getVibestrTier(balance)`, `getCollectorMilestones(count)`, `getTokensForBadge(id, map)`, `getBadgesForToken(id, map)`
 
+### Badge Leaderboard API (recommended for most use cases)
+
+The fastest way to look up badges. Returns everything pre-computed.
+
+```ts
+import { getBadgeLeaderboard, getWalletBadges } from "@/lib/gvc-api";
+
+// Get a single wallet's badges
+const { badges, profile } = await getWalletBadges("0xabc...");
+
+// Get the full leaderboard (all wallets, all badges, rarity counts)
+const lb = await getBadgeLeaderboard();
+// lb.badges["0xabc..."] -> ["rainbow_citizen", "mountain_goat", ...]
+// lb.ledger["rainbow_citizen"] -> 252 (holder count, for rarity)
+// lb.profileData["0xabc..."] -> { customName: "vibes.eth", ... }
+```
+
+### Earned Badges API
+
+Some badges are manually assigned by GVC admins (e.g. vibestr_bounty_hunter). These can't be derived from on-chain data.
+
+```ts
+import { getEarnedBadges, getEarnedBadgesBatch } from "@/lib/gvc-api";
+
+const earned = await getEarnedBadges("0xabc...");
+// ["vibestr_bounty_hunter"]
+
+// Batch (up to 50 wallets per request)
+const batch = await getEarnedBadgesBatch(["0xabc...", "0xdef..."]);
+// { "0xabc...": ["vibestr_bounty_hunter"], "0xdef...": [] }
+```
+
+### Badge Data Sources (101 total)
+
+| Source | Count |
+|---|---|
+| NFT trait evaluation | 81 |
+| ERC-20 balance (VIBESTR tiers) | 8 |
+| ERC-1155 ownership (HighKey Moments) | 2 |
+| Milestone (badge count thresholds) | 9 |
+| Manual assignment | 1 |
+
+### Key Contracts
+
+| Contract | Address |
+|---|---|
+| VIBESTR Token | 0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196 (ERC-20, 18 decimals) |
+| HighKey Moments | 0x74fcb6eb2a2d02207b36e804d800687ce78d210c (ERC-1155) |
+| GVC NFT | 0xB8Ea78fcaCEf50d41375E44E6814ebbA36Bb33c4 (ERC-721) |
+
 ## GVC Community API (`lib/gvc-api.ts`)
 
 Live GVC data. No API key needed. No database setup. Just import and use.

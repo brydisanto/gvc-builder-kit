@@ -75,13 +75,13 @@ const COMBO_BADGES: {
 
 const VIBESTR_TIERS: { threshold: number; badge: string }[] = [
   { threshold: 10_000_000, badge: "vibestr_cosmic_tier" },
-  { threshold: 5_000_000, badge: "vibestr_diamond_tier" },
-  { threshold: 1_000_000, badge: "vibestr_gold_tier" },
+  { threshold: 6_900_000, badge: "vibestr_diamond_tier" },
+  { threshold: 4_200_000, badge: "vibestr_gold_tier" },
+  { threshold: 2_500_000, badge: "vibestr_silver_tier" },
+  { threshold: 1_000_000, badge: "vibestr_bronze_tier" },
   { threshold: 500_000, badge: "vibestr_purple_tier" },
   { threshold: 250_000, badge: "vibestr_pink_tier" },
-  { threshold: 100_000, badge: "vibestr_silver_tier" },
-  { threshold: 50_000, badge: "vibestr_bronze_tier" },
-  { threshold: 10_000, badge: "vibestr_blue_tier" },
+  { threshold: 69_000, badge: "vibestr_blue_tier" },
 ];
 
 // ── Main function ────────────────────────────────────────────────────
