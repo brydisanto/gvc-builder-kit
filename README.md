@@ -100,7 +100,7 @@ Either option works. Pick whichever feels more comfortable.
 This is the fun part. Copy the command below, paste it into your terminal, and press Enter. The Builder Kit will ask you a few questions about what you want to build.
 
 ```
-npx gvc create
+npx create-gvc-app
 ```
 
 Here's what it looks like:
@@ -135,7 +135,7 @@ Now let's get your project running so you can see it. Type these two commands in
 
 ```
 cd my-gvc-tracker
-gvc dev
+npm run dev
 ```
 
 The first command moves you into your project folder. The second command starts your project on your computer so you can see it in your browser.
@@ -168,15 +168,16 @@ Claude will keep everything on-brand automatically.
 
 ### Step 7: Ship it
 
-When you're ready to go live, type this in your terminal and press Enter:
+When you're ready to go live, deploy your project to Vercel. It's free and takes about two minutes.
 
-```
-gvc deploy
-```
+1. Push your project to a GitHub repository
+2. Go to [vercel.com](https://vercel.com) and sign in with GitHub
+3. Click "Add New Project" and import your repo
+4. Click "Deploy"
 
-Your project is now live on the internet with a shareable URL.
+That's it. Vercel gives you a live URL you can share with anyone.
 
-**That's it. You just built and shipped something.**
+**You just built and shipped something.**
 
 ---
 
@@ -215,6 +216,8 @@ Anything you can imagine. The Builder Kit gives you a starting point, and you ta
 ## Power-ups
 
 Want to connect to blockchain data, add a leaderboard, or build a game? Just describe your idea and the Builder Kit recommends what you need. You can also pick them yourself.
+
+When you pick extras during setup, they get added to your project's Claude guide. Open your project in Claude and tell it what you want to build. It already knows which features you selected and how to set them up.
 
 ### Blockchain & Data
 
@@ -266,10 +269,42 @@ The Builder Kit reads your description and picks the right setup:
 
 | Command | What it does |
 |---|---|
-| `npx gvc create` | Create a new project |
-| `gvc dev` | Run your project locally |
-| `gvc deploy` | Ship it live |
-| `gvc templates` | See all available templates |
+| `npx create-gvc-app` | Create a new project (no install needed) |
+| `npm run dev` | Run your project locally |
+| Deploy via [Vercel](https://vercel.com) | Ship it live |
+
+**Power user?** Install globally with `npm install -g create-gvc-app` to unlock shortcuts:
+
+| Command | What it does |
+|---|---|
+| `gvc dev` | Same as `npm run dev` |
+| `gvc deploy` | Deploy to Vercel from the terminal |
+| `gvc templates` | Browse all available templates |
+
+---
+
+## Community Data API
+
+Your project can pull live GVC data with zero setup. The community API is already wired into every project through `lib/gvc-api.ts`.
+
+| Endpoint | What it returns |
+|---|---|
+| Collection stats | Floor price, market cap, 24h volume, total owners |
+| Holder rankings | All holders ranked by token count, diamond hands stats |
+| Recent sales | Live sales feed with buyer, seller, price, images |
+| Sales history | 11,000+ historical sales for charts |
+| Community activity | 30-day buys, sells, accumulator leaderboard |
+| VIBESTR data | Token price, liquidity, volume, burned amount |
+| Market depth | Bid and offer levels |
+| Trader analysis | Profitable flips with hold times |
+| Wallet lookup | ENS name, Twitter handle for any wallet |
+
+No API key needed. Just import and use:
+
+```ts
+import { getStats, getHolders } from "@/lib/gvc-api";
+const stats = await getStats();
+```
 
 ---
 

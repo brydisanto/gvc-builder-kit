@@ -574,7 +574,7 @@ You're all set! Here's how to start building:
 
 1. Open this folder in Claude (just type \`claude\` in your terminal)
 2. Tell Claude what you want to change or add
-3. When you're happy, run \`gvc deploy\` to put it live
+3. When you're happy, push to GitHub and deploy at vercel.com
 
 ## Things to try
 
@@ -910,7 +910,7 @@ async function main() {
 
   const nextSteps = [
     `  ${info("cd")} ${projectName}`,
-    `  ${info("gvc dev")}              ${dim("Start your project in the browser")}`,
+    `  ${info("npm run dev")}          ${dim("Start your project in the browser")}`,
   ];
 
   if (hasClaude) {
@@ -925,7 +925,9 @@ async function main() {
 
   nextSteps.push(
     `\n  ${dim("When you're ready to go live:")}`,
-    `  ${info("gvc deploy")}           ${dim("Ship it to the internet")}`
+    `  ${dim("Push to GitHub, then deploy at")} ${info("https://vercel.com")}`,
+    `\n  ${dim("Tip: Run")} ${info("npm install -g create-gvc-app")} ${dim("to unlock")}`,
+    `  ${dim("shortcuts like")} ${info("gvc dev")} ${dim("and")} ${info("gvc deploy")}${dim(".")}`
   );
 
   p.note(nextSteps.join("\n"), "Next steps");

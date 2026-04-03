@@ -4,7 +4,7 @@ Built with the GVC Builder Kit.
 
 ## Get started
 
-1. Run `gvc dev` to start your project
+1. Run `npm run dev` to start your project
 2. Open this project in Claude
 3. Tell Claude what you want to build -- it already knows the GVC brand
 
@@ -17,4 +17,4 @@ Built with the GVC Builder Kit.
 
 ## Deploy
 
-Run `gvc deploy` to ship it live.
+Push to GitHub, then deploy at [vercel.com](https://vercel.com).

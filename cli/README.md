@@ -23,10 +23,17 @@ Your project is ready with the full GVC brand system, a Claude guide, and everyt
 
 | Command | What it does |
 |---|---|
-| `npx create-gvc-app` | Create a new project |
-| `gvc dev` | Start your project locally |
-| `gvc deploy` | Ship it live to the internet |
-| `gvc templates` | See all available templates |
+| `npx create-gvc-app` | Create a new project (no install needed) |
+| `npm run dev` | Start your project locally |
+| Deploy via [Vercel](https://vercel.com) | Ship it live to the internet |
+
+**Want shortcuts?** Install globally with `npm install -g create-gvc-app` to unlock these:
+
+| Command | What it does |
+|---|---|
+| `gvc dev` | Same as `npm run dev` |
+| `gvc deploy` | Deploy to Vercel from the terminal |
+| `gvc templates` | Browse all available templates |
 
 ## What's Inside Every Project
 
