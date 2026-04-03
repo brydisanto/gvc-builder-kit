@@ -889,44 +889,31 @@ async function main() {
   console.log();
   console.log(brand("  Your project is ready!"));
   console.log();
-
-  const nextSteps = [
-    `  ${info("cd")} ${projectName}`,
-    `  ${info("npm run dev")}          ${dim("Start your project in the browser")}`,
-  ];
-
+  console.log(gold("  Follow these steps to start building:"));
+  console.log();
+  console.log(`  ${pc.bold("Step 1:")} See your project in the browser`);
+  console.log(`  ${info("cd " + projectName)}`);
+  console.log(`  ${info("npm run dev")}`);
+  console.log(`  ${dim("Then open")} ${info("http://localhost:3000")} ${dim("in your browser")}`);
+  console.log();
+  console.log(`  ${pc.bold("Step 2:")} Open a ${pc.bold("new")} terminal tab (keep the first one running)`);
+  console.log();
+  console.log(`  ${pc.bold("Step 3:")} Start building with Claude`);
+  console.log(`  ${info("cd " + projectName)}`);
   if (hasClaude) {
-    nextSteps.push(
-      `  ${info("claude")}              ${dim("Start building with Claude")}`
-    );
+    console.log(`  ${info("claude")}`);
   } else {
-    nextSteps.push(
-      `\n  ${dim("Install Claude CLI:")} ${info("https://docs.anthropic.com/claude-code")}`
-    );
+    console.log(`  ${dim("Install Claude first:")} ${info("https://docs.anthropic.com/claude-code")}`);
   }
-
-  nextSteps.push(
-    `\n  ${dim("When you're ready to go live:")}`,
-    `  ${dim("Push to GitHub, then deploy at")} ${info("https://vercel.com")}`,
-    `\n  ${dim("Tip: Run")} ${info("npm install -g create-gvc-app")} ${dim("to unlock")}`,
-    `  ${dim("shortcuts like")} ${info("gvc dev")} ${dim("and")} ${info("gvc deploy")}${dim(".")}`
-  );
-
-  p.note(nextSteps.join("\n"), "Next steps");
-
-  console.log(
-    dim("  Open your project in Claude and describe what you")
-  );
-  console.log(
-    dim("  want to change. It already knows the GVC brand")
-  );
-  console.log(
-    dim("  and what you're building.")
-  );
+  console.log();
+  console.log(`  ${pc.bold("Step 4:")} Tell Claude what to build`);
+  console.log(`  ${dim('Try:')} ${gold('"Build what\'s described in my CLAUDE.md"')}`);
+  console.log(`  ${dim("Claude already knows your project, the GVC brand,")}`);
+  console.log(`  ${dim("and what features you picked. Just talk to it.")}`);
   console.log();
 
   p.outro(
-    gold("Good vibes only. Go build something amazing! ") +
+    gold("Good vibes only! ") +
       dim("// gvc-builder-kit v0.1.3")
   );
 }

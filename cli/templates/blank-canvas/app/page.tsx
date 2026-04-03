@@ -1,110 +1,163 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sparkles, ArrowRight, Zap } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-6 py-24 relative overflow-hidden">
+    <main className="min-h-screen flex flex-col items-center justify-center px-6 py-16 relative overflow-hidden">
       {/* Background embers */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(6)].map((_, i) => (
+        {[...Array(8)].map((_, i) => (
           <div
             key={i}
             className="ember"
             style={{
-              left: `${15 + i * 14}%`,
-              top: `${20 + (i % 3) * 25}%`,
-              animationDelay: `${i * 0.9}s`,
-              animationDuration: `${5 + i * 0.8}s`,
+              left: `${10 + i * 11}%`,
+              top: `${15 + (i % 4) * 20}%`,
+              animationDelay: `${i * 0.7}s`,
+              animationDuration: `${4 + i * 0.6}s`,
             }}
           />
         ))}
       </div>
 
-      {/* Hero */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="text-center max-w-3xl mx-auto relative z-10"
-      >
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gvc-gray/60 border border-gvc-gold/20 mb-8">
-          <Sparkles className="w-4 h-4 text-gvc-gold" />
-          <span className="text-sm text-gvc-gold/90 font-body">
-            GVC Builder Kit
+      <div className="max-w-2xl mx-auto text-center relative z-10">
+        {/* Shaka */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, type: "spring", stiffness: 150 }}
+          className="mb-6"
+        >
+          <Image
+            src="/shaka.png"
+            alt="GVC"
+            width={80}
+            height={80}
+            className="mx-auto drop-shadow-[0_0_25px_rgba(255,224,72,0.3)]"
+          />
+        </motion.div>
+
+        {/* Project name */}
+        <motion.h1
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.6 }}
+          className="text-4xl sm:text-6xl font-display font-black text-shimmer leading-tight mb-4"
+        >
+          {{PROJECT_NAME}}
+        </motion.h1>
+
+        {/* Status badge */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gvc-green/10 border border-gvc-green/20 mb-8"
+        >
+          <div className="w-2 h-2 rounded-full bg-gvc-green animate-pulse" />
+          <span className="text-sm text-gvc-green font-body">
+            Your project is running
           </span>
-        </div>
+        </motion.div>
 
-        <h1 className="text-5xl sm:text-7xl font-display font-black text-shimmer leading-tight mb-6">
-          YOUR PROJECT
-          <br />
-          NAME
-        </h1>
+        {/* What to do next */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+          className="text-left max-w-lg mx-auto mb-10"
+        >
+          <h2 className="text-lg font-display font-bold text-white mb-4">
+            What to do next
+          </h2>
 
-        <p className="text-lg sm:text-xl text-white/60 font-body max-w-xl mx-auto mb-12">
-          Built with the GVC Builder Kit. Open this project in Claude and start
-          building something legendary.
-        </p>
-      </motion.div>
+          <div className="space-y-4">
+            <div className="flex items-start gap-4">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
+                1
+              </span>
+              <div>
+                <p className="text-white font-body font-semibold text-sm">
+                  Open a new terminal tab
+                </p>
+                <p className="text-white/40 text-sm font-body">
+                  Keep this one running. It powers the page you're looking at.
+                </p>
+              </div>
+            </div>
 
-      {/* Example Cards */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        className="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-3xl w-full relative z-10 mb-16"
-      >
-        <div className="card-glow rounded-2xl bg-gvc-dark border border-white/[0.06] p-6 hover:border-gvc-gold/30 transition-all duration-300">
-          <div className="w-10 h-10 rounded-xl bg-gvc-gold/10 flex items-center justify-center mb-4">
-            <Zap className="w-5 h-5 text-gvc-gold" />
+            <div className="flex items-start gap-4">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
+                2
+              </span>
+              <div>
+                <p className="text-white font-body font-semibold text-sm">
+                  Navigate to your project
+                </p>
+                <div className="mt-1 bg-black/40 rounded-lg px-3 py-2 font-mono text-xs text-gvc-green/80">
+                  cd {{PROJECT_NAME}}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center mt-0.5">
+                3
+              </span>
+              <div>
+                <p className="text-white font-body font-semibold text-sm">
+                  Start building with Claude
+                </p>
+                <div className="mt-1 bg-black/40 rounded-lg px-3 py-2 font-mono text-xs text-gvc-green/80">
+                  claude
+                </div>
+                <p className="text-white/40 text-sm font-body mt-1">
+                  Claude already knows your project and the GVC brand. Just tell it what you want.
+                </p>
+              </div>
+            </div>
           </div>
-          <h3 className="font-display font-bold text-white text-lg mb-2">
-            Gold Glow
-          </h3>
-          <p className="text-white/50 text-sm font-body leading-relaxed">
-            Cards with the signature GVC gold glow effect baked right in.
-          </p>
-        </div>
+        </motion.div>
 
-        <div className="rounded-2xl bg-gvc-dark border border-white/[0.06] p-6 hover:border-pink-accent/30 transition-all duration-300">
-          <div className="w-10 h-10 rounded-xl bg-pink-accent/10 flex items-center justify-center mb-4">
-            <Sparkles className="w-5 h-5 text-pink-accent" />
+        {/* Example prompts */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="text-left max-w-lg mx-auto mb-10"
+        >
+          <h2 className="text-lg font-display font-bold text-white mb-3">
+            Try saying
+          </h2>
+          <div className="space-y-2">
+            {[
+              "Build what's described in my CLAUDE.md",
+              "Add a hero section with a big gold title",
+              "Show the current GVC floor price in a stats card",
+              "Make it look like the GVC Gallery",
+            ].map((prompt) => (
+              <div
+                key={prompt}
+                className="bg-white/[0.03] border border-white/[0.06] rounded-xl px-4 py-3 text-white/50 text-sm font-body hover:border-gvc-gold/20 hover:text-white/70 transition-all duration-200 cursor-default"
+              >
+                &ldquo;{prompt}&rdquo;
+              </div>
+            ))}
           </div>
-          <h3 className="font-display font-bold text-white text-lg mb-2">
-            Brand Colors
-          </h3>
-          <p className="text-white/50 text-sm font-body leading-relaxed">
-            Full GVC palette wired up -- gold, pink, orange, green, all ready.
-          </p>
-        </div>
+        </motion.div>
 
-        <div className="rounded-2xl bg-gvc-dark border border-white/[0.06] p-6 hover:border-gvc-green/30 transition-all duration-300">
-          <div className="w-10 h-10 rounded-xl bg-gvc-green/10 flex items-center justify-center mb-4">
-            <ArrowRight className="w-5 h-5 text-gvc-green" />
-          </div>
-          <h3 className="font-display font-bold text-white text-lg mb-2">
-            Ship Fast
-          </h3>
-          <p className="text-white/50 text-sm font-body leading-relaxed">
-            Fonts, animations, and design tokens. Just tell Claude what to
-            build.
-          </p>
-        </div>
-      </motion.div>
-
-      {/* CTA */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8, delay: 0.5 }}
-        className="text-center relative z-10"
-      >
-        <p className="text-white/40 text-sm font-body">
-          Open this project in{" "}
-          <span className="text-gvc-gold/80">Claude</span> and start building
-        </p>
-      </motion.div>
+        {/* Footer */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="text-white/20 text-xs font-body"
+        >
+          Built with the GVC Builder Kit. This page will be replaced by whatever you build.
+        </motion.p>
+      </div>
     </main>
   );
 }
