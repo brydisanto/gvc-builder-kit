@@ -1,6 +1,6 @@
 {
   "name": "create-gvc-app",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Scaffold branded Next.js projects for the Good Vibes Club community",
   "type": "module",
   "bin": {
@@ -9,7 +9,8 @@
   },
   "files": [
     "src",
-    "templates"
+    "templates",
+    "README.md"
   ],
   "keywords": [
     "gvc",
