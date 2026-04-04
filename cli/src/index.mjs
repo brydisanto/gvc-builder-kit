@@ -414,7 +414,7 @@ export function BadgeCard({ name, tier, image }: { name: string; tier: string; i
 // Universal landing page that shows the user's idea and walks them
 // step-by-step into Claude to build it.
 
-function generateStarterPage(templateType, projectName, description, addons) {
+function generateStarterPage(templateType, projectName, description, addons, projectPath) {
   const TEMPLATE_LABELS = {
     'project-site': 'Website / Landing Page',
     'dashboard': 'Dashboard / Tracker',
@@ -651,9 +651,9 @@ export default function Home() {
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">1</span>
                 <p className="text-white/60 font-body text-sm">Go to your project folder</p>
               </div>
-              <button onClick={() => copyText("cd {{SAFE_NAME}}", 1)} className="w-full group relative">
+              <button onClick={() => copyText("cd {{PROJECT_PATH}}", 1)} className="w-full group relative">
                 <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 1 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
-                  <span className={copiedStep === 1 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>cd {{SAFE_NAME}}</span>
+                  <span className={copiedStep === 1 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>cd {{PROJECT_PATH}}</span>
                 </div>
                 <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (copiedStep === 1 ? "text-[#2EFF2E]" : "text-white/30 group-hover:text-white/50")}>
                   {copiedStep === 1 ? "Copied!" : "Click to copy"}
@@ -737,7 +737,8 @@ export default function Home() {
     .replaceAll('{{TEMPLATE_LABEL}}', templateLabel)
     .replaceAll('{{ADDON_COUNT_HTML}}', addonCountHtml)
     .replaceAll('{{ADDON_PROMPT_LINE}}', addonPromptLine)
-    .replaceAll('{{PROMPT_JSON}}', promptJson);
+    .replaceAll('{{PROMPT_JSON}}', promptJson)
+    .replaceAll('{{PROJECT_PATH}}', projectPath);
 }
 
 // ── Generate example prompts based on template + addons ─────────────
@@ -1069,7 +1070,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.3.4");
+    console.log("create-gvc-app v0.3.5");
     return;
   }
 
@@ -1210,7 +1211,7 @@ async function main() {
   s.message("Writing project files...");
 
   // Write template-specific starter page
-  const starterPage = generateStarterPage(templateType, projectName.trim(), description.trim(), selectedAddons);
+  const starterPage = generateStarterPage(templateType, projectName.trim(), description.trim(), selectedAddons, projectDir);
   await fs.writeFile(path.join(projectDir, "app", "page.tsx"), starterPage, "utf-8");
 
   // Write CLAUDE.md
@@ -1268,7 +1269,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.3.4")
+      dim("// gvc-builder-kit v0.3.5")
   );
 }
 
