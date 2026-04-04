@@ -132,7 +132,7 @@ const TEMPLATE_CHOICES = [
 
 // ── Add-on definitions ───────────────────────────────────────────────
 const ADDONS = [
-  { value: "collection-data",   label: "NFT collection info",         hint: "floor price, listings, and metadata for GVC" },
+  { value: "collection-data",   label: "NFT collection info",         hint: "floor price, listings, metadata, and trait rarity for all 6,969 GVCs" },
   { value: "token-prices",      label: "Live crypto prices",          hint: "real-time ETH and VIBESTR prices" },
   { value: "web3-wallet",       label: "Connect wallet button",       hint: "let users connect their crypto wallet" },
   { value: "stats-panel",       label: "Stats and charts",            hint: "animated counters, data cards, dashboards" },
@@ -150,7 +150,7 @@ const ADDONS = [
 // ── Keyword matching for add-on suggestions ──────────────────────────
 const SUGGESTION_RULES = [
   {
-    keywords: ["nft", "collection", "floor", "listing", "opensea", "mint"],
+    keywords: ["nft", "collection", "floor", "listing", "opensea", "mint", "trait", "rarity", "rare", "metadata", "token id"],
     addon: "collection-data",
   },
   {
@@ -264,7 +264,35 @@ export async function GET() {
     totalSupply: data.total?.count ?? 0,
   });
 }
-\`\`\``,
+\`\`\`
+
+### NFT Metadata & Trait Rarity
+
+All 6,969 token traits are in \\\`public/gvc-metadata.json\\\`. Keyed by token ID (0-6968).
+
+\`\`\`ts
+const metadata = await fetch('/gvc-metadata.json').then(r => r.json());
+
+// Look up any token
+const token = metadata["142"];
+// token.name   -> "Citizen of Vibetown #142"
+// token.traits -> { Type: "Robot", Face: "Laser Eyes", Hair: "Mohawk Gold", Body: "Hoodie Black", Background: "BG Mint" }
+// token.image  -> "ipfs://QmY6J.../142.jpg"
+
+// Calculate trait rarity
+const allTokens = Object.values(metadata);
+const traitCounts: Record<string, Record<string, number>> = {};
+for (const t of allTokens) {
+  for (const [type, value] of Object.entries(t.traits)) {
+    traitCounts[type] = traitCounts[type] || {};
+    traitCounts[type][value] = (traitCounts[type][value] || 0) + 1;
+  }
+}
+// traitCounts["Type"]["Robot"] -> number of Robots in the collection
+// Rarity % = count / 6969 * 100
+\`\`\`
+
+Trait types: Type, Face, Hair, Body, Background. To display images, replace "ipfs://" with "https://ipfs.io/ipfs/".`,
 
   "token-prices": `### Fetching Token Prices
 
@@ -1038,7 +1066,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.2.3");
+    console.log("create-gvc-app v0.2.4");
     return;
   }
 
@@ -1237,7 +1265,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.2.3")
+      dim("// gvc-builder-kit v0.2.4")
   );
 }
 
