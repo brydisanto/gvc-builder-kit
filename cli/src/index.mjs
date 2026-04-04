@@ -132,19 +132,19 @@ const TEMPLATE_CHOICES = [
 
 // ── Add-on definitions ───────────────────────────────────────────────
 const ADDONS = [
-  { value: "collection-data",   label: "GVC Collection data",                   hint: "fetch NFT metadata, floor prices" },
-  { value: "token-prices",      label: "Token prices (ETH, VIBESTR)",            hint: "live price feeds" },
-  { value: "web3-wallet",       label: "Web3 wallet connect",                   hint: "connect wallet, read address" },
-  { value: "stats-panel",       label: "Animated stats panel",                  hint: "counters, charts, dashboards" },
-  { value: "leaderboard",       label: "Leaderboard system (daily/weekly/all-time)", hint: "rankings, scores, streaks" },
-  { value: "auth",              label: "Auth (edge-compatible sessions)",        hint: "login, sessions, protected pages" },
-  { value: "game-engine",       label: "Game engine scaffold",                  hint: "canvas, game loop, sprites" },
-  { value: "audio-mixer",       label: "Audio mixer (Web Audio API)",            hint: "sounds, music, mixing" },
-  { value: "toasts",            label: "Toast notifications",                   hint: "alerts, success/error messages" },
-  { value: "ipfs-images",       label: "IPFS image loading",                    hint: "load images from IPFS gateways" },
-  { value: "on-chain-reads",    label: "On-chain reads (wallet balances, contracts)", hint: "read blockchain data" },
-  { value: "badge-collection",  label: "Badge collection (101 GVC badges, tiers)",    hint: "collect, display, tier up" },
-  { value: "vercel-kv",         label: "Vercel KV (Redis) setup",               hint: "key-value storage, caching" },
+  { value: "collection-data",   label: "NFT collection info",         hint: "floor price, listings, and metadata for GVC" },
+  { value: "token-prices",      label: "Live crypto prices",          hint: "real-time ETH and VIBESTR prices" },
+  { value: "web3-wallet",       label: "Connect wallet button",       hint: "let users connect their crypto wallet" },
+  { value: "stats-panel",       label: "Stats and charts",            hint: "animated counters, data cards, dashboards" },
+  { value: "leaderboard",       label: "Leaderboard",                 hint: "ranked lists with daily, weekly, and all-time views" },
+  { value: "auth",              label: "User accounts",               hint: "sign up, log in, and protected pages" },
+  { value: "game-engine",       label: "Game starter kit",            hint: "game board, scoring, and game loop" },
+  { value: "audio-mixer",       label: "Sound and music",             hint: "play sounds, background music, audio controls" },
+  { value: "toasts",            label: "Pop-up notifications",        hint: "success, error, and info messages" },
+  { value: "ipfs-images",       label: "NFT image loading",           hint: "display NFT images with fallback handling" },
+  { value: "on-chain-reads",    label: "Blockchain lookups",          hint: "check wallet balances and read smart contracts" },
+  { value: "badge-collection",  label: "Badge collection",            hint: "101 GVC badges with tiers and glow effects" },
+  { value: "vercel-kv",         label: "Save and store data",         hint: "persistent storage for scores, votes, and settings" },
 ];
 
 // ── Keyword matching for add-on suggestions ──────────────────────────
@@ -1038,7 +1038,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.2.2");
+    console.log("create-gvc-app v0.2.3");
     return;
   }
 
@@ -1237,7 +1237,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.2.2")
+      dim("// gvc-builder-kit v0.2.3")
   );
 }
 
