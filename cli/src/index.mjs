@@ -687,8 +687,8 @@ export default function Home() {
             <div className="flex items-start gap-3">
               <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-sm font-bold flex items-center justify-center mt-0.5">2</span>
               <div className="flex-1">
-                <p className="text-white font-body font-semibold text-sm mb-2">Open your project folder</p>
-                <p className="text-white/40 font-body text-sm mb-2">In Claude Code, paste this to navigate to your project:</p>
+                <p className="text-white font-body font-semibold text-sm mb-2">Point it to your project</p>
+                <p className="text-white/40 font-body text-sm mb-2">Copy this and paste it into Claude Code&apos;s chat:</p>
                 <button onClick={copyCmd} className="w-full group relative">
                   <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (cmdCopied ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
                     <span className={cmdCopied ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>cd {{SAFE_NAME}}</span>
@@ -1079,7 +1079,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.3.0");
+    console.log("create-gvc-app v0.3.1");
     return;
   }
 
@@ -1278,7 +1278,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.3.0")
+      dim("// gvc-builder-kit v0.3.1")
   );
 }
 
