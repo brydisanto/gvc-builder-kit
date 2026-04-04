@@ -645,7 +645,7 @@ export default function Home() {
           <p className="text-white/25 font-body text-xs mb-5">On Mac: <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/60 font-mono text-xs mx-0.5">Cmd + T</kbd> &mdash; On Windows: right-click the terminal title bar &rarr; New Tab</p>
 
           <div className="space-y-4">
-            {/* Step 1 */}
+            {/* Step 1 — cd into project */}
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">1</span>
@@ -677,11 +677,19 @@ export default function Home() {
               </button>
               <p className="text-white/25 font-body text-xs mt-1.5">Free, takes 30 seconds. Requires a{" "}
                 <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-[#FFE048]/50 hover:text-[#FFE048] underline underline-offset-2 transition-colors">Claude account</a>
-                {" "}(free to create).
+                {" "}(free to create). If you see a message about PATH, paste this too:
               </p>
+              <button onClick={() => copyText("source ~/.zshrc", 21)} className="w-full group relative mt-1.5">
+                <div className={"bg-black/60 rounded-xl px-4 py-2.5 font-mono text-xs text-left transition-all duration-200 " + (copiedStep === 21 ? "border border-[#2EFF2E]/30" : "border border-white/[0.06] hover:border-[#FFE048]/20")}>
+                  <span className={copiedStep === 21 ? "text-[#2EFF2E]" : "text-white/40"}>source ~/.zshrc</span>
+                </div>
+                <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (copiedStep === 21 ? "text-[#2EFF2E]" : "text-white/20 group-hover:text-white/40")}>
+                  {copiedStep === 21 ? "Copied!" : "Click to copy"}
+                </span>
+              </button>
             </div>
 
-            {/* Step 3 — Launch */}
+            {/* Step 3 — Launch Claude Code */}
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">3</span>
@@ -695,13 +703,14 @@ export default function Home() {
                   {copiedStep === 3 ? "Copied!" : "Click to copy"}
                 </span>
               </button>
+              <p className="text-white/25 font-body text-xs mt-1.5">This opens Claude Code in your terminal. You&apos;ll see a prompt where you can type.</p>
             </div>
 
-            {/* Step 4 — Build prompt */}
+            {/* Step 4 — Build prompt (inside Claude Code) */}
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">4</span>
-                <p className="text-white/60 font-body text-sm">Tell Claude what to build</p>
+                <p className="text-white/60 font-body text-sm">Type this <span className="text-white/80 font-semibold">inside Claude Code</span></p>
               </div>
               <button onClick={() => copyText("Build what's described in my CLAUDE.md", 4)} className="w-full group relative">
                 <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 4 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
@@ -711,12 +720,12 @@ export default function Home() {
                   {copiedStep === 4 ? "Copied!" : "Click to copy"}
                 </span>
               </button>
-              <p className="text-white/25 font-body text-xs mt-1.5">Claude reads your project files automatically — it already knows your brand, fonts, APIs, and idea.</p>
+              <p className="text-white/25 font-body text-xs mt-1.5">Paste this into the Claude Code prompt (not the regular terminal). Claude reads your project files and starts building.</p>
             </div>
           </div>
 
           <p className="text-white/30 font-body text-xs mt-5 leading-relaxed">
-            That&apos;s it! Come back to this tab to watch your project get built in real time.
+            That&apos;s it! Come back to this browser tab to watch your project get built in real time.
           </p>
         </motion.div>
 
@@ -1070,7 +1079,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.3.5");
+    console.log("create-gvc-app v0.3.6");
     return;
   }
 
@@ -1269,7 +1278,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.3.5")
+      dim("// gvc-builder-kit v0.3.6")
   );
 }
 
