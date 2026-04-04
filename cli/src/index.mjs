@@ -665,7 +665,10 @@ export default function Home() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">2</span>
-                <p className="text-white/60 font-body text-sm">Install Claude Code <span className="text-white/30">(skip if you already have it)</span></p>
+                <p className="text-white/60 font-body text-sm">Install Claude Code</p>
+              </div>
+              <div className="rounded-xl bg-[#FFE048]/[0.06] border border-[#FFE048]/15 px-4 py-2.5 mb-3">
+                <p className="text-[#FFE048] font-body text-xs font-semibold">Already have Claude Code? Skip to step 3 &darr;</p>
               </div>
               <button onClick={() => copyText("curl -fsSL https://claude.ai/install.sh | bash", 2)} className="w-full group relative">
                 <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 2 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
@@ -1079,7 +1082,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.3.7");
+    console.log("create-gvc-app v0.3.8");
     return;
   }
 
@@ -1278,7 +1281,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.3.7")
+      dim("// gvc-builder-kit v0.3.8")
   );
 }
 
