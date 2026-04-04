@@ -224,26 +224,23 @@ const TEMPLATE_INSTRUCTIONS = {
 
 // ── Add-on code snippets (included in CLAUDE.md when relevant) ──────
 const ADDON_SNIPPETS = {
-  "collection-data": `### Fetching GVC Floor Price & Listings
+  "collection-data": `### Fetching GVC Collection Stats (no API key needed)
 
 \`\`\`ts
-// app/api/collection/route.ts
-import { NextResponse } from "next/server";
+// Fetch live stats — floor price, volume, owners, market cap
+const stats = await fetch("https://api-hazel-pi-72.vercel.app/api/stats").then(r => r.json());
+// { floorPrice: 0.65, floorPriceUsd: 1625, numOwners: 1513, marketCapUsd: 9247054, volume24h: 2.1, totalSales: 11000 }
 
-export async function GET() {
-  const res = await fetch(
-    "https://api.opensea.io/api/v2/collections/good-vibes-club/stats",
-    { headers: { "x-api-key": process.env.OPENSEA_API_KEY ?? "" }, next: { revalidate: 60 } }
-  );
-  const data = await res.json();
-  return NextResponse.json({
-    floorPrice: data.total?.floor_price ?? 0,
-    totalVolume: data.total?.volume ?? 0,
-    numOwners: data.total?.num_owners ?? 0,
-    totalSupply: data.total?.count ?? 0,
-  });
-}
+// Fetch recent sales
+const sales = await fetch("https://api-hazel-pi-72.vercel.app/api/recent-sales?limit=10").then(r => r.json());
+// [{ tokenId: "3101", priceEth: 0.611, buyer: "0x...", imageUrl: "...", timestamp: "..." }]
+
+// Fetch top holders
+const holders = await fetch("https://api-hazel-pi-72.vercel.app/api/holders?limit=20").then(r => r.json());
+// { holders: [{ address: "0x...", tokenCount: 42, ens: "vibes.eth" }] }
 \`\`\`
+
+All GVC data is available from \\\`https://api-hazel-pi-72.vercel.app/api\\\`. No API key needed. Data refreshes every 60 seconds.
 
 ### NFT Metadata & Trait Rarity
 
@@ -884,14 +881,23 @@ ${addonDescriptions || "None selected -- you can always add capabilities later b
 - \`.font-display\` -- Brice headline font
 - \`.font-body\` -- Mundial body font
 
-## Smart Contract & API Reference
+## GVC API (no API key needed)
+All collection data is available from: https://api-hazel-pi-72.vercel.app/api
+- GET /stats -- floor price, market cap, 24h volume, owners, total sales
+- GET /holders?limit=50 -- all holders ranked by token count
+- GET /recent-sales?limit=10 -- recent sales with buyer, seller, price, image
+- GET /sales-history?limit=100 -- historical sales data
+- GET /activity -- 30-day buys/sells, accumulator leaderboard
+- GET /vibestr -- VIBESTR token data
+- GET /market-depth -- bid/offer depth
+- GET /wallet?address=0x... -- ENS name, Twitter handle for a wallet
+- GET /badge-leaderboard -- all wallets with their badges
+Do NOT use the OpenSea API directly. Use the GVC API above instead -- it wraps OpenSea and needs no API key.
+
+## Smart Contracts
 - GVC NFT: 0xB8Ea78fcaCEf50d41375E44E6814ebbA36Bb33c4
 - VIBESTR Token: 0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196
-- WETH: 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
-- Burn Address: 0x000000000000000000000000000000000000dEaD
 - OpenSea Collection: good-vibes-club
-- OpenSea API: https://api.opensea.io/api/v2 (needs x-api-key header from OPENSEA_API_KEY env var)
-  - To get a key: go to https://opensea.io/account/settings, sign in, scroll to Developer, click Create API Key
 - ETH price: https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd
 - VIBESTR price: https://api.dexscreener.com/latest/dex/tokens/0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196
 - Public RPC: https://ethereum-rpc.publicnode.com
@@ -1075,7 +1081,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.4.0");
+    console.log("create-gvc-app v0.4.1");
     return;
   }
 
@@ -1274,7 +1280,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.4.0")
+      dim("// gvc-builder-kit v0.4.1")
   );
 }
 
