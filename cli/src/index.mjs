@@ -637,20 +637,26 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Primary CTA — Claude Code */}
+        {/* Primary CTA — Open Claude Code */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-left rounded-2xl bg-[#121212] border border-[#FFE048]/20 p-6 mb-6">
           <h2 className="text-lg font-display font-bold text-white mb-2">Now let&apos;s build it</h2>
           <p className="text-white/50 font-body text-sm mb-5 leading-relaxed">
-            Your project has the GVC brand system, fonts, APIs, and everything ready to go.
-            Open a new terminal tab and run one command:
+            Your project has the GVC brand system, custom fonts, live APIs, and everything ready to go.
+            Open Claude Code and it will know your entire project automatically.
           </p>
 
-          <div className="bg-black/40 rounded-xl px-5 py-4 font-mono text-base text-[#2EFF2E] mb-4 text-center">
-            claude
-          </div>
+          <a
+            href="https://claude.ai/code"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full inline-flex items-center justify-center gap-3 px-6 py-4 font-display font-bold text-base rounded-xl transition-all duration-300 bg-[#FFE048] text-[#050505] hover:shadow-[0_0_30px_rgba(255,224,72,0.3)] mb-4"
+          >
+            Open Claude Code
+            <svg className="w-4 h-4 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          </a>
 
-          <p className="text-white/50 font-body text-sm mb-4 leading-relaxed">
-            Claude Code reads your project automatically — it already knows your brand, your fonts, your APIs, and your idea. Just tell it:
+          <p className="text-white/50 font-body text-sm mb-3 leading-relaxed">
+            Once it opens, tell it:
           </p>
 
           <div className="bg-black/20 border border-white/[0.06] rounded-xl px-4 py-3 text-white/60 text-sm font-body italic mb-4">
@@ -658,41 +664,29 @@ export default function Home() {
           </div>
 
           <p className="text-white/30 font-body text-xs leading-relaxed">
-            Don&apos;t have Claude Code?{" "}
-            <a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener noreferrer" className="text-[#FFE048]/60 hover:text-[#FFE048] underline underline-offset-2 transition-colors">
-              Install it here
-            </a>{" "}
-            (free, takes 30 seconds).
+            Claude Code reads your project files automatically — it already knows your brand, fonts, APIs, and idea. No setup needed.
           </p>
         </motion.div>
 
-        {/* Fallback — Claude.ai */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-6 mb-8">
-          <h3 className="text-sm font-display font-bold text-white/60 mb-2">Prefer Claude.ai instead?</h3>
-          <p className="text-white/40 font-body text-sm mb-4">
-            We&apos;ll copy a prompt with your idea and the full GVC context, then open Claude in a new tab. Just paste and go.
-          </p>
+        {/* Alternative — terminal */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-6 mb-6">
+          <h3 className="text-sm font-display font-bold text-white/60 mb-2">Or use your terminal</h3>
+          <p className="text-white/40 font-body text-sm mb-3">Open a new terminal tab and run:</p>
+          <div className="bg-black/40 rounded-lg px-4 py-3 font-mono text-sm text-[#2EFF2E]/80">claude</div>
+        </motion.div>
 
-          <button
-            onClick={copyAndOpen}
-            className={
-              copied
-                ? "w-full inline-flex items-center justify-center gap-3 px-5 py-3 font-display font-bold text-sm rounded-xl transition-all duration-300 bg-[#2EFF2E]/20 text-[#2EFF2E] border border-[#2EFF2E]/30"
-                : "w-full inline-flex items-center justify-center gap-3 px-5 py-3 font-display font-bold text-sm rounded-xl transition-all duration-300 border border-white/[0.12] text-white/70 hover:border-[#FFE048]/30 hover:text-[#FFE048]"
-            }
-          >
-            {copied ? (
-              <>
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
-                Copied! Opening Claude...
-              </>
-            ) : (
-              <>
-                Copy prompt &amp; open Claude.ai
-                <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              </>
-            )}
-          </button>
+        {/* Fallback — Claude.ai chat */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-5 mb-8">
+          <div className="flex items-center justify-between">
+            <p className="text-white/30 font-body text-xs">No Claude Code?</p>
+            <button
+              onClick={copyAndOpen}
+              className="inline-flex items-center gap-2 text-xs font-body text-[#FFE048]/60 hover:text-[#FFE048] transition-colors"
+            >
+              {copied ? "Copied! Opening..." : "Copy prompt & open Claude.ai"}
+              <svg className="w-3 h-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+            </button>
+          </div>
         </motion.div>
 
         {/* Footer */}
@@ -1044,7 +1038,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.2.0");
+    console.log("create-gvc-app v0.2.1");
     return;
   }
 
@@ -1243,7 +1237,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.2.0")
+      dim("// gvc-builder-kit v0.2.1")
   );
 }
 
