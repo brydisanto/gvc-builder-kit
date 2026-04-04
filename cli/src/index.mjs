@@ -638,98 +638,88 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Step-by-step terminal instructions */}
+        {/* Step-by-step — Desktop app primary */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-left rounded-2xl bg-[#121212] border border-[#FFE048]/20 p-6 mb-6">
-          <h2 className="text-lg font-display font-bold text-white mb-2">Now let&apos;s build it</h2>
-          <p className="text-white/40 font-body text-sm mb-2">Open a <span className="text-white/80 font-semibold">new terminal tab</span> and paste these commands one at a time.</p>
-          <p className="text-white/25 font-body text-xs mb-5">On Mac: <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/60 font-mono text-xs mx-0.5">Cmd + T</kbd> &mdash; On Windows: right-click the terminal title bar &rarr; New Tab</p>
+          <h2 className="text-lg font-display font-bold text-white mb-5">Now let&apos;s build it</h2>
 
-          <div className="space-y-4">
-            {/* Step 1 — cd into project */}
+          <div className="space-y-5">
+            {/* Step 1 — Download Claude Code */}
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">1</span>
-                <p className="text-white/60 font-body text-sm">Go to your project folder</p>
+                <p className="text-white/60 font-body text-sm">Download Claude Code</p>
               </div>
-              <button onClick={() => copyText("cd {{PROJECT_PATH}}", 1)} className="w-full group relative">
-                <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 1 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
-                  <span className={copiedStep === 1 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>cd {{PROJECT_PATH}}</span>
-                </div>
-                <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (copiedStep === 1 ? "text-[#2EFF2E]" : "text-white/30 group-hover:text-white/50")}>
-                  {copiedStep === 1 ? "Copied!" : "Click to copy"}
-                </span>
-              </button>
+              <a href="https://claude.ai/download" target="_blank" rel="noopener noreferrer" className="w-full inline-flex items-center justify-center gap-3 px-5 py-3.5 rounded-xl bg-[#FFE048] text-[#050505] font-display font-bold text-sm hover:shadow-[0_0_20px_rgba(255,224,72,0.3)] transition-all">
+                Download Claude Code (free)
+                <svg className="w-4 h-4 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              </a>
+              <p className="text-white/25 font-body text-xs mt-1.5">Already have it? Skip to step 2.</p>
             </div>
 
-            {/* Step 2 — Install Claude Code */}
+            {/* Step 2 — Open project folder */}
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">2</span>
-                <p className="text-white/60 font-body text-sm">Install Claude Code</p>
+                <p className="text-white/60 font-body text-sm">Open your project in Claude Code</p>
               </div>
-              <div className="rounded-xl bg-[#FFE048]/[0.06] border border-[#FFE048]/15 px-4 py-2.5 mb-3">
-                <p className="text-[#FFE048] font-body text-xs font-semibold">Already have Claude Code? Skip to step 3 &darr;</p>
-              </div>
-              <button onClick={() => copyText("curl -fsSL https://claude.ai/install.sh | bash", 2)} className="w-full group relative">
+              <p className="text-white/40 font-body text-sm mb-2">Open the Claude Code app and select your project folder:</p>
+              <button onClick={() => copyText("{{PROJECT_PATH}}", 2)} className="w-full group relative">
                 <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 2 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
-                  <span className={copiedStep === 2 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>curl -fsSL https://claude.ai/install.sh | bash</span>
+                  <span className={copiedStep === 2 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>{{PROJECT_PATH}}</span>
                 </div>
                 <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (copiedStep === 2 ? "text-[#2EFF2E]" : "text-white/30 group-hover:text-white/50")}>
-                  {copiedStep === 2 ? "Copied!" : "Click to copy"}
+                  {copiedStep === 2 ? "Copied!" : "Click to copy path"}
                 </span>
               </button>
-              <p className="text-white/25 font-body text-xs mt-1.5">Free, takes 30 seconds. Requires a{" "}
-                <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-[#FFE048]/50 hover:text-[#FFE048] underline underline-offset-2 transition-colors">Claude account</a>
-                {" "}(free to create). If you see a message about PATH, paste this too:
-              </p>
-              <button onClick={() => copyText("source ~/.zshrc", 21)} className="w-full group relative mt-1.5">
-                <div className={"bg-black/60 rounded-xl px-4 py-2.5 font-mono text-xs text-left transition-all duration-200 " + (copiedStep === 21 ? "border border-[#2EFF2E]/30" : "border border-white/[0.06] hover:border-[#FFE048]/20")}>
-                  <span className={copiedStep === 21 ? "text-[#2EFF2E]" : "text-white/40"}>source ~/.zshrc</span>
-                </div>
-                <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (copiedStep === 21 ? "text-[#2EFF2E]" : "text-white/20 group-hover:text-white/40")}>
-                  {copiedStep === 21 ? "Copied!" : "Click to copy"}
-                </span>
-              </button>
+              <p className="text-white/25 font-body text-xs mt-1.5">In the app, click the folder name at the top &rarr; <span className="text-white/40">Open folder</span> &rarr; navigate to this path.</p>
             </div>
 
-            {/* Step 3 — Launch Claude Code */}
+            {/* Step 3 — Tell Claude to build */}
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">3</span>
-                <p className="text-white/60 font-body text-sm">Start Claude Code</p>
+                <p className="text-white/60 font-body text-sm">Tell Claude what to build</p>
               </div>
-              <button onClick={() => copyText("claude", 3)} className="w-full group relative">
+              <button onClick={() => copyText("Build what's described in my CLAUDE.md", 3)} className="w-full group relative">
                 <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 3 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
-                  <span className={copiedStep === 3 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>claude</span>
+                  <span className={copiedStep === 3 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>Build what&apos;s described in my CLAUDE.md</span>
                 </div>
                 <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (copiedStep === 3 ? "text-[#2EFF2E]" : "text-white/30 group-hover:text-white/50")}>
                   {copiedStep === 3 ? "Copied!" : "Click to copy"}
                 </span>
               </button>
-              <p className="text-white/25 font-body text-xs mt-1.5">This opens Claude Code in your terminal. You&apos;ll see a prompt where you can type.</p>
-            </div>
-
-            {/* Step 4 — Build prompt (inside Claude Code) */}
-            <div>
-              <div className="flex items-center gap-2 mb-2">
-                <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">4</span>
-                <p className="text-white/60 font-body text-sm">When you see the <span className="font-mono text-[#FFE048]/70">&gt;</span> prompt, paste this</p>
-              </div>
-              <button onClick={() => copyText("Build what's described in my CLAUDE.md", 4)} className="w-full group relative">
-                <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 4 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
-                  <span className={copiedStep === 4 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>Build what&apos;s described in my CLAUDE.md</span>
-                </div>
-                <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (copiedStep === 4 ? "text-[#2EFF2E]" : "text-white/30 group-hover:text-white/50")}>
-                  {copiedStep === 4 ? "Copied!" : "Click to copy"}
-                </span>
-              </button>
-              <p className="text-white/25 font-body text-xs mt-1.5">This is what you tell Claude to do. It reads your project files and starts building automatically.</p>
+              <p className="text-white/25 font-body text-xs mt-1.5">Paste this into the Claude Code chat. It reads your project files and starts building automatically.</p>
             </div>
           </div>
 
           <p className="text-white/30 font-body text-xs mt-5 leading-relaxed">
             That&apos;s it! Come back to this browser tab to watch your project get built in real time.
           </p>
+        </motion.div>
+
+        {/* Alternative — Terminal */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-5 mb-6">
+          <h3 className="text-sm font-display font-bold text-white/60 mb-3">Prefer the terminal?</h3>
+          <p className="text-white/30 font-body text-xs mb-3">Open a new terminal tab and run these commands:</p>
+          <div className="space-y-2">
+            <button onClick={() => copyText("cd {{PROJECT_PATH}}", 11)} className="w-full group relative">
+              <div className={"bg-black/60 rounded-lg px-3 py-2 font-mono text-xs text-left transition-all duration-200 " + (copiedStep === 11 ? "border border-[#2EFF2E]/30" : "border border-white/[0.06] hover:border-white/10")}>
+                <span className={copiedStep === 11 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/60"}>cd {{PROJECT_PATH}}</span>
+              </div>
+              <span className={"absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-body transition-colors " + (copiedStep === 11 ? "text-[#2EFF2E]" : "text-white/20 group-hover:text-white/40")}>
+                {copiedStep === 11 ? "Copied!" : "Copy"}
+              </span>
+            </button>
+            <button onClick={() => copyText("claude", 12)} className="w-full group relative">
+              <div className={"bg-black/60 rounded-lg px-3 py-2 font-mono text-xs text-left transition-all duration-200 " + (copiedStep === 12 ? "border border-[#2EFF2E]/30" : "border border-white/[0.06] hover:border-white/10")}>
+                <span className={copiedStep === 12 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/60"}>claude</span>
+              </div>
+              <span className={"absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-body transition-colors " + (copiedStep === 12 ? "text-[#2EFF2E]" : "text-white/20 group-hover:text-white/40")}>
+                {copiedStep === 12 ? "Copied!" : "Copy"}
+              </span>
+            </button>
+          </div>
+          <p className="text-white/20 font-body text-xs mt-2">Then paste: &ldquo;Build what&apos;s described in my CLAUDE.md&rdquo;</p>
         </motion.div>
 
         {/* Footer */}
@@ -1082,7 +1072,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.3.8");
+    console.log("create-gvc-app v0.3.9");
     return;
   }
 
@@ -1281,7 +1271,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.3.8")
+      dim("// gvc-builder-kit v0.3.9")
   );
 }
 
