@@ -928,6 +928,9 @@ Use cases: rarity checker, token lookup, trait filtering, collection search, tra
 ## Tech Stack
 - Next.js (App Router), React, TypeScript, Tailwind CSS, Framer Motion
 
+## Important: Dev Server
+The dev server is already running (the user started it before opening Claude Code). Do NOT run \`npm run dev\` — just edit the files and the browser will hot-reload automatically. If you need to install a new package, use \`npm install <package>\` and the dev server will pick it up.
+
 ## Project Structure
 app/ -> Pages and layouts
 components/ -> Reusable UI components
@@ -1072,7 +1075,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.3.9");
+    console.log("create-gvc-app v0.4.0");
     return;
   }
 
@@ -1271,7 +1274,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.3.9")
+      dim("// gvc-builder-kit v0.4.0")
   );
 }
 
