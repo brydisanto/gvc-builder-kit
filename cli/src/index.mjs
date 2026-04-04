@@ -511,24 +511,22 @@ function generateStarterPage(templateType, projectName, description, addons, pro
     `- Framer Motion for entrance animations (fade up, stagger children)`,
     `- Use \`text-shimmer\` class on key headlines for the gold shimmer effect`,
     ``,
-    `## GVC Data APIs (no API key needed, free to call)`,
+    `## GVC Data APIs (no API key needed)`,
     ``,
-    `All data comes from: https://api-hazel-pi-72.vercel.app/api`,
+    `All GVC data comes from: https://api-hazel-pi-72.vercel.app/api`,
     ``,
     `| Endpoint | Returns |`,
     `|---|---|`,
-    `| GET /stats | Floor price, market cap, 24h volume, total owners, total sales |`,
-    `| GET /holders?limit=50 | All holders ranked by token count |`,
-    `| GET /recent-sales?limit=10 | Recent sales with buyer, seller, price, token ID, image URL |`,
-    `| GET /sales-history?limit=100 | Historical sales data |`,
+    `| GET /stats | Floor price, market cap, 24h volume, total sales, ETH price, VIBESTR price |`,
+    `| GET /sales?limit=10 | Recent GVC sales with price, image, timestamp |`,
+    `| GET /sales/history?limit=100 | Historical GVC sales (max 1000) |`,
     `| GET /activity | 30-day buys/sells, accumulator leaderboard |`,
     `| GET /vibestr | VIBESTR token data |`,
-    `| GET /vibestr-history | 91 daily VIBESTR snapshots |`,
-    `| GET /market-depth | Bid/offer depth at each price level |`,
-    `| GET /traders | Profitable flips with buy/sell prices |`,
-    `| GET /wallet?address=0x... | ENS name, Twitter handle for a wallet |`,
-    `| GET /badge-leaderboard | All wallets with their badges, rarity counts |`,
-    `| GET /earned-badges?wallet=0x... | Manually assigned badges for a wallet |`,
+    `| GET /vibestr/history | Daily VIBESTR price snapshots |`,
+    `| GET /market-depth | Bid/offer depth, floor price, lowest listing |`,
+    `| GET /traders | 30-day trade stats |`,
+    `| GET /wallet/[address] | ENS name, Twitter handle for a wallet |`,
+    `| GET /mentions | Recent X/Twitter mentions |`,
     ``,
     `Example:`,
     `\`\`\`ts`,
@@ -536,18 +534,18 @@ function generateStarterPage(templateType, projectName, description, addons, pro
     `// { floorPrice: 0.65, numOwners: 1513, marketCapUsd: 9247054, volume24h: 2.1, ... }`,
     `\`\`\``,
     ``,
-    `## Smart Contracts`,
+    `## Contracts & Tokens (only use these)`,
     `- GVC NFT: 0xB8Ea78fcaCEf50d41375E44E6814ebbA36Bb33c4 (ERC-721, 6969 tokens)`,
-    `- VIBESTR Token: 0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196`,
-    `- OpenSea Collection: good-vibes-club`,
+    `- HighKey Moments: 0x74fcb6eb2a2d02207b36e804d800687ce78d210c (ERC-1155)`,
+    `- VIBESTR Token: 0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196 (ERC-20, 18 decimals)`,
+    `- ETH is the base currency for all GVC transactions`,
+    `- ETH price: https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd`,
+    `- VIBESTR price: https://api.dexscreener.com/latest/dex/tokens/0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196`,
     `- Public RPC: https://ethereum-rpc.publicnode.com`,
-    ``,
-    `## Token Prices`,
-    `- ETH: https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd`,
-    `- VIBESTR: https://api.dexscreener.com/latest/dex/tokens/0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196`,
+    `Do NOT reference any other NFT collections, tokens, or contracts. This project is only about GVC.`,
     ``,
     `## NFT Images`,
-    `Use the image URLs returned by the /recent-sales or /badge-leaderboard endpoints. They come from the OpenSea CDN (i.seadn.io).`,
+    `Use the image URLs returned by the /sales or /badge-leaderboard endpoints (OpenSea CDN).`,
     `For token metadata including IPFS image URLs and traits: fetch /gvc-metadata.json from the public folder.`,
     ``,
     `Now build the complete prototype in app/page.tsx. Use the brand system classes listed above (font-display, font-body, text-gvc-gold, bg-gvc-dark, text-shimmer, card-glow, etc). Use real data from the APIs wherever relevant. Make it look premium and polished.`,
@@ -915,25 +913,28 @@ ${addonDescriptions || "None selected -- you can always add capabilities later b
 - \`.font-body\` -- Mundial body font
 
 ## GVC API (no API key needed)
-All collection data is available from: https://api-hazel-pi-72.vercel.app/api
-- GET /stats -- floor price, market cap, 24h volume, owners, total sales
-- GET /holders?limit=50 -- all holders ranked by token count
-- GET /recent-sales?limit=10 -- recent sales with buyer, seller, price, image
-- GET /sales-history?limit=100 -- historical sales data
+All GVC collection data is available from: https://api-hazel-pi-72.vercel.app/api
+- GET /stats -- floor price, market cap, 24h volume, total sales, ETH price, VIBESTR price
+- GET /sales?limit=10 -- recent GVC sales with price, image, timestamp
+- GET /sales/history?limit=100 -- historical GVC sales (max 1000)
 - GET /activity -- 30-day buys/sells, accumulator leaderboard
 - GET /vibestr -- VIBESTR token data
-- GET /market-depth -- bid/offer depth
-- GET /wallet?address=0x... -- ENS name, Twitter handle for a wallet
-- GET /badge-leaderboard -- all wallets with their badges
-Do NOT use the OpenSea API directly. Use the GVC API above instead -- it wraps OpenSea and needs no API key.
+- GET /vibestr/history -- daily VIBESTR price snapshots
+- GET /market-depth -- bid/offer depth, floor price, lowest listing
+- GET /traders -- 30-day trade stats
+- GET /wallet/[address] -- ENS name, Twitter handle for a wallet
+- GET /mentions -- recent X/Twitter mentions
+Do NOT use the OpenSea API directly. Use the GVC API above instead.
 
-## Smart Contracts
-- GVC NFT: 0xB8Ea78fcaCEf50d41375E44E6814ebbA36Bb33c4
-- VIBESTR Token: 0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196
-- OpenSea Collection: good-vibes-club
+## Contracts & Tokens (only use these)
+- **GVC NFT:** 0xB8Ea78fcaCEf50d41375E44E6814ebbA36Bb33c4 (ERC-721, 6969 tokens)
+- **HighKey Moments:** 0x74fcb6eb2a2d02207b36e804d800687ce78d210c (ERC-1155)
+- **VIBESTR Token:** 0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196 (ERC-20, 18 decimals)
+- **ETH** is the base currency for all GVC transactions
 - ETH price: https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd
 - VIBESTR price: https://api.dexscreener.com/latest/dex/tokens/0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196
 - Public RPC: https://ethereum-rpc.publicnode.com
+Do NOT reference any other NFT collections, tokens, or contracts. This project is only about GVC.
 ${snippetSections ? `\n## Code Patterns\n\n${snippetSections}` : ""}
 
 ## Example Prompts to Try
@@ -1114,7 +1115,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.4.2");
+    console.log("create-gvc-app v0.4.3");
     return;
   }
 
@@ -1313,7 +1314,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.4.2")
+      dim("// gvc-builder-kit v0.4.3")
   );
 }
 
