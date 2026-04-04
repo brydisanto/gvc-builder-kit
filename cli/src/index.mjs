@@ -648,7 +648,7 @@ export default function Home() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">1</span>
-                <p className="text-white/60 font-body text-sm">Go to your project</p>
+                <p className="text-white/60 font-body text-sm">Go to your project folder</p>
               </div>
               <button onClick={() => copyText("cd {{SAFE_NAME}}", 1)} className="w-full group relative">
                 <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 1 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
@@ -660,66 +660,63 @@ export default function Home() {
               </button>
             </div>
 
-            {/* Step 2 */}
+            {/* Step 2 — Install Claude Code */}
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">2</span>
-                <p className="text-white/60 font-body text-sm">Start Claude Code</p>
+                <p className="text-white/60 font-body text-sm">Install Claude Code <span className="text-white/30">(skip if you already have it)</span></p>
               </div>
-              <button onClick={() => copyText("claude", 2)} className="w-full group relative">
+              <button onClick={() => copyText("curl -fsSL https://claude.ai/install.sh | bash", 2)} className="w-full group relative">
                 <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 2 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
-                  <span className={copiedStep === 2 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>claude</span>
+                  <span className={copiedStep === 2 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>curl -fsSL https://claude.ai/install.sh | bash</span>
                 </div>
                 <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (copiedStep === 2 ? "text-[#2EFF2E]" : "text-white/30 group-hover:text-white/50")}>
                   {copiedStep === 2 ? "Copied!" : "Click to copy"}
                 </span>
               </button>
+              <p className="text-white/25 font-body text-xs mt-1.5">Free, takes 30 seconds. Requires a{" "}
+                <a href="https://claude.ai" target="_blank" rel="noopener noreferrer" className="text-[#FFE048]/50 hover:text-[#FFE048] underline underline-offset-2 transition-colors">Claude account</a>
+                {" "}(free to create).
+              </p>
             </div>
 
-            {/* Step 3 */}
+            {/* Step 3 — Launch */}
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">3</span>
-                <p className="text-white/60 font-body text-sm">Tell Claude what to build</p>
+                <p className="text-white/60 font-body text-sm">Start Claude Code</p>
               </div>
-              <button onClick={() => copyText("Build what's described in my CLAUDE.md", 3)} className="w-full group relative">
+              <button onClick={() => copyText("claude", 3)} className="w-full group relative">
                 <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 3 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
-                  <span className={copiedStep === 3 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>Build what&apos;s described in my CLAUDE.md</span>
+                  <span className={copiedStep === 3 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>claude</span>
                 </div>
                 <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (copiedStep === 3 ? "text-[#2EFF2E]" : "text-white/30 group-hover:text-white/50")}>
                   {copiedStep === 3 ? "Copied!" : "Click to copy"}
                 </span>
               </button>
             </div>
+
+            {/* Step 4 — Build prompt */}
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">4</span>
+                <p className="text-white/60 font-body text-sm">Tell Claude what to build</p>
+              </div>
+              <button onClick={() => copyText("Build what's described in my CLAUDE.md", 4)} className="w-full group relative">
+                <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 4 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
+                  <span className={copiedStep === 4 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>Build what&apos;s described in my CLAUDE.md</span>
+                </div>
+                <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (copiedStep === 4 ? "text-[#2EFF2E]" : "text-white/30 group-hover:text-white/50")}>
+                  {copiedStep === 4 ? "Copied!" : "Click to copy"}
+                </span>
+              </button>
+              <p className="text-white/25 font-body text-xs mt-1.5">Claude reads your project files automatically — it already knows your brand, fonts, APIs, and idea.</p>
+            </div>
           </div>
 
           <p className="text-white/30 font-body text-xs mt-5 leading-relaxed">
-            Claude reads your project files automatically — it already knows your brand, fonts, APIs, and idea. Come back to this tab to watch it build in real time.
+            That&apos;s it! Come back to this tab to watch your project get built in real time.
           </p>
-
-          <div className="mt-4 pt-4 border-t border-white/[0.06]">
-            <p className="text-white/30 font-body text-xs">
-              Don&apos;t have Claude Code?{" "}
-              <a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener noreferrer" className="text-[#FFE048]/60 hover:text-[#FFE048] underline underline-offset-2 transition-colors">
-                Install it here
-              </a>{" "}
-              (takes 30 seconds)
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Fallback — Claude.ai chat */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-5 mb-8">
-          <div className="flex items-center justify-between">
-            <p className="text-white/30 font-body text-xs">Don&apos;t want to use the terminal?</p>
-            <button
-              onClick={copyAndOpen}
-              className="inline-flex items-center gap-2 text-xs font-body text-[#FFE048]/60 hover:text-[#FFE048] transition-colors"
-            >
-              {copied ? "Copied! Opening..." : "Copy prompt & open Claude.ai"}
-              <svg className="w-3 h-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-            </button>
-          </div>
         </motion.div>
 
         {/* Footer */}
@@ -1071,7 +1068,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.3.2");
+    console.log("create-gvc-app v0.3.3");
     return;
   }
 
@@ -1270,7 +1267,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.3.2")
+      dim("// gvc-builder-kit v0.3.3")
   );
 }
 
