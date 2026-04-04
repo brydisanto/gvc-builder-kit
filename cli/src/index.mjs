@@ -572,12 +572,14 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [cmdCopied, setCmdCopied] = useState(false);
 
+  const startCmd = "cd {{SAFE_NAME}} && claude";
+
   async function copyCmd() {
     try {
-      await navigator.clipboard.writeText("claude");
+      await navigator.clipboard.writeText(startCmd);
     } catch {
       const ta = document.createElement("textarea");
-      ta.value = "claude";
+      ta.value = startCmd;
       document.body.appendChild(ta);
       ta.select();
       document.execCommand("copy");
@@ -670,7 +672,7 @@ export default function Home() {
             className="w-full group relative"
           >
             <div className={"bg-black/60 rounded-xl px-5 py-4 font-mono text-sm text-left transition-all duration-200 " + (cmdCopied ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
-              <span className={cmdCopied ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>claude</span>
+              <span className={cmdCopied ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>{startCmd}</span>
             </div>
             <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (cmdCopied ? "text-[#2EFF2E]" : "text-white/30 group-hover:text-white/50")}>
               {cmdCopied ? "Copied!" : "Click to copy"}
@@ -1068,7 +1070,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.2.8");
+    console.log("create-gvc-app v0.2.9");
     return;
   }
 
@@ -1267,7 +1269,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.2.8")
+      dim("// gvc-builder-kit v0.2.9")
   );
 }
 
