@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import pool from "@/lib/db";
+import pool, { GVC_IMAGE_FILTER } from "@/lib/db";
 
 export const revalidate = 60;
 
@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json(data);
     }
 
-    // Compute from price_cache
+    // Compute from price_cache — GVC only
     const limitParam = request.nextUrl.searchParams.get("limit");
     let limit = 20;
     if (limitParam) {
@@ -28,9 +28,10 @@ export async function GET(request: NextRequest) {
     const { rows } = await pool.query(
       `SELECT tx_hash, price_eth, price_usd, payment_symbol, image_url, created_at
        FROM price_cache
+       WHERE image_url LIKE $1
        ORDER BY created_at DESC
-       LIMIT $1`,
-      [limit]
+       LIMIT $2`,
+      [GVC_IMAGE_FILTER, limit]
     );
 
     const data = rows.map((r) => ({

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import pool from "@/lib/db";
+import pool, { GVC_IMAGE_FILTER } from "@/lib/db";
 
 export const revalidate = 60;
 
@@ -32,15 +32,16 @@ export async function GET() {
         "SELECT value FROM cache_entries WHERE key = 'market-depth-good-vibes-club' LIMIT 1"
       ).catch(() => ({ rows: [] })),
 
-      // Volume and sales count from price_cache
-      pool.query(`
-        SELECT
+      // Volume and sales count from price_cache — GVC only
+      pool.query(
+        `SELECT
           COUNT(*) as total_sales,
           SUM(price_eth) FILTER (WHERE created_at > NOW() - INTERVAL '1 day') as volume_24h,
           COUNT(*) FILTER (WHERE created_at > NOW() - INTERVAL '1 day') as sales_24h
         FROM price_cache
-        WHERE price_eth > 0
-      `),
+        WHERE price_eth > 0 AND image_url LIKE $1`,
+        [GVC_IMAGE_FILTER]
+      ),
     ]);
 
     const ethPrice = ethRes?.ethereum?.usd ?? 0;
@@ -53,9 +54,9 @@ export async function GET() {
       floorPrice = depth.lowestListing ?? 0;
     }
     if (!floorPrice) {
-      // Fallback: cheapest recent sale
       const fallback = await pool.query(
-        "SELECT MIN(price_eth) as floor FROM price_cache WHERE price_eth > 0.1 AND created_at > NOW() - INTERVAL '7 days'"
+        "SELECT MIN(price_eth) as floor FROM price_cache WHERE price_eth > 0.1 AND created_at > NOW() - INTERVAL '7 days' AND image_url LIKE $1",
+        [GVC_IMAGE_FILTER]
       );
       floorPrice = parseFloat(fallback.rows[0]?.floor) || 0;
     }

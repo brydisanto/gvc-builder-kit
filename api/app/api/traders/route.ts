@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import pool from "@/lib/db";
+import pool, { GVC_IMAGE_FILTER } from "@/lib/db";
 
 export const revalidate = 60;
 
@@ -13,9 +13,9 @@ export async function GET() {
       return NextResponse.json(cached.rows[0].value);
     }
 
-    // Compute basic trade stats from price_cache
-    const { rows } = await pool.query(`
-      SELECT
+    // Compute from price_cache — GVC only
+    const { rows } = await pool.query(
+      `SELECT
         COUNT(*) as total_trades,
         AVG(price_eth) as avg_price,
         MIN(price_eth) FILTER (WHERE price_eth > 0) as min_price,
@@ -24,7 +24,9 @@ export async function GET() {
       FROM price_cache
       WHERE created_at > NOW() - INTERVAL '30 days'
         AND price_eth > 0
-    `);
+        AND image_url LIKE $1`,
+      [GVC_IMAGE_FILTER]
+    );
 
     const stats = rows[0];
 
