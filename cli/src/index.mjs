@@ -469,30 +469,46 @@ function generateStarterPage(templateType, projectName, description, addons) {
   if (addonPromptLine) promptParts.push(addonPromptLine, ``);
 
   promptParts.push(
-    `Build me a complete, working, single-page prototype. Use Next.js App Router, TypeScript, Tailwind CSS, and Framer Motion.`,
+    `Build me a complete, working prototype by editing app/page.tsx. The project is already set up with Next.js App Router, TypeScript, Tailwind CSS, and Framer Motion — just write the page code.`,
     ``,
-    `## GVC Brand System (use this exactly)`,
+    `## IMPORTANT: Your project already has the GVC brand system installed`,
     ``,
-    `Colors:`,
-    `- Gold (primary): #FFE048`,
-    `- Black (background): #050505`,
-    `- Dark (cards/panels): #121212`,
-    `- Gray (borders): #1F1F1F`,
-    `- Green (success): #2EFF2E`,
-    `- Pink accent: #FF6B9D`,
-    `- Orange accent: #FF5F1F`,
+    `The project is scaffolded and running. These are ALREADY set up — use them directly:`,
     ``,
-    `Design:`,
-    `- Dark backgrounds with gold accents throughout`,
-    `- Rounded corners (12-16px for cards, full for pills)`,
-    `- Gold glow on hover: shadow-[0_0_20px_rgba(255,224,72,0.3)]`,
-    `- Generous whitespace, let things breathe`,
+    `### Fonts (already loaded in layout.tsx)`,
+    `- Headlines: \`className="font-display"\` — Brice font (bold, premium serif)`,
+    `- Body text: \`className="font-body"\` — Mundial font (clean sans-serif)`,
+    `- DO NOT import Google Fonts or any other fonts. Brice and Mundial are already loaded.`,
+    ``,
+    `### Tailwind Colors (already in tailwind.config.ts)`,
+    `- \`text-gvc-gold\` / \`bg-gvc-gold\` / \`border-gvc-gold\` — #FFE048 (primary gold)`,
+    `- \`bg-gvc-black\` — #050505 (page background)`,
+    `- \`bg-gvc-dark\` — #121212 (cards, panels)`,
+    `- \`bg-gvc-gray\` / \`border-gvc-gray\` — #1F1F1F (borders, dividers)`,
+    `- \`text-gvc-green\` / \`bg-gvc-green\` — #2EFF2E (success)`,
+    `- \`text-gvc-orange\` — #FF5F1F (accent)`,
+    `- \`text-pink-accent\` — #FF6B9D (accent)`,
+    ``,
+    `### CSS Utilities (already in globals.css)`,
+    `- \`text-shimmer\` — animated gold gradient text effect for headlines`,
+    `- \`card-glow\` — gold glow box-shadow that intensifies on hover`,
+    `- \`ember\` — floating gold particle dot (position absolute, add to background)`,
+    ``,
+    `### Assets (already in /public/)`,
+    `- \`/shaka.png\` — GVC shaka hand icon (use with next/image)`,
+    `- \`/gvc-logotype.svg\` — Good Vibes Club wordmark`,
+    `- \`/grid.svg\` — background grid texture`,
+    `- \`/gvc-metadata.json\` — all 6,969 token traits and IPFS image URLs`,
+    ``,
+    `### Design patterns`,
+    `- Dark backgrounds (#050505) with gold accents throughout`,
+    `- Cards: \`bg-gvc-dark border border-white/[0.08] rounded-2xl\``,
+    `- Card hover: add \`card-glow\` class or \`hover:border-gvc-gold/20\``,
+    `- Borders: \`border-white/[0.08]\` (subtle) or \`border-gvc-gold/20\` (emphasis)`,
+    `- Text hierarchy: \`text-gvc-gold\` for emphasis, \`text-white\` primary, \`text-white/50\` secondary, \`text-white/30\` muted`,
+    `- Generous whitespace — let things breathe`,
     `- Framer Motion for entrance animations (fade up, stagger children)`,
-    `- Shimmer effect on key headlines (animated gold gradient text)`,
-    ``,
-    `Typography:`,
-    `- Headlines: bold serif font, premium feel (use a serif from Google Fonts as a stand-in)`,
-    `- Body: clean sans-serif, generous line height`,
+    `- Use \`text-shimmer\` class on key headlines for the gold shimmer effect`,
     ``,
     `## GVC Data APIs (no API key needed, free to call)`,
     ``,
@@ -510,7 +526,6 @@ function generateStarterPage(templateType, projectName, description, addons) {
     `| GET /market-depth | Bid/offer depth at each price level |`,
     `| GET /traders | Profitable flips with buy/sell prices |`,
     `| GET /wallet?address=0x... | ENS name, Twitter handle for a wallet |`,
-    `| GET /mentions | Twitter/X mentions with engagement stats |`,
     `| GET /badge-leaderboard | All wallets with their badges, rarity counts |`,
     `| GET /earned-badges?wallet=0x... | Manually assigned badges for a wallet |`,
     ``,
@@ -532,8 +547,9 @@ function generateStarterPage(templateType, projectName, description, addons) {
     ``,
     `## NFT Images`,
     `Use the image URLs returned by the /recent-sales or /badge-leaderboard endpoints. They come from the OpenSea CDN (i.seadn.io).`,
+    `For token metadata including IPFS image URLs and traits: fetch /gvc-metadata.json from the public folder.`,
     ``,
-    `Now build the complete prototype. Make it look premium and polished. Use real data from the APIs above wherever relevant.`,
+    `Now build the complete prototype in app/page.tsx. Use the brand system classes listed above (font-display, font-body, text-gvc-gold, bg-gvc-dark, text-shimmer, card-glow, etc). Use real data from the APIs wherever relevant. Make it look premium and polished.`,
   );
 
   const fullPrompt = promptParts.join("\n");
@@ -621,81 +637,62 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* CTA — Open in Claude */}
+        {/* Primary CTA — Claude Code */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-left rounded-2xl bg-[#121212] border border-[#FFE048]/20 p-6 mb-6">
           <h2 className="text-lg font-display font-bold text-white mb-2">Now let&apos;s build it</h2>
           <p className="text-white/50 font-body text-sm mb-5 leading-relaxed">
-            Your project is set up with the GVC brand system, fonts, and everything you picked.
-            Now you need Claude to turn your idea into a working prototype.
+            Your project has the GVC brand system, fonts, APIs, and everything ready to go.
+            Open a new terminal tab and run one command:
           </p>
 
-          <div className="space-y-4 mb-6">
-            <div className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-sm font-bold flex items-center justify-center mt-0.5">1</span>
-              <div>
-                <p className="text-white font-body font-semibold text-sm">Click the button below</p>
-                <p className="text-white/40 text-sm font-body">It copies your project prompt and opens Claude in a new tab.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-sm font-bold flex items-center justify-center mt-0.5">2</span>
-              <div>
-                <p className="text-white font-body font-semibold text-sm">Paste into Claude</p>
-                <p className="text-white/40 text-sm font-body">
-                  Press{" "}
-                  <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Cmd + V</kbd>{" "}
-                  on Mac or{" "}
-                  <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/70 font-mono text-xs mx-0.5">Ctrl + V</kbd>{" "}
-                  on Windows, then press Enter.
-                </p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-sm font-bold flex items-center justify-center mt-0.5">3</span>
-              <div>
-                <p className="text-white font-body font-semibold text-sm">Claude builds your prototype</p>
-                <p className="text-white/40 text-sm font-body">It already knows your idea, the GVC brand, and what features you want. It takes it from here.</p>
-              </div>
-            </div>
+          <div className="bg-black/40 rounded-xl px-5 py-4 font-mono text-base text-[#2EFF2E] mb-4 text-center">
+            claude
           </div>
+
+          <p className="text-white/50 font-body text-sm mb-4 leading-relaxed">
+            Claude Code reads your project automatically — it already knows your brand, your fonts, your APIs, and your idea. Just tell it:
+          </p>
+
+          <div className="bg-black/20 border border-white/[0.06] rounded-xl px-4 py-3 text-white/60 text-sm font-body italic mb-4">
+            &ldquo;Build what&apos;s described in my CLAUDE.md&rdquo;
+          </div>
+
+          <p className="text-white/30 font-body text-xs leading-relaxed">
+            Don&apos;t have Claude Code?{" "}
+            <a href="https://docs.anthropic.com/en/docs/claude-code/overview" target="_blank" rel="noopener noreferrer" className="text-[#FFE048]/60 hover:text-[#FFE048] underline underline-offset-2 transition-colors">
+              Install it here
+            </a>{" "}
+            (free, takes 30 seconds).
+          </p>
+        </motion.div>
+
+        {/* Fallback — Claude.ai */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-6 mb-8">
+          <h3 className="text-sm font-display font-bold text-white/60 mb-2">Prefer Claude.ai instead?</h3>
+          <p className="text-white/40 font-body text-sm mb-4">
+            We&apos;ll copy a prompt with your idea and the full GVC context, then open Claude in a new tab. Just paste and go.
+          </p>
 
           <button
             onClick={copyAndOpen}
             className={
               copied
-                ? "w-full inline-flex items-center justify-center gap-3 px-6 py-4 font-display font-bold text-base rounded-xl transition-all duration-300 bg-[#2EFF2E]/20 text-[#2EFF2E] border border-[#2EFF2E]/30"
-                : "w-full inline-flex items-center justify-center gap-3 px-6 py-4 font-display font-bold text-base rounded-xl transition-all duration-300 bg-[#FFE048] text-[#050505] hover:shadow-[0_0_30px_rgba(255,224,72,0.3)]"
+                ? "w-full inline-flex items-center justify-center gap-3 px-5 py-3 font-display font-bold text-sm rounded-xl transition-all duration-300 bg-[#2EFF2E]/20 text-[#2EFF2E] border border-[#2EFF2E]/30"
+                : "w-full inline-flex items-center justify-center gap-3 px-5 py-3 font-display font-bold text-sm rounded-xl transition-all duration-300 border border-white/[0.12] text-white/70 hover:border-[#FFE048]/30 hover:text-[#FFE048]"
             }
           >
             {copied ? (
               <>
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
                 Copied! Opening Claude...
               </>
             ) : (
               <>
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" /></svg>
-                Open in Claude
-                <svg className="w-4 h-4 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                Copy prompt &amp; open Claude.ai
+                <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
               </>
             )}
           </button>
-
-          <p className="text-white/30 text-xs font-body text-center mt-3">
-            Or{" "}
-            <button onClick={copyOnly} className="text-[#FFE048]/60 hover:text-[#FFE048] underline underline-offset-2 transition-colors">
-              copy the prompt
-            </button>{" "}
-            to paste it yourself.
-          </p>
-        </motion.div>
-
-        {/* Claude Code alternative */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-6 mb-8">
-          <h3 className="text-sm font-display font-bold text-white/60 mb-2">Already have Claude Code?</h3>
-          <p className="text-white/40 font-body text-sm mb-3">Open a new terminal tab and run:</p>
-          <div className="bg-black/40 rounded-lg px-4 py-3 font-mono text-sm text-[#2EFF2E]/80 mb-2">claude</div>
-          <p className="text-white/30 font-body text-xs">Claude reads your CLAUDE.md automatically and knows exactly what to build.</p>
         </motion.div>
 
         {/* Footer */}
@@ -1047,7 +1044,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.1.9");
+    console.log("create-gvc-app v0.2.0");
     return;
   }
 
@@ -1246,7 +1243,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.1.9")
+      dim("// gvc-builder-kit v0.2.0")
   );
 }
 
