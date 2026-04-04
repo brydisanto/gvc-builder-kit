@@ -570,6 +570,22 @@ const CLAUDE_PROMPT = {{PROMPT_JSON}};
 
 export default function Home() {
   const [copied, setCopied] = useState(false);
+  const [cmdCopied, setCmdCopied] = useState(false);
+
+  async function copyCmd() {
+    try {
+      await navigator.clipboard.writeText("claude");
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = "claude";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    setCmdCopied(true);
+    setTimeout(() => setCmdCopied(false), 2500);
+  }
 
   async function doCopy() {
     try {
@@ -641,26 +657,28 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Primary CTA — Open Claude Code */}
+        {/* Primary CTA — Open Claude Code in this project */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-left rounded-2xl bg-[#121212] border border-[#FFE048]/20 p-6 mb-6">
           <h2 className="text-lg font-display font-bold text-white mb-2">Now let&apos;s build it</h2>
           <p className="text-white/50 font-body text-sm mb-5 leading-relaxed">
             Your project has the GVC brand system, custom fonts, live APIs, and everything ready to go.
-            Open Claude Code and it will know your entire project automatically.
+            Open a <span className="text-white/80">new terminal tab</span> (keep this one running) and paste this:
           </p>
 
-          <a
-            href="https://claude.ai/code"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full inline-flex items-center justify-center gap-3 px-6 py-4 font-display font-bold text-base rounded-xl transition-all duration-300 bg-[#FFE048] text-[#050505] hover:shadow-[0_0_30px_rgba(255,224,72,0.3)] mb-4"
+          <button
+            onClick={copyCmd}
+            className="w-full group relative"
           >
-            Open Claude Code
-            <svg className="w-4 h-4 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-          </a>
+            <div className={"bg-black/60 rounded-xl px-5 py-4 font-mono text-sm text-left transition-all duration-200 " + (cmdCopied ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
+              <span className={cmdCopied ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>claude</span>
+            </div>
+            <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (cmdCopied ? "text-[#2EFF2E]" : "text-white/30 group-hover:text-white/50")}>
+              {cmdCopied ? "Copied!" : "Click to copy"}
+            </span>
+          </button>
 
-          <p className="text-white/50 font-body text-sm mb-3 leading-relaxed">
-            Once it opens, tell it:
+          <p className="text-white/50 font-body text-sm mt-4 mb-3 leading-relaxed">
+            Then tell Claude:
           </p>
 
           <div className="bg-black/20 border border-white/[0.06] rounded-xl px-4 py-3 text-white/60 text-sm font-body italic mb-4">
@@ -670,19 +688,27 @@ export default function Home() {
           <p className="text-white/30 font-body text-xs leading-relaxed">
             Claude Code reads your project files automatically — it already knows your brand, fonts, APIs, and idea. No setup needed.
           </p>
+
+          <div className="mt-4 pt-4 border-t border-white/[0.06]">
+            <p className="text-white/30 font-body text-xs mb-2">Don&apos;t have Claude Code yet?</p>
+            <div className="flex gap-3">
+              <a href="https://claude.ai/download" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-body text-[#FFE048]/60 hover:text-[#FFE048] transition-colors">
+                Download the app
+                <svg className="w-3 h-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              </a>
+              <span className="text-white/15 text-xs">or</span>
+              <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-body text-white/40 hover:text-white/60 transition-colors">
+                Use in browser
+                <svg className="w-3 h-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+              </a>
+            </div>
+          </div>
         </motion.div>
 
-        {/* Alternative — terminal */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-6 mb-6">
-          <h3 className="text-sm font-display font-bold text-white/60 mb-2">Or use your terminal</h3>
-          <p className="text-white/40 font-body text-sm mb-3">Open a new terminal tab and run:</p>
-          <div className="bg-black/40 rounded-lg px-4 py-3 font-mono text-sm text-[#2EFF2E]/80">claude</div>
-        </motion.div>
-
-        {/* Fallback — Claude.ai chat */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-5 mb-8">
+        {/* Fallback — Claude.ai chat (no Claude Code) */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-5 mb-8">
           <div className="flex items-center justify-between">
-            <p className="text-white/30 font-body text-xs">No Claude Code?</p>
+            <p className="text-white/30 font-body text-xs">Just want to chat with Claude instead?</p>
             <button
               onClick={copyAndOpen}
               className="inline-flex items-center gap-2 text-xs font-body text-[#FFE048]/60 hover:text-[#FFE048] transition-colors"
@@ -1042,7 +1068,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.2.7");
+    console.log("create-gvc-app v0.2.8");
     return;
   }
 
@@ -1241,7 +1267,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.2.7")
+      dim("// gvc-builder-kit v0.2.8")
   );
 }
 
