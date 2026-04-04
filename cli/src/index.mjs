@@ -572,14 +572,14 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [cmdCopied, setCmdCopied] = useState(false);
 
-  const startCmd = "cd {{SAFE_NAME}} && claude";
+  const cdCmd = "cd {{SAFE_NAME}}";
 
   async function copyCmd() {
     try {
-      await navigator.clipboard.writeText(startCmd);
+      await navigator.clipboard.writeText(cdCmd);
     } catch {
       const ta = document.createElement("textarea");
-      ta.value = startCmd;
+      ta.value = cdCmd;
       document.body.appendChild(ta);
       ta.select();
       document.execCommand("copy");
@@ -659,50 +659,59 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Primary CTA — Open Claude Code in this project */}
+        {/* Step-by-step build instructions */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-left rounded-2xl bg-[#121212] border border-[#FFE048]/20 p-6 mb-6">
-          <h2 className="text-lg font-display font-bold text-white mb-2">Now let&apos;s build it</h2>
-          <p className="text-white/50 font-body text-sm mb-5 leading-relaxed">
-            Your project has the GVC brand system, custom fonts, live APIs, and everything ready to go.
-            Open a <span className="text-white/80">new terminal tab</span> (keep this one running) and paste this:
-          </p>
+          <h2 className="text-lg font-display font-bold text-white mb-5">Now let&apos;s build it</h2>
 
-          <button
-            onClick={copyCmd}
-            className="w-full group relative"
-          >
-            <div className={"bg-black/60 rounded-xl px-5 py-4 font-mono text-sm text-left transition-all duration-200 " + (cmdCopied ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
-              <span className={cmdCopied ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>{startCmd}</span>
+          <div className="space-y-5">
+            {/* Step 1 */}
+            <div className="flex items-start gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-sm font-bold flex items-center justify-center mt-0.5">1</span>
+              <div className="flex-1">
+                <p className="text-white font-body font-semibold text-sm mb-2">Open Claude Code</p>
+                <div className="flex flex-wrap gap-2">
+                  <a href="https://claude.ai/download" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#FFE048] text-[#050505] font-display font-bold text-sm hover:shadow-[0_0_20px_rgba(255,224,72,0.3)] transition-all">
+                    Download the app
+                    <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </a>
+                  <span className="self-center text-white/20 text-xs font-body">or</span>
+                  <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.12] text-white/70 font-display font-bold text-sm hover:border-[#FFE048]/30 hover:text-[#FFE048] transition-all">
+                    Open in browser
+                    <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                  </a>
+                </div>
+              </div>
             </div>
-            <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (cmdCopied ? "text-[#2EFF2E]" : "text-white/30 group-hover:text-white/50")}>
-              {cmdCopied ? "Copied!" : "Click to copy"}
-            </span>
-          </button>
 
-          <p className="text-white/50 font-body text-sm mt-4 mb-3 leading-relaxed">
-            Then tell Claude:
-          </p>
+            {/* Step 2 */}
+            <div className="flex items-start gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-sm font-bold flex items-center justify-center mt-0.5">2</span>
+              <div className="flex-1">
+                <p className="text-white font-body font-semibold text-sm mb-2">Open your project folder</p>
+                <p className="text-white/40 font-body text-sm mb-2">In Claude Code, paste this to navigate to your project:</p>
+                <button onClick={copyCmd} className="w-full group relative">
+                  <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (cmdCopied ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
+                    <span className={cmdCopied ? "text-[#2EFF2E]" : "text-[#2EFF2E]/80"}>cd {{SAFE_NAME}}</span>
+                  </div>
+                  <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (cmdCopied ? "text-[#2EFF2E]" : "text-white/30 group-hover:text-white/50")}>
+                    {cmdCopied ? "Copied!" : "Click to copy"}
+                  </span>
+                </button>
+              </div>
+            </div>
 
-          <div className="bg-black/20 border border-white/[0.06] rounded-xl px-4 py-3 text-white/60 text-sm font-body italic mb-4">
-            &ldquo;Build what&apos;s described in my CLAUDE.md&rdquo;
-          </div>
-
-          <p className="text-white/30 font-body text-xs leading-relaxed">
-            Claude Code reads your project files automatically — it already knows your brand, fonts, APIs, and idea. No setup needed.
-          </p>
-
-          <div className="mt-4 pt-4 border-t border-white/[0.06]">
-            <p className="text-white/30 font-body text-xs mb-2">Don&apos;t have Claude Code yet?</p>
-            <div className="flex gap-3">
-              <a href="https://claude.ai/download" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-body text-[#FFE048]/60 hover:text-[#FFE048] transition-colors">
-                Download the app
-                <svg className="w-3 h-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              </a>
-              <span className="text-white/15 text-xs">or</span>
-              <a href="https://claude.ai/code" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-xs font-body text-white/40 hover:text-white/60 transition-colors">
-                Use in browser
-                <svg className="w-3 h-3 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-              </a>
+            {/* Step 3 */}
+            <div className="flex items-start gap-3">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-sm font-bold flex items-center justify-center mt-0.5">3</span>
+              <div className="flex-1">
+                <p className="text-white font-body font-semibold text-sm mb-2">Tell Claude to build</p>
+                <div className="bg-black/20 border border-white/[0.06] rounded-xl px-4 py-3 text-white/60 text-sm font-body italic">
+                  &ldquo;Build what&apos;s described in my CLAUDE.md&rdquo;
+                </div>
+                <p className="text-white/30 font-body text-xs mt-2">
+                  Claude reads your project automatically — it knows your brand, fonts, APIs, and idea.
+                </p>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -1070,7 +1079,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.2.9");
+    console.log("create-gvc-app v0.3.0");
     return;
   }
 
@@ -1269,7 +1278,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.2.9")
+      dim("// gvc-builder-kit v0.3.0")
   );
 }
 
