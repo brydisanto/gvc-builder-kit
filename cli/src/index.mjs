@@ -710,7 +710,7 @@ export default function Home() {
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">4</span>
-                <p className="text-white/60 font-body text-sm">Type this <span className="text-white/80 font-semibold">inside Claude Code</span></p>
+                <p className="text-white/60 font-body text-sm">When you see the <span className="font-mono text-[#FFE048]/70">&gt;</span> prompt, paste this</p>
               </div>
               <button onClick={() => copyText("Build what's described in my CLAUDE.md", 4)} className="w-full group relative">
                 <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 4 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-[#FFE048]/20")}>
@@ -720,7 +720,7 @@ export default function Home() {
                   {copiedStep === 4 ? "Copied!" : "Click to copy"}
                 </span>
               </button>
-              <p className="text-white/25 font-body text-xs mt-1.5">Paste this into the Claude Code prompt (not the regular terminal). Claude reads your project files and starts building.</p>
+              <p className="text-white/25 font-body text-xs mt-1.5">This is what you tell Claude to do. It reads your project files and starts building automatically.</p>
             </div>
           </div>
 
@@ -1079,7 +1079,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.3.6");
+    console.log("create-gvc-app v0.3.7");
     return;
   }
 
@@ -1278,7 +1278,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.3.6")
+      dim("// gvc-builder-kit v0.3.7")
   );
 }
 
