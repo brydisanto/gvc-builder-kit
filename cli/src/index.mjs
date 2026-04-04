@@ -70,62 +70,47 @@ function checkClaudeCLI() {
 const TEMPLATE_CHOICES = [
   {
     value: "blank-canvas",
-    label: "I have my own idea (blank start)",
-    hint: "just the brand system, ready for anything",
+    label: "Something else (blank start)",
+    hint: "just the brand system, ready for anything you describe",
   },
   {
     value: "project-site",
-    label: "A website for my project",
-    hint: "landing page, about section, features, CTA",
+    label: "A website or landing page",
+    hint: "hero section, about, features, call to action",
   },
   {
-    value: "tracker",
-    label: "A tracker or dashboard",
-    hint: "stats cards, charts, live data, auto-refresh",
+    value: "dashboard",
+    label: "A dashboard or tracker",
+    hint: "stats, floor price, leaderboards, charts, live data",
   },
   {
     value: "mini-game",
-    label: "A game or interactive experience",
-    hint: "game board, scoring, leaderboard",
+    label: "A game",
+    hint: "game board, scoring, game over screen",
   },
   {
     value: "gallery",
-    label: "A place to show off my collection",
-    hint: "image grid with glow cards, filtering, uploads",
+    label: "A gallery",
+    hint: "image grid, filtering, search, uploads",
   },
   {
     value: "vote-and-rank",
     label: "A voting or ranking page",
-    hint: "1v1 matchups, polls, leaderboard, results",
+    hint: "1v1 matchups, polls, leaderboard",
   },
   {
-    value: "badge-wallet-tool",
-    label: "A badge or wallet lookup tool",
-    hint: "paste a wallet, see badges, holdings, stats",
-  },
-  {
-    value: "rarity-checker",
-    label: "A rarity or price checker",
-    hint: "look up any GVC by token ID, traits, rank, sales",
-  },
-  {
-    value: "leaderboard",
-    label: "A community leaderboard",
-    hint: "top holders, sweepers, badge counts, activity",
-  },
-  {
-    value: "sweep-tracker",
-    label: "A sweep or floor tracker",
-    hint: "floor price changes, listings under target, sweep activity",
+    value: "lookup-tool",
+    label: "A lookup tool",
+    hint: "search by wallet or token ID, see badges, traits, rarity",
   },
   {
     value: "card-maker",
-    label: "A shareable card or image maker",
-    hint: "profile cards, badge flex, memes with GVC characters",
+    label: "A card or image maker",
+    hint: "create shareable profile cards, badge flexes, memes",
   },
   {
     value: "profile-page",
-    label: "A personal GVC profile page",
+    label: "A profile page",
     hint: "connect wallet, show your GVCs, badges, stats",
   },
 ];
@@ -219,22 +204,16 @@ function suggestAddons(description) {
 const TEMPLATE_INSTRUCTIONS = {
   "project-site":
     "Build a landing page with: hero section with gold shimmer title, about section, features grid (3 columns), CTA section, footer with social links. Use the GVC brand system throughout.",
-  "tracker":
-    "Build a dashboard with: stats panel showing 3-4 key metrics with animated counters, a data table or card grid for tracked items, auto-refresh every 60 seconds. If GVC Collection data is selected, fetch live floor price and listing count from OpenSea.",
+  "dashboard":
+    "Build a dashboard with: stats panel showing floor price, 24h volume, owners, and market cap with animated counters, a ranked holder or sales table, and a chart showing price or volume history. Use getStats(), getHolders(), getRecentSales(), and getSalesHistory() from lib/gvc-api.ts. Auto-refresh every 60 seconds.",
   "mini-game":
     "Build a browser game with: a game board or play area, score display, moves/lives counter, game-over screen with final score, and a restart button. Add a leaderboard if that add-on is selected.",
   "gallery":
     "Build a gallery page with: responsive image grid (3 columns desktop, 2 mobile) with gold glow cards on hover, filtering or search, and an upload/submit form. If IPFS images is selected, load NFT images with fallback handling.",
   "vote-and-rank":
     "Build a voting page with: 1v1 card matchups where users pick a winner, a results leaderboard sorted by wins, keyboard shortcuts (left/right arrows) for fast voting. If the leaderboard add-on is selected, add daily/weekly/all-time tabs.",
-  "badge-wallet-tool":
-    "Build a wallet lookup tool with: an input field where users paste an Ethereum address, a results section showing their GVC NFTs, earned badges with tier glow effects, and holder stats. Use getBadgeLeaderboard() from lib/gvc-api.ts for badge data and resolveWallet() for ENS/Twitter info.",
-  "rarity-checker":
-    "Build a token lookup tool with: an input field for GVC token ID, a display showing the NFT image, all traits (Background, Body, Face, Hair, Type), rarity rank, and recent sales history for that token. Use the badge-definitions.json to show which badges that token qualifies for.",
-  "leaderboard":
-    "Build a community leaderboard with: a ranked table of holders sorted by token count or badge count, tabs for different views (top holders, most badges, most active sweepers), and wallet identity resolution showing ENS names. Use getHolders() and getBadgeLeaderboard() from lib/gvc-api.ts.",
-  "sweep-tracker":
-    "Build a floor/sweep tracker with: a stats panel showing current floor price, 24h volume, and total listings, a live feed of recent sales, and a chart showing floor price history. Use getStats(), getRecentSales(), and getSalesHistory() from lib/gvc-api.ts. Auto-refresh every 60 seconds.",
+  "lookup-tool":
+    "Build a lookup tool with: an input field that accepts either a wallet address (0x...) or a GVC token ID (0-6968). For wallets: show their GVC NFTs, earned badges with tier glow effects, and holder stats. Use getBadgeLeaderboard() from lib/gvc-api.ts. For token IDs: show the NFT image, all traits (Type, Face, Hair, Body, Background), rarity rank, and which badges that token qualifies for. Use gvc-metadata.json for trait data.",
   "card-maker":
     "Build a shareable image maker with: a canvas area where users can pick a background from the GVC backgrounds folder, overlay GVC character images or badge icons, add custom text with Brice/Mundial fonts, and download the result as a PNG. Use HTML Canvas for rendering. Include preset templates like profile cards and badge flex cards.",
   "profile-page":
@@ -437,17 +416,14 @@ export function BadgeCard({ name, tier, image }: { name: string; tier: string; i
 
 function generateStarterPage(templateType, projectName, description, addons) {
   const TEMPLATE_LABELS = {
-    'project-site': 'Project Website',
-    'tracker': 'Tracker / Dashboard',
+    'project-site': 'Website / Landing Page',
+    'dashboard': 'Dashboard / Tracker',
     'mini-game': 'Game',
     'gallery': 'Gallery',
     'vote-and-rank': 'Vote & Rank',
-    'badge-wallet-tool': 'Badge / Wallet Lookup',
-    'rarity-checker': 'Rarity / Price Checker',
-    'leaderboard': 'Community Leaderboard',
-    'sweep-tracker': 'Sweep / Floor Tracker',
+    'lookup-tool': 'Lookup Tool',
     'card-maker': 'Card / Image Maker',
-    'profile-page': 'Personal GVC Profile',
+    'profile-page': 'Profile Page',
     'blank-canvas': 'Blank Canvas',
   };
 
@@ -748,7 +724,7 @@ function generateExamplePrompts(templateType, addons) {
       '"Create a timeline section showing GVC milestones"',
       '"Add a newsletter signup form at the bottom"',
     ],
-    "tracker": [
+    "dashboard": [
       '"Add a chart showing price history over the last 7 days"',
       '"Create a notification when floor price drops below a threshold"',
       '"Add a table that shows the most recent sales"',
@@ -1066,7 +1042,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.2.4");
+    console.log("create-gvc-app v0.2.5");
     return;
   }
 
@@ -1265,7 +1241,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.2.4")
+      dim("// gvc-builder-kit v0.2.5")
   );
 }
 

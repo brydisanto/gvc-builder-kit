@@ -16,17 +16,14 @@ import Image from "next/image";
 
 // Template label map
 const TEMPLATE_LABELS: Record<string, string> = {
-  "project-site": "Project Website",
-  tracker: "Tracker / Dashboard",
+  "project-site": "Website / Landing Page",
+  dashboard: "Dashboard / Tracker",
   "mini-game": "Game",
   gallery: "Gallery",
   "vote-and-rank": "Vote & Rank",
-  "badge-wallet-tool": "Badge / Wallet Lookup",
-  "rarity-checker": "Rarity / Price Checker",
-  leaderboard: "Community Leaderboard",
-  "sweep-tracker": "Sweep / Floor Tracker",
+  "lookup-tool": "Lookup Tool",
   "card-maker": "Card / Image Maker",
-  "profile-page": "Personal GVC Profile",
+  "profile-page": "Profile Page",
   "blank-canvas": "Blank Canvas",
 };
 
@@ -34,26 +31,20 @@ const TEMPLATE_LABELS: Record<string, string> = {
 const TEMPLATE_INSTRUCTIONS: Record<string, string> = {
   "project-site":
     "Build a landing page with: hero section with gold shimmer title, about section, features grid (3 columns), CTA section, footer with social links.",
-  tracker:
-    "Build a dashboard with: stats panel showing 3-4 key metrics with animated counters, a data table or card grid for tracked items, auto-refresh every 60 seconds.",
+  dashboard:
+    "Build a dashboard with: stats panel showing floor price, 24h volume, owners, and market cap with animated counters, a ranked holder or sales table, and a chart showing price or volume history. Auto-refresh every 60 seconds.",
   "mini-game":
     "Build a browser game with: a game board or play area, score display, moves/lives counter, game-over screen with final score, and a restart button.",
   gallery:
     "Build a gallery page with: responsive image grid (3 columns desktop, 2 mobile) with gold glow cards on hover, filtering or search, and an upload/submit form.",
   "vote-and-rank":
     "Build a voting page with: 1v1 card matchups where users pick a winner, a results leaderboard sorted by wins, keyboard shortcuts for fast voting.",
-  "badge-wallet-tool":
-    "Build a wallet lookup tool with: an input field where users paste an Ethereum address, a results section showing their GVC NFTs, earned badges with tier glow effects, and holder stats. Use getBadgeLeaderboard() and resolveWallet() from lib/gvc-api.ts.",
-  "rarity-checker":
-    "Build a token lookup tool with: an input field for GVC token ID, a display showing the NFT image, all traits, rarity rank, and recent sales history. Use badge-definitions.json to show which badges that token qualifies for.",
-  leaderboard:
-    "Build a community leaderboard with: a ranked table of holders sorted by token count or badge count, tabs for different views, and wallet identity resolution showing ENS names. Use getHolders() and getBadgeLeaderboard() from lib/gvc-api.ts.",
-  "sweep-tracker":
-    "Build a floor/sweep tracker with: a stats panel showing current floor price, 24h volume, and total listings, a live feed of recent sales, and a chart showing floor price history. Use getStats(), getRecentSales(), and getSalesHistory() from lib/gvc-api.ts.",
+  "lookup-tool":
+    "Build a lookup tool with: an input field that accepts either a wallet address (0x...) or a GVC token ID (0-6968). For wallets: show their GVC NFTs, earned badges with tier glow effects, and holder stats. For token IDs: show the NFT image, all traits (Type, Face, Hair, Body, Background), rarity rank, and which badges that token qualifies for.",
   "card-maker":
-    "Build a shareable image maker with: a canvas area where users can pick a background, overlay GVC character images or badge icons, add custom text with Brice/Mundial fonts, and download as PNG. Include preset templates like profile cards and badge flex cards.",
+    "Build a shareable image maker with: a canvas area where users can pick a background, overlay GVC character images or badge icons, add custom text, and download as PNG. Include preset templates like profile cards and badge flex cards.",
   "profile-page":
-    "Build a personal GVC profile page with: wallet connect button, a grid showing owned GVCs, earned badges with tier glow effects, holder stats, and a shareable URL. Use getBadgeLeaderboard() and getHolders() from lib/gvc-api.ts.",
+    "Build a personal GVC profile page with: wallet connect button, a grid showing owned GVCs, earned badges with tier glow effects, holder stats, and a shareable URL.",
   "blank-canvas":
     "This is a blank start with the GVC brand system. Help me build whatever I describe.",
 };
