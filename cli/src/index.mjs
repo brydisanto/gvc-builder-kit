@@ -70,8 +70,8 @@ function checkClaudeCLI() {
 const TEMPLATE_CHOICES = [
   {
     value: "blank-canvas",
-    label: "Something else",
-    hint: "you describe it, Claude builds it — total blank slate",
+    label: "Blank canvas",
+    hint: "you describe the vibe, Claude builds it — anything you want",
   },
   {
     value: "project-site",
@@ -1042,7 +1042,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.2.6");
+    console.log("create-gvc-app v0.2.7");
     return;
   }
 
@@ -1241,7 +1241,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.2.6")
+      dim("// gvc-builder-kit v0.2.7")
   );
 }
 
