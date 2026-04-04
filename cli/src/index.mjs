@@ -143,7 +143,7 @@ const ADDONS = [
   { value: "toasts",            label: "Toast notifications",                   hint: "alerts, success/error messages" },
   { value: "ipfs-images",       label: "IPFS image loading",                    hint: "load images from IPFS gateways" },
   { value: "on-chain-reads",    label: "On-chain reads (wallet balances, contracts)", hint: "read blockchain data" },
-  { value: "badge-collection",  label: "Badge collection (90 GVC badges, tiers)",    hint: "collect, display, tier up" },
+  { value: "badge-collection",  label: "Badge collection (101 GVC badges, tiers)",    hint: "collect, display, tier up" },
   { value: "vercel-kv",         label: "Vercel KV (Redis) setup",               hint: "key-value storage, caching" },
 ];
 
@@ -770,7 +770,7 @@ function generateExamplePrompts(templateType, addons) {
   if (addons.includes("web3-wallet")) prompts.push('"Add a connect wallet button that shows my address and ETH balance"');
   if (addons.includes("stats-panel")) prompts.push('"Build an animated stats row with counters that tick up on load"');
   if (addons.includes("leaderboard")) prompts.push('"Create a leaderboard with daily, weekly, and all-time tabs"');
-  if (addons.includes("badge-collection")) prompts.push('"Display all 90 GVC badges in a grid with tier filtering"');
+  if (addons.includes("badge-collection")) prompts.push('"Display all 101 GVC badges in a grid with tier filtering"');
   if (addons.includes("game-engine")) prompts.push('"Set up a canvas-based game loop with keyboard controls"');
 
   // Always include these general prompts
@@ -1038,7 +1038,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.2.1");
+    console.log("create-gvc-app v0.2.2");
     return;
   }
 
@@ -1237,7 +1237,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.2.1")
+      dim("// gvc-builder-kit v0.2.2")
   );
 }
 
