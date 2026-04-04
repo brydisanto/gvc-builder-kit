@@ -70,48 +70,48 @@ function checkClaudeCLI() {
 const TEMPLATE_CHOICES = [
   {
     value: "blank-canvas",
-    label: "Something else (blank start)",
-    hint: "just the brand system, ready for anything you describe",
+    label: "Something else",
+    hint: "you describe it, Claude builds it — total blank slate",
   },
   {
     value: "project-site",
     label: "A website or landing page",
-    hint: "hero section, about, features, call to action",
+    hint: "e.g. a homepage for your project with hero, about section, and links",
   },
   {
     value: "dashboard",
     label: "A dashboard or tracker",
-    hint: "stats, floor price, leaderboards, charts, live data",
+    hint: "e.g. floor price tracker, holder leaderboard, sales feed with charts",
   },
   {
     value: "mini-game",
     label: "A game",
-    hint: "game board, scoring, game over screen",
+    hint: "e.g. a matching game, trivia quiz, or arcade-style challenge",
   },
   {
     value: "gallery",
     label: "A gallery",
-    hint: "image grid, filtering, search, uploads",
+    hint: "e.g. browse and filter NFTs, community art wall, or trait explorer",
   },
   {
     value: "vote-and-rank",
     label: "A voting or ranking page",
-    hint: "1v1 matchups, polls, leaderboard",
+    hint: "e.g. 1v1 matchups to rank favorites, polls, community picks",
   },
   {
     value: "lookup-tool",
     label: "A lookup tool",
-    hint: "search by wallet or token ID, see badges, traits, rarity",
+    hint: "e.g. paste a wallet to see badges, or enter a token ID to see traits and rarity",
   },
   {
     value: "card-maker",
     label: "A card or image maker",
-    hint: "create shareable profile cards, badge flexes, memes",
+    hint: "e.g. create shareable profile cards, badge flex images, or memes",
   },
   {
     value: "profile-page",
     label: "A profile page",
-    hint: "connect wallet, show your GVCs, badges, stats",
+    hint: "e.g. connect your wallet and see your GVCs, badges, and holder stats",
   },
 ];
 
@@ -1042,7 +1042,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.2.5");
+    console.log("create-gvc-app v0.2.6");
     return;
   }
 
@@ -1241,7 +1241,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.2.5")
+      dim("// gvc-builder-kit v0.2.6")
   );
 }
 
