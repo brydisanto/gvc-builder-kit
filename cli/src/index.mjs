@@ -695,28 +695,61 @@ export default function Home() {
         </motion.div>
 
         {/* Alternative — Terminal */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-5 mb-6">
-          <h3 className="text-sm font-display font-bold text-white/60 mb-3">Prefer the terminal?</h3>
-          <p className="text-white/30 font-body text-xs mb-3">Open a new terminal tab and run these commands:</p>
-          <div className="space-y-2">
-            <button onClick={() => copyText("cd {{PROJECT_PATH}}", 11)} className="w-full group relative">
-              <div className={"bg-black/60 rounded-lg px-3 py-2 font-mono text-xs text-left transition-all duration-200 " + (copiedStep === 11 ? "border border-[#2EFF2E]/30" : "border border-white/[0.06] hover:border-white/10")}>
-                <span className={copiedStep === 11 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/60"}>cd {{PROJECT_PATH}}</span>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-6 mb-6">
+          <h3 className="text-base font-display font-bold text-white/80 mb-2">Prefer the terminal?</h3>
+          <p className="text-white/40 font-body text-sm mb-4">Open a <span className="text-white/70 font-semibold">new terminal tab</span> and paste these commands one at a time.</p>
+
+          <div className="space-y-4">
+            {/* Terminal Step 1 */}
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-6 h-6 rounded-full bg-white/[0.06] text-white/50 text-xs font-bold flex items-center justify-center">1</span>
+                <p className="text-white/50 font-body text-sm">Go to your project folder</p>
               </div>
-              <span className={"absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-body transition-colors " + (copiedStep === 11 ? "text-[#2EFF2E]" : "text-white/20 group-hover:text-white/40")}>
-                {copiedStep === 11 ? "Copied!" : "Copy"}
-              </span>
-            </button>
-            <button onClick={() => copyText("claude", 12)} className="w-full group relative">
-              <div className={"bg-black/60 rounded-lg px-3 py-2 font-mono text-xs text-left transition-all duration-200 " + (copiedStep === 12 ? "border border-[#2EFF2E]/30" : "border border-white/[0.06] hover:border-white/10")}>
-                <span className={copiedStep === 12 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/60"}>claude</span>
+              <button onClick={() => copyText("cd {{PROJECT_PATH}}", 11)} className="w-full group relative">
+                <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 11 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-white/15")}>
+                  <span className={copiedStep === 11 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/70"}>cd {{PROJECT_PATH}}</span>
+                </div>
+                <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (copiedStep === 11 ? "text-[#2EFF2E]" : "text-white/25 group-hover:text-white/40")}>
+                  {copiedStep === 11 ? "Copied!" : "Click to copy"}
+                </span>
+              </button>
+            </div>
+
+            {/* Terminal Step 2 */}
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-6 h-6 rounded-full bg-white/[0.06] text-white/50 text-xs font-bold flex items-center justify-center">2</span>
+                <p className="text-white/50 font-body text-sm">Start Claude Code</p>
               </div>
-              <span className={"absolute right-2 top-1/2 -translate-y-1/2 text-[10px] font-body transition-colors " + (copiedStep === 12 ? "text-[#2EFF2E]" : "text-white/20 group-hover:text-white/40")}>
-                {copiedStep === 12 ? "Copied!" : "Copy"}
-              </span>
-            </button>
+              <button onClick={() => copyText("claude", 12)} className="w-full group relative">
+                <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 12 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-white/15")}>
+                  <span className={copiedStep === 12 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/70"}>claude</span>
+                </div>
+                <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (copiedStep === 12 ? "text-[#2EFF2E]" : "text-white/25 group-hover:text-white/40")}>
+                  {copiedStep === 12 ? "Copied!" : "Click to copy"}
+                </span>
+              </button>
+              <p className="text-white/25 font-body text-xs mt-1.5">Don&apos;t have Claude Code? Run: <span className="font-mono text-white/40">curl -fsSL https://claude.ai/install.sh | bash</span></p>
+            </div>
+
+            {/* Terminal Step 3 */}
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="w-6 h-6 rounded-full bg-white/[0.06] text-white/50 text-xs font-bold flex items-center justify-center">3</span>
+                <p className="text-white/50 font-body text-sm">When you see the <span className="font-mono text-white/60">&gt;</span> prompt, paste this</p>
+              </div>
+              <button onClick={() => copyText("Build what's described in my CLAUDE.md", 13)} className="w-full group relative">
+                <div className={"bg-black/60 rounded-xl px-4 py-3 font-mono text-sm text-left transition-all duration-200 " + (copiedStep === 13 ? "border border-[#2EFF2E]/30" : "border border-white/[0.08] hover:border-white/15")}>
+                  <span className={copiedStep === 13 ? "text-[#2EFF2E]" : "text-[#2EFF2E]/70"}>Build what&apos;s described in my CLAUDE.md</span>
+                </div>
+                <span className={"absolute right-3 top-1/2 -translate-y-1/2 text-xs font-body transition-colors " + (copiedStep === 13 ? "text-[#2EFF2E]" : "text-white/25 group-hover:text-white/40")}>
+                  {copiedStep === 13 ? "Copied!" : "Click to copy"}
+                </span>
+              </button>
+              <p className="text-white/25 font-body text-xs mt-1.5">Claude reads your project and starts building. Come back to the browser to watch it happen.</p>
+            </div>
           </div>
-          <p className="text-white/20 font-body text-xs mt-2">Then paste: &ldquo;Build what&apos;s described in my CLAUDE.md&rdquo;</p>
         </motion.div>
 
         {/* Footer */}
@@ -1081,7 +1114,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.4.1");
+    console.log("create-gvc-app v0.4.2");
     return;
   }
 
@@ -1280,7 +1313,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.4.1")
+      dim("// gvc-builder-kit v0.4.2")
   );
 }
 
