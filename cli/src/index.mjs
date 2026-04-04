@@ -641,7 +641,8 @@ export default function Home() {
         {/* Step-by-step terminal instructions */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-left rounded-2xl bg-[#121212] border border-[#FFE048]/20 p-6 mb-6">
           <h2 className="text-lg font-display font-bold text-white mb-2">Now let&apos;s build it</h2>
-          <p className="text-white/40 font-body text-sm mb-5">Open your terminal and paste these commands one at a time. Come back here to watch it build.</p>
+          <p className="text-white/40 font-body text-sm mb-2">Open a <span className="text-white/80 font-semibold">new terminal tab</span> and paste these commands one at a time.</p>
+          <p className="text-white/25 font-body text-xs mb-5">On Mac: <kbd className="inline-block px-1.5 py-0.5 rounded bg-white/10 text-white/60 font-mono text-xs mx-0.5">Cmd + T</kbd> &mdash; On Windows: right-click the terminal title bar &rarr; New Tab</p>
 
           <div className="space-y-4">
             {/* Step 1 */}
@@ -1068,7 +1069,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.3.3");
+    console.log("create-gvc-app v0.3.4");
     return;
   }
 
@@ -1267,7 +1268,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.3.3")
+      dim("// gvc-builder-kit v0.3.4")
   );
 }
 
