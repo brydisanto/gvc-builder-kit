@@ -5,18 +5,49 @@ export const revalidate = 60;
 
 export async function GET(request: NextRequest) {
   try {
-    const { rows } = await pool.query(
+    // Try cache first
+    const cached = await pool.query(
       "SELECT value FROM cache_entries WHERE key = 'events-recent' LIMIT 1"
     );
-    if (!rows.length) {
-      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    if (cached.rows.length) {
+      let data = cached.rows[0].value;
+      const limit = request.nextUrl.searchParams.get("limit");
+      if (limit && Array.isArray(data)) {
+        data = data.slice(0, parseInt(limit, 10));
+      }
+      return NextResponse.json(data);
     }
-    let data = rows[0].value;
-    const limit = request.nextUrl.searchParams.get("limit");
-    if (limit && Array.isArray(data)) {
-      data = data.slice(0, parseInt(limit, 10));
+
+    // Compute from price_cache
+    const limitParam = request.nextUrl.searchParams.get("limit");
+    let limit = 20;
+    if (limitParam) {
+      limit = Math.min(Math.max(1, parseInt(limitParam, 10)), 100);
     }
-    return NextResponse.json(data);
+
+    const { rows } = await pool.query(
+      `SELECT tx_hash, price_eth, price_usd, payment_symbol, image_url, created_at
+       FROM price_cache
+       ORDER BY created_at DESC
+       LIMIT $1`,
+      [limit]
+    );
+
+    const data = rows.map((r) => ({
+      txHash: r.tx_hash,
+      priceEth: parseFloat(r.price_eth) || 0,
+      priceUsd: r.price_usd ? parseFloat(r.price_usd) : null,
+      paymentSymbol: r.payment_symbol,
+      imageUrl: r.image_url,
+      timestamp: r.created_at,
+    }));
+
+    return NextResponse.json(data, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=120",
+      },
+    });
   } catch (e: any) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
