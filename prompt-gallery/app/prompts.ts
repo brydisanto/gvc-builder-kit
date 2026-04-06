@@ -16,7 +16,7 @@ const PROMPTS: Prompt[] = [
   {
     id: "full-body",
     title: "Full Body Character",
-    description: "Generate your GVC as a complete, full-body, 3D character. Exporting your 3D character via this prompt will produce better quality outputs in all of your prompts.",
+    description: "Generate your GVC as a complete, full-body, 3D character. Exporting your full-body character will produce better quality outputs in all future prompts.",
     category: "character",
     icon: "body",
     author: "@GoodVibesClub",
