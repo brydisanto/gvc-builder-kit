@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-gvc-gold: #FFE048;
+  --color-gvc-black: #050505;
+  --color-gvc-dark: #121212;
+  --color-gvc-gray: #1F1F1F;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--color-gvc-black);
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--font-mundial), system-ui, sans-serif;
+}
+
+::selection {
+  background-color: var(--color-gvc-gold);
+  color: var(--color-gvc-black);
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-brice), serif; }
+  .font-body { font-family: var(--font-mundial), sans-serif; }
+}
+
+.text-shimmer {
+  background: linear-gradient(110deg, #FFE048 0%, #fff8b8 25%, #FFE048 50%, #fff8b8 75%, #FFE048 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.card-glow {
+  box-shadow: 0 0 20px rgba(255, 224, 72, 0.15), 0 0 60px rgba(255, 224, 72, 0.05);
+  transition: box-shadow 0.4s ease;
+}
+.card-glow:hover {
+  box-shadow: 0 0 30px rgba(255, 224, 72, 0.3), 0 0 80px rgba(255, 224, 72, 0.1);
+}
+
+.ember {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--color-gvc-gold);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: emberFloat 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes emberFloat {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; }
+  50% { transform: translateY(-20px) scale(1.1); opacity: 1; }
+}
