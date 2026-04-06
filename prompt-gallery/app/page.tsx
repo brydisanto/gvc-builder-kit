@@ -492,15 +492,14 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        {/* STEP 3 - Let 'errrr rip! */}
+        {/* STEP 3 - Copy The Prompt */}
         <AnimatePresence>
           {promptGenerated && selectedPrompt && tokenMeta && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="rounded-2xl bg-gvc-dark border border-gvc-gold/20 p-6 mb-6">
               <div className="flex items-center gap-3 mb-2">
                 <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-                <h2 className="text-lg font-display font-bold text-white">Let &apos;Errrr Rip!</h2>
+                <h2 className="text-lg font-display font-bold text-white">{selectedPrompt.hasReferenceImage ? "Copy The Prompt Below" : "Let \u0027Errrr Rip!"}</h2>
               </div>
-              <p className="text-white/40 font-body text-sm mb-5 pl-11">Copy the prompt below and follow the instructions.</p>
 
               
 
@@ -516,25 +515,29 @@ export default function Home() {
                   Open Gemini
                   <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                 </a>
-                
+
               </div>
+
+              {!selectedPrompt.hasReferenceImage && (
+                <div className="mt-5 pt-5 border-t border-white/[0.06]">
+                  <p className="text-white/30 font-body text-sm">We recommend using <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors">Gemini</a> for the best results (or you can use ChatGPT, Midjourney, Dall-E, etc). Upload your GVC image and paste the prompt.</p>
+                </div>
+              )}
 
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* STEP 4 - Upload images and generate */}
+        {/* STEP 4 - Let 'Errrr Rip! (only for prompts with reference images) */}
         <AnimatePresence>
-          {promptGenerated && selectedPrompt && tokenMeta && (
+          {promptGenerated && selectedPrompt && tokenMeta && selectedPrompt.hasReferenceImage && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-6 mb-6">
               <div className="flex items-center gap-3 mb-2">
                 <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
-                <h2 className="text-lg font-display font-bold text-white">Upload and Generate</h2>
+                <h2 className="text-lg font-display font-bold text-white">Let &apos;Errrr Rip!</h2>
               </div>
 
-              {selectedPrompt.hasReferenceImage ? (
-                <>
-                  <p className="text-white/40 font-body text-sm mb-5 pl-11">This prompt requires 2 images. Download them below, then upload both to Gemini along with the prompt.</p>
+              <p className="text-white/40 font-body text-sm mb-5 pl-11">This prompt requires 2 images. Download them below, then upload both to Gemini along with the prompt.</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
                       <p className="text-white font-body text-sm font-semibold mb-2">Your GVC character</p>
@@ -559,20 +562,8 @@ export default function Home() {
                     <li>Download both images above</li>
                     <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or Midjourney, Dall-E, ChatGPT, etc)</li>
                     <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat</li>
-                    <li>Paste the prompt from Step 3 and hit send</li>
+                    <li>Paste the prompt and hit send</li>
                   </ol>
-                </>
-              ) : (
-                <>
-                  <p className="text-white/40 font-body text-sm mb-5 pl-11">Upload your GVC image and paste the prompt into your image generator.</p>
-                  <ol className="text-white/50 font-body text-sm space-y-2 list-decimal list-inside mb-4">
-                    <li>Save your GVC image from Step 2</li>
-                    <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or Midjourney, Dall-E, ChatGPT, etc)</li>
-                    <li>Upload your GVC image to the chat</li>
-                    <li>Paste the prompt from Step 3 and hit send</li>
-                  </ol>
-                </>
-              )}
               <p className="text-white/30 font-body text-sm">We recommend using <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors">Gemini</a> for the best results (or you can use ChatGPT, Midjourney, Dall-E, etc).</p>
             </motion.div>
           )}
