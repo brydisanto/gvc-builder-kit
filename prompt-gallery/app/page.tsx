@@ -106,6 +106,23 @@ export default function Home() {
   const [promptGenerated, setPromptGenerated] = useState(false);
   const [generating, setGenerating] = useState(false);
 
+  async function downloadImage(url: string, filename: string) {
+    try {
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(blobUrl);
+    } catch {
+      window.open(url, "_blank");
+    }
+  }
+
   function handleGenerate() {
     setGenerating(true);
     setPromptGenerated(false);
@@ -404,10 +421,10 @@ export default function Home() {
                   <div className="flex-1 min-w-0">
                     <p className="text-white font-display font-bold">{tokenMeta.name}</p>
                     {imageUrl && (
-                      <a href={imageUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 mt-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                      <button onClick={() => downloadImage(imageUrl, `GVC-${tokenId}.png`)} className="inline-flex items-center gap-1.5 px-3 py-1.5 mt-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
                         Save your GVC image
                         <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                      </a>
+                      </button>
                     )}
                   </div>
                 </motion.div>
@@ -510,10 +527,10 @@ export default function Home() {
                         <p className="text-white font-body text-sm font-semibold mb-2">Your GVC character</p>
                         <p className="text-white/40 font-body text-sm mb-3">Save your character image and upload it to the chat.</p>
                         {imageUrl && (
-                          <a href={imageUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                          <button onClick={() => downloadImage(imageUrl, `GVC-${tokenId}.png`)} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
                             Save GVC image
                             <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                          </a>
+                          </button>
                         )}
                       </div>
                       <div className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
