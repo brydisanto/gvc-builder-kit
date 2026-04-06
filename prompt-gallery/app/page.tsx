@@ -89,6 +89,40 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [category, setCategory] = useState("all");
 
+  // Submission form state
+  const [submitTokenId, setSubmitTokenId] = useState("");
+  const [submitPromptId, setSubmitPromptId] = useState("");
+  const [submitImageUrl, setSubmitImageUrl] = useState("");
+  const [submitName, setSubmitName] = useState("");
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  function handleSubmit() {
+    if (!submitImageUrl || !submitTokenId) return;
+    setSubmitStatus("sending");
+
+    // For now, log the submission — backend approval pipeline comes later
+    const submission = {
+      tokenId: submitTokenId,
+      promptId: submitPromptId,
+      imageUrl: submitImageUrl,
+      name: submitName,
+      timestamp: new Date().toISOString(),
+    };
+    console.log("Community submission:", submission);
+
+    // Simulate success
+    setTimeout(() => {
+      setSubmitStatus("sent");
+      setTimeout(() => {
+        setSubmitStatus("idle");
+        setSubmitTokenId("");
+        setSubmitPromptId("");
+        setSubmitImageUrl("");
+        setSubmitName("");
+      }, 3000);
+    }, 800);
+  }
+
   // Load metadata
   useEffect(() => {
     fetch("/gvc-metadata.json")
@@ -293,7 +327,7 @@ export default function Home() {
         </motion.div>
 
         {/* Prompt grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
           {filteredPrompts.map((prompt, i) => (
             <motion.button
               key={prompt.id}
@@ -326,6 +360,40 @@ export default function Home() {
             </motion.button>
           ))}
         </div>
+
+        {/* Example generation slidedown */}
+        <AnimatePresence>
+          {selectedPrompt?.exampleImage && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="overflow-hidden mb-4"
+            >
+              <div className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-gvc-gold font-display font-bold text-sm">Example</span>
+                  <span className="text-white/20 font-body text-xs">&mdash;</span>
+                  <span className="text-white/40 font-body text-xs">{selectedPrompt.title}</span>
+                  {selectedPrompt.exampleTokenId && (
+                    <span className="text-white/20 font-body text-xs ml-auto">Token #{selectedPrompt.exampleTokenId}</span>
+                  )}
+                </div>
+                <div className="rounded-xl overflow-hidden bg-black/40 aspect-square sm:aspect-video max-h-[400px]">
+                  <img
+                    src={selectedPrompt.exampleImage}
+                    alt={`Example: ${selectedPrompt.title}`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <p className="text-white/20 font-body text-xs mt-2 text-center">
+                  Generated with Gemini. Your results will vary based on your character.
+                </p>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Assembled prompt output */}
         <AnimatePresence>
@@ -406,6 +474,102 @@ export default function Home() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Community submission form */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-6 mb-8"
+        >
+          <h2 className="text-lg font-display font-bold text-white mb-2">
+            Share your creation
+          </h2>
+          <p className="text-white/40 font-body text-sm mb-5">
+            Made something cool? Submit your generated image and it could be featured in the gallery.
+          </p>
+
+          <div className="space-y-4">
+            <div>
+              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Token ID</label>
+              <input
+                type="text"
+                placeholder="Which GVC did you use? (e.g. 142)"
+                value={submitTokenId}
+                onChange={(e) => setSubmitTokenId(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors"
+              />
+            </div>
+
+            <div>
+              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Prompt used</label>
+              <select
+                value={submitPromptId}
+                onChange={(e) => setSubmitPromptId(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm focus:outline-none focus:border-gvc-gold/30 transition-colors appearance-none"
+              >
+                <option value="" className="bg-gvc-dark">Select a prompt...</option>
+                {PROMPTS.map((p) => (
+                  <option key={p.id} value={p.id} className="bg-gvc-dark">{p.title}</option>
+                ))}
+                <option value="custom" className="bg-gvc-dark">Custom prompt (my own)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Image URL</label>
+              <input
+                type="text"
+                placeholder="Link to your generated image (Imgur, Discord CDN, etc.)"
+                value={submitImageUrl}
+                onChange={(e) => setSubmitImageUrl(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors"
+              />
+              <p className="text-white/20 font-body text-xs mt-1">Upload to <a href="https://imgur.com/upload" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/50 hover:text-gvc-gold underline underline-offset-2">Imgur</a> and paste the direct image link</p>
+            </div>
+
+            <div>
+              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Your name or handle <span className="text-white/20">(optional)</span></label>
+              <input
+                type="text"
+                placeholder="@yourhandle or display name"
+                value={submitName}
+                onChange={(e) => setSubmitName(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors"
+              />
+            </div>
+
+            {/* Preview */}
+            {submitImageUrl && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                className="rounded-xl overflow-hidden bg-black/40 border border-white/[0.06]"
+              >
+                <img
+                  src={submitImageUrl}
+                  alt="Preview"
+                  className="w-full max-h-[300px] object-contain"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = "none";
+                  }}
+                />
+              </motion.div>
+            )}
+
+            <button
+              onClick={handleSubmit}
+              disabled={submitStatus === "sending" || !submitImageUrl || !submitTokenId}
+              className={`w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 font-display font-bold text-sm rounded-xl transition-all duration-300 ${
+                submitStatus === "sent"
+                  ? "bg-gvc-green/20 text-gvc-green border border-gvc-green/30"
+                  : "bg-gvc-gold text-gvc-black hover:shadow-[0_0_20px_rgba(255,224,72,0.3)] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:shadow-none"
+              }`}
+            >
+              {submitStatus === "sending" ? "Submitting..." : submitStatus === "sent" ? "Submitted! We'll review it soon." : "Submit for review"}
+            </button>
+          </div>
+        </motion.div>
 
         {/* Footer */}
         <div className="text-center pt-4 pb-8">

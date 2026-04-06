@@ -5,6 +5,8 @@ export interface Prompt {
   category: "profile" | "scene" | "meme" | "cinematic" | "artistic";
   template: string;
   previewEmoji: string;
+  exampleImage?: string; // path to /examples/[id].png — add your own!
+  exampleTokenId?: string; // which token was used for the example
 }
 
 const PROMPTS: Prompt[] = [
