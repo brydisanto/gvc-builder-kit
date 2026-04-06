@@ -368,9 +368,7 @@ export default function Home() {
                 <p className="text-white font-display font-bold">
                   {tokenMeta.name}
                 </p>
-                <p className="text-white/40 font-body text-xs mb-2">
-                  {formatTraitsShort(tokenMeta.traits)}
-                </p>
+                <div className="mb-2" />
                 {imageUrl && (
                   <a
                     href={imageUrl}
