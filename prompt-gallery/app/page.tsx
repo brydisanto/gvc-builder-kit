@@ -519,50 +519,61 @@ export default function Home() {
                 
               </div>
 
-              <div className="mt-5 pt-5 border-t border-white/[0.06]">
-                {selectedPrompt.hasReferenceImage ? (
-                  <>
-                    <h3 className="text-white font-display font-bold text-base mb-4">This prompt requires 2 images</h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                      <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
-                        <p className="text-white font-body text-sm font-semibold mb-2">Your GVC character</p>
-                        <p className="text-white/40 font-body text-sm mb-3">Save your character image and upload it to the chat.</p>
-                        {imageUrl && (
-                          <button onClick={() => downloadImage(imageUrl, `GVC-${tokenId}.png`)} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
-                            Save GVC image
-                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                          </button>
-                        )}
-                      </div>
-                      <div className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
-                        <p className="text-white font-body text-sm font-semibold mb-2">Proportion reference</p>
-                        <p className="text-white/40 font-body text-sm mb-3">Download and upload this alongside your character.</p>
-                        <a href="/ref/ReferenceImage.png" download="Image-2-GVC-Proportion-Reference.png" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
-                          Download reference
-                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                        </a>
-                      </div>
-                    </div>
-                    <ol className="text-white/50 font-body text-sm space-y-2 list-decimal list-inside mb-4">
-                      <li>Download both images above</li>
-                      <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or Midjourney, Dall-E, ChatGPT, etc)</li>
-                      <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat</li>
-                      <li>Paste the prompt and hit send</li>
-                    </ol>
-                    <p className="text-white/30 font-body text-sm">We recommend using <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors">Gemini</a> for the best results (or you can use ChatGPT, Midjourney, Dall-E, etc).</p>
-                  </>
-                ) : (
-                  <>
-                    <ol className="text-white/50 font-body text-sm space-y-2 list-decimal list-inside mb-4">
-                      <li>Save your GVC image from Step 2</li>
-                      <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or ChatGPT)</li>
-                      <li>Upload your GVC image to the chat</li>
-                      <li>Paste the prompt and hit send</li>
-                    </ol>
-                    <p className="text-white/30 font-body text-sm">We recommend using <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors">Gemini</a> for the best results (or you can use ChatGPT, Midjourney, Dall-E, etc).</p>
-                  </>
-                )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* STEP 4 - Upload images and generate */}
+        <AnimatePresence>
+          {promptGenerated && selectedPrompt && tokenMeta && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-6 mb-6">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
+                <h2 className="text-lg font-display font-bold text-white">Upload and Generate</h2>
               </div>
+
+              {selectedPrompt.hasReferenceImage ? (
+                <>
+                  <p className="text-white/40 font-body text-sm mb-5 pl-11">This prompt requires 2 images. Download them below, then upload both to Gemini along with the prompt.</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                    <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
+                      <p className="text-white font-body text-sm font-semibold mb-2">Your GVC character</p>
+                      <p className="text-white/40 font-body text-sm mb-3">Save your character image and upload it to the chat.</p>
+                      {imageUrl && (
+                        <button onClick={() => downloadImage(imageUrl, `GVC-${tokenId}.png`)} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                          Save GVC image
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        </button>
+                      )}
+                    </div>
+                    <div className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
+                      <p className="text-white font-body text-sm font-semibold mb-2">Proportion reference</p>
+                      <p className="text-white/40 font-body text-sm mb-3">Download and upload this alongside your character.</p>
+                      <a href="/ref/ReferenceImage.png" download="Image-2-GVC-Proportion-Reference.png" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                        Download reference
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                      </a>
+                    </div>
+                  </div>
+                  <ol className="text-white/50 font-body text-sm space-y-2 list-decimal list-inside mb-4">
+                    <li>Download both images above</li>
+                    <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or Midjourney, Dall-E, ChatGPT, etc)</li>
+                    <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat</li>
+                    <li>Paste the prompt from Step 3 and hit send</li>
+                  </ol>
+                </>
+              ) : (
+                <>
+                  <p className="text-white/40 font-body text-sm mb-5 pl-11">Upload your GVC image and paste the prompt into your image generator.</p>
+                  <ol className="text-white/50 font-body text-sm space-y-2 list-decimal list-inside mb-4">
+                    <li>Save your GVC image from Step 2</li>
+                    <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or Midjourney, Dall-E, ChatGPT, etc)</li>
+                    <li>Upload your GVC image to the chat</li>
+                    <li>Paste the prompt from Step 3 and hit send</li>
+                  </ol>
+                </>
+              )}
+              <p className="text-white/30 font-body text-sm">We recommend using <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors">Gemini</a> for the best results (or you can use ChatGPT, Midjourney, Dall-E, etc).</p>
             </motion.div>
           )}
         </AnimatePresence>
