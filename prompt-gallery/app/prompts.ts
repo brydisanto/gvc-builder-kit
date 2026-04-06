@@ -24,14 +24,14 @@ const PROMPTS: Prompt[] = [
     hasReferenceImage: true,
     template: `I've uploaded two images.
 
-IMAGE 1 (my character): This is my Good Vibes Club (GVC) NFT character. Use this as the definitive reference for the character's identity - head, face, expression, outfit, colors, materials, and accessories.
+MY CHARACTER: This is my Good Vibes Club (GVC) NFT character. Use this as the definitive reference for the character's identity - head, face, expression, outfit, colors, materials, and accessories. This is the image that is NOT named "Image-2-GVC-Proportion-Reference.png".
 
-IMAGE 2 (proportion reference): This is a proportion guide showing the standard GVC full-body character from multiple angles. Use this ONLY for body proportions, limb length, stance, and overall height ratio. Do NOT copy the style, clothing, colors, or materials from this image.
+PROPORTION REFERENCE (the file named "Image-2-GVC-Proportion-Reference.png"): This is a proportion guide showing the standard GVC full-body character from multiple angles. Use this ONLY for body proportions, limb length, stance, and overall height ratio. Do NOT copy the style, clothing, colors, or materials from this image.
 
-TASK: Generate a full-body version of my character (Image 1) using the body proportions from Image 2.
+TASK: Generate a full-body version of my character using the body proportions from the proportion reference.
 
 IDENTITY LOCK (CRITICAL)
-Preserve exactly from Image 1:
+Preserve exactly from my character image:
 - head shape, facial features, expression
 - material finish (glossy, matte, soft plastic, etc.)
 - color palette and shading behavior
@@ -40,19 +40,19 @@ Do not redesign or reinterpret the character's style.
 The result must feel like the same exact character, simply revealed as full body.
 
 STYLE CONTINUATION (VERY IMPORTANT)
-Extend the existing outfit from Image 1 naturally into a full-body design:
+Extend the existing outfit from my character image naturally into a full-body design:
 - continue fabric types, stitching logic, and material behavior from the upper body
 - maintain the same design language, color transitions, and detailing
 - avoid adding unrelated fashion elements
 - everything must feel like it belongs to the same original design
 
-PROPORTION GUIDE (from Image 2 ONLY)
-Use Image 2 as the reference for:
+PROPORTION GUIDE (from "Image-2-GVC-Proportion-Reference.png" ONLY)
+Use the proportion reference image for:
 - body height ratio (head is ~1/4 of total height)
 - limb proportions (short legs, simplified hands)
 - pose balance and stance
 - chunky sneaker style on feet
-Do NOT transfer any style, clothing, colors, or materials from Image 2.
+Do NOT transfer any style, clothing, colors, or materials from the proportion reference.
 
 GVC STYLE TARGET
 Render in a vibrant, high-quality stylized 3D aesthetic:
@@ -73,7 +73,7 @@ Slight perspective (85mm lens feel)
 Character standing on a subtle platform or ground plane
 
 BACKGROUND
-Minimal gradient background matching the character's color palette from Image 1
+Minimal gradient background matching the character's color palette from my character image
 Soft studio lighting, no distractions
 
 OUTPUT

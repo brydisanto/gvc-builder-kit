@@ -618,10 +618,10 @@ export default function Home() {
                         </div>
                         <h3 className="text-white font-display font-bold text-base mb-3">Then follow these steps</h3>
                         <ol className="text-white/50 font-body text-sm space-y-3 list-decimal list-inside mb-4">
-                          <li>Download <span className="text-white/80 font-semibold">Image 1</span> (your GVC character)</li>
-                          <li>Download <span className="text-white/80 font-semibold">Image 2</span> (proportion reference)</li>
+                          <li>Download your <span className="text-white/80 font-semibold">GVC character image</span></li>
+                          <li>Download the <span className="text-white/80 font-semibold">proportion reference</span></li>
                           <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or ChatGPT)</li>
-                          <li>Upload <span className="text-white/80 font-semibold">Image 1 first</span>, then <span className="text-white/80 font-semibold">Image 2</span> - order matters</li>
+                          <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat</li>
                           <li>Paste the prompt above and hit send</li>
                         </ol>
                         <p className="text-white/30 font-body text-sm">We recommend <span className="text-white/50">Gemini</span> for best image generation results.</p>
