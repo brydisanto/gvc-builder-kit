@@ -49,16 +49,16 @@ This project was created with the GVC Builder Kit. It uses the Good Vibes Club b
 
 ### GVC API (no API key needed)
 All GVC data comes from: `https://api-hazel-pi-72.vercel.app/api`
-- `GET /stats` — { floorPrice, floorPriceUsd, volume24h, numOwners, totalSales, avgPrice, marketCap, marketCapUsd }
-- `GET /sales?limit=10` — [{ txHash, priceEth, paymentSymbol, imageUrl, timestamp }]
-- `GET /sales/history?limit=100` — same shape as /sales, max 1000
-- `GET /activity` — 30-day buys/sells, accumulator leaderboard
-- `GET /vibestr` — { priceUsd, priceChange24h, volume24h, liquidity, marketCap }
-- `GET /vibestr/history` — daily VIBESTR price snapshots
-- `GET /market-depth` — bid/offer depth, floor price, lowest listing
-- `GET /traders` — 30-day trade stats
-- `GET /wallet/[address]` — ENS name, Twitter handle for a wallet
-- `GET /mentions` — recent X/Twitter mentions
+- `GET /stats` - { floorPrice, floorPriceUsd, volume24h, numOwners, totalSales, avgPrice, marketCap, marketCapUsd }
+- `GET /sales?limit=10` - [{ txHash, priceEth, paymentSymbol, imageUrl, timestamp }]
+- `GET /sales/history?limit=100` - same shape as /sales, max 1000
+- `GET /activity` - 30-day buys/sells, accumulator leaderboard
+- `GET /vibestr` - { priceUsd, priceChange24h, volume24h, liquidity, marketCap }
+- `GET /vibestr/history` - daily VIBESTR price snapshots
+- `GET /market-depth` - bid/offer depth, floor price, lowest listing
+- `GET /traders` - 30-day trade stats
+- `GET /wallet/[address]` - ENS name, Twitter handle for a wallet
+- `GET /mentions` - recent X/Twitter mentions
 
 Do NOT use the OpenSea API directly. Use the GVC API above instead.
 

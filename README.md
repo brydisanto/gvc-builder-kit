@@ -109,7 +109,7 @@ Here's what it looks like:
 ? What's your project called? my-gvc-tracker
 
 ? What do you want to build?
-    Blank canvas — you describe the vibe, Claude builds it
+    Blank canvas - you describe the vibe, Claude builds it
   * A website or landing page
     A dashboard or tracker
     A game

@@ -71,7 +71,7 @@ const TEMPLATE_CHOICES = [
   {
     value: "blank-canvas",
     label: "Blank canvas",
-    hint: "you describe the vibe, Claude builds it — anything you want",
+    hint: "you describe the vibe, Claude builds it -anything you want",
   },
   {
     value: "project-site",
@@ -227,7 +227,7 @@ const ADDON_SNIPPETS = {
   "collection-data": `### Fetching GVC Collection Stats (no API key needed)
 
 \`\`\`ts
-// Fetch live stats — floor price, volume, owners, market cap
+// Fetch live stats -floor price, volume, owners, market cap
 const stats = await fetch("https://api-hazel-pi-72.vercel.app/api/stats").then(r => r.json());
 // { floorPrice: 0.649, floorPriceUsd: 1340, numOwners: 1510, totalSales: 24278, avgPrice: 0.55, volume24h: 2.37, marketCapUsd: 9344543 }
 
@@ -470,36 +470,36 @@ function generateStarterPage(templateType, projectName, description, addons, pro
   if (addonPromptLine) promptParts.push(addonPromptLine, ``);
 
   promptParts.push(
-    `Build me a complete, working prototype by editing app/page.tsx. The project is already set up with Next.js App Router, TypeScript, Tailwind CSS, and Framer Motion — just write the page code.`,
+    `Build me a complete, working prototype by editing app/page.tsx. The project is already set up with Next.js App Router, TypeScript, Tailwind CSS, and Framer Motion -just write the page code.`,
     ``,
     `## IMPORTANT: Your project already has the GVC brand system installed`,
     ``,
-    `The project is scaffolded and running. These are ALREADY set up — use them directly:`,
+    `The project is scaffolded and running. These are ALREADY set up -use them directly:`,
     ``,
     `### Fonts (already loaded in layout.tsx)`,
-    `- Headlines: \`className="font-display"\` — Brice font (bold, premium serif)`,
-    `- Body text: \`className="font-body"\` — Mundial font (clean sans-serif)`,
+    `- Headlines: \`className="font-display"\` -Brice font (bold, premium serif)`,
+    `- Body text: \`className="font-body"\` -Mundial font (clean sans-serif)`,
     `- DO NOT import Google Fonts or any other fonts. Brice and Mundial are already loaded.`,
     ``,
     `### Tailwind Colors (already in tailwind.config.ts)`,
-    `- \`text-gvc-gold\` / \`bg-gvc-gold\` / \`border-gvc-gold\` — #FFE048 (primary gold)`,
-    `- \`bg-gvc-black\` — #050505 (page background)`,
-    `- \`bg-gvc-dark\` — #121212 (cards, panels)`,
-    `- \`bg-gvc-gray\` / \`border-gvc-gray\` — #1F1F1F (borders, dividers)`,
-    `- \`text-gvc-green\` / \`bg-gvc-green\` — #2EFF2E (success)`,
-    `- \`text-gvc-orange\` — #FF5F1F (accent)`,
-    `- \`text-pink-accent\` — #FF6B9D (accent)`,
+    `- \`text-gvc-gold\` / \`bg-gvc-gold\` / \`border-gvc-gold\` -#FFE048 (primary gold)`,
+    `- \`bg-gvc-black\` -#050505 (page background)`,
+    `- \`bg-gvc-dark\` -#121212 (cards, panels)`,
+    `- \`bg-gvc-gray\` / \`border-gvc-gray\` -#1F1F1F (borders, dividers)`,
+    `- \`text-gvc-green\` / \`bg-gvc-green\` -#2EFF2E (success)`,
+    `- \`text-gvc-orange\` -#FF5F1F (accent)`,
+    `- \`text-pink-accent\` -#FF6B9D (accent)`,
     ``,
     `### CSS Utilities (already in globals.css)`,
-    `- \`text-shimmer\` — animated gold gradient text effect for headlines`,
-    `- \`card-glow\` — gold glow box-shadow that intensifies on hover`,
-    `- \`ember\` — floating gold particle dot (position absolute, add to background)`,
+    `- \`text-shimmer\` -animated gold gradient text effect for headlines`,
+    `- \`card-glow\` -gold glow box-shadow that intensifies on hover`,
+    `- \`ember\` -floating gold particle dot (position absolute, add to background)`,
     ``,
     `### Assets (already in /public/)`,
-    `- \`/shaka.png\` — GVC shaka hand icon (use with next/image)`,
-    `- \`/gvc-logotype.svg\` — Good Vibes Club wordmark`,
-    `- \`/grid.svg\` — background grid texture`,
-    `- \`/gvc-metadata.json\` — all 6,969 token traits and IPFS image URLs`,
+    `- \`/shaka.png\` -GVC shaka hand icon (use with next/image)`,
+    `- \`/gvc-logotype.svg\` -Good Vibes Club wordmark`,
+    `- \`/grid.svg\` -background grid texture`,
+    `- \`/gvc-metadata.json\` -all 6,969 token traits and IPFS image URLs`,
     ``,
     `### Design patterns`,
     `- Dark backgrounds (#050505) with gold accents throughout`,
@@ -507,7 +507,7 @@ function generateStarterPage(templateType, projectName, description, addons, pro
     `- Card hover: add \`card-glow\` class or \`hover:border-gvc-gold/20\``,
     `- Borders: \`border-white/[0.08]\` (subtle) or \`border-gvc-gold/20\` (emphasis)`,
     `- Text hierarchy: \`text-gvc-gold\` for emphasis, \`text-white\` primary, \`text-white/50\` secondary, \`text-white/30\` muted`,
-    `- Generous whitespace — let things breathe`,
+    `- Generous whitespace -let things breathe`,
     `- Framer Motion for entrance animations (fade up, stagger children)`,
     `- Use \`text-shimmer\` class on key headlines for the gold shimmer effect`,
     ``,
@@ -633,12 +633,12 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Step-by-step — Desktop app primary */}
+        {/* Step-by-step -Desktop app primary */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="text-left rounded-2xl bg-[#121212] border border-[#FFE048]/20 p-6 mb-6">
           <h2 className="text-lg font-display font-bold text-white mb-5">Now let&apos;s build it</h2>
 
           <div className="space-y-5">
-            {/* Step 1 — Download Claude Code */}
+            {/* Step 1 -Download Claude Code */}
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">1</span>
@@ -651,7 +651,7 @@ export default function Home() {
               <p className="text-white/25 font-body text-xs mt-1.5">Already have it? Skip to step 2.</p>
             </div>
 
-            {/* Step 2 — Open project folder */}
+            {/* Step 2 -Open project folder */}
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">2</span>
@@ -669,7 +669,7 @@ export default function Home() {
               <p className="text-white/25 font-body text-xs mt-1.5">In the app, click the folder name at the top &rarr; <span className="text-white/40">Open folder</span> &rarr; navigate to this path.</p>
             </div>
 
-            {/* Step 3 — Tell Claude to build */}
+            {/* Step 3 -Tell Claude to build */}
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="w-6 h-6 rounded-full bg-[#FFE048]/15 text-[#FFE048] text-xs font-bold flex items-center justify-center">3</span>
@@ -692,7 +692,7 @@ export default function Home() {
           </p>
         </motion.div>
 
-        {/* Alternative — Terminal */}
+        {/* Alternative -Terminal */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="text-left rounded-2xl bg-[#121212] border border-white/[0.06] p-6 mb-6">
           <h3 className="text-base font-display font-bold text-white/80 mb-2">Prefer the terminal?</h3>
           <p className="text-white/40 font-body text-sm mb-4">Open a <span className="text-white/70 font-semibold">new terminal tab</span> and paste these commands one at a time.</p>
@@ -969,7 +969,7 @@ Use cases: rarity checker, token lookup, trait filtering, collection search, tra
 - Next.js (App Router), React, TypeScript, Tailwind CSS, Framer Motion
 
 ## Important: Dev Server
-The dev server is already running (the user started it before opening Claude Code). Do NOT run \`npm run dev\` — just edit the files and the browser will hot-reload automatically. If you need to install a new package, use \`npm install <package>\` and the dev server will pick it up.
+The dev server is already running (the user started it before opening Claude Code). Do NOT run \`npm run dev\` -just edit the files and the browser will hot-reload automatically. If you need to install a new package, use \`npm install <package>\` and the dev server will pick it up.
 
 ## Project Structure
 app/ -> Pages and layouts
@@ -1231,7 +1231,7 @@ async function main() {
   const s = p.spinner();
   s.start("Setting up your project...");
 
-  // Always use blank-canvas as the base — the template choice shapes the CLAUDE.md instructions
+  // Always use blank-canvas as the base -the template choice shapes the CLAUDE.md instructions
   const templateSrc = path.join(TEMPLATES_DIR, "blank-canvas");
 
   // Create project directory
@@ -1281,7 +1281,7 @@ async function main() {
       timeout: 120000,
     });
   } catch {
-    // Non-fatal — user can run npm install manually
+    // Non-fatal -user can run npm install manually
     s.stop(pc.yellow("Dependencies didn't install automatically, but that's okay!"));
     p.note(
       `Just run ${info("npm install")} inside your project folder.`,
@@ -1306,7 +1306,7 @@ async function main() {
   console.log(`  │${" ".repeat(innerWidth)}│`);
   console.log(`  └${"─".repeat(innerWidth)}┘`);
   console.log();
-  console.log(`  ${dim("This starts your project. When you see")} ${success("✓ Ready")}${dim(",")}`);
+  console.log(`  ${dim("This starts your project. When you see")} ${success("Ready")}${dim(",")}`);
   console.log(`  ${dim("open")} ${info("http://localhost:3000")} ${dim("in your browser.")}`);
   console.log();
   console.log(`  ${dim("The page will show you exactly what to do next.")}`);
