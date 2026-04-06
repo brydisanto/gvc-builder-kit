@@ -23,11 +23,11 @@ export async function GET(request: NextRequest) {
     }
     const data = rows.map((r) => ({
       txHash: r.tx_hash,
-      priceEth: r.price_eth,
-      priceUsd: r.price_usd,
+      priceEth: parseFloat(r.price_eth) || 0,
+      priceUsd: r.price_usd ? parseFloat(r.price_usd) : null,
       paymentSymbol: r.payment_symbol,
       imageUrl: r.image_url,
-      createdAt: r.created_at,
+      timestamp: r.created_at,
     }));
     return NextResponse.json(data, {
       headers: {
