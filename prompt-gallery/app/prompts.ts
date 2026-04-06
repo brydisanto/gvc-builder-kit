@@ -7,6 +7,7 @@ export interface Prompt {
   previewEmoji: string;
   exampleImage?: string; // path to /examples/[id].png — add your own!
   exampleTokenId?: string; // which token was used for the example
+  hasReferenceImage?: boolean; // if true, user needs to upload a second reference image
 }
 
 const PROMPTS: Prompt[] = [
@@ -18,30 +19,38 @@ const PROMPTS: Prompt[] = [
     previewEmoji: "🧍",
     exampleImage: "/examples/full-body.png",
     exampleTokenId: "4217",
-    template: `Generate a full-body version of my character.
+    hasReferenceImage: true,
+    template: `I've uploaded two images.
+
+IMAGE 1 (my character): This is my Good Vibes Club (GVC) NFT character. Use this as the definitive reference for the character's identity — head, face, expression, outfit, colors, materials, and accessories.
+
+IMAGE 2 (proportion reference): This is a proportion guide showing the standard GVC full-body character from multiple angles. Use this ONLY for body proportions, limb length, stance, and overall height ratio. Do NOT copy the style, clothing, colors, or materials from this image.
+
+TASK: Generate a full-body version of my character (Image 1) using the body proportions from Image 2.
 
 IDENTITY LOCK (CRITICAL)
-Preserve exactly:
+Preserve exactly from Image 1:
 • head shape, facial features, expression
 • material finish (glossy, matte, soft plastic, etc.)
 • color palette and shading behavior
-• accessories and clothing from the original image
+• accessories and clothing
 Do not redesign or reinterpret the character's style.
 The result must feel like the same exact character, simply revealed as full body.
 
 STYLE CONTINUATION (VERY IMPORTANT)
-Extend the existing outfit naturally into a full-body design:
+Extend the existing outfit from Image 1 naturally into a full-body design:
 • continue fabric types, stitching logic, and material behavior from the upper body
 • maintain the same design language, color transitions, and detailing
 • avoid adding unrelated fashion elements
 • everything must feel like it belongs to the same original design
 
-PROPORTION GUIDE
-Use standard GVC character proportions:
-• head is approximately 1/4 of total body height (stylized large head)
-• short legs relative to torso (premium toy/vinyl figure proportions)
-• simplified mitten-like hands
-• chunky sneakers with visible sole detail
+PROPORTION GUIDE (from Image 2 ONLY)
+Use Image 2 as the reference for:
+• body height ratio (head is ~1/4 of total height)
+• limb proportions (short legs, simplified hands)
+• pose balance and stance
+• chunky sneaker style on feet
+Do NOT transfer any style, clothing, colors, or materials from Image 2.
 
 GVC STYLE TARGET
 Render in a vibrant, high-quality stylized 3D aesthetic:
@@ -62,13 +71,13 @@ Slight perspective (85mm lens feel)
 Character standing on a subtle platform or ground plane
 
 BACKGROUND
-Minimal gradient background matching the character's color palette
+Minimal gradient background matching the character's color palette from Image 1
 Soft studio lighting, no distractions
 
 OUTPUT
 Highly polished 3D render, consistent with high-end character design
 Add subtle Vibetown energy:
-• soft colored rim light (matching palette)
+• soft colored rim light (matching the character's palette)
 • gentle glow accents
 • clean studio + dreamy gradient blend`,
   },
