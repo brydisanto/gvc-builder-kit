@@ -229,11 +229,11 @@ const ADDON_SNIPPETS = {
 \`\`\`ts
 // Fetch live stats — floor price, volume, owners, market cap
 const stats = await fetch("https://api-hazel-pi-72.vercel.app/api/stats").then(r => r.json());
-// { floorPrice: 0.65, floorPriceUsd: 1625, numOwners: 1513, marketCapUsd: 9247054, volume24h: 2.1, totalSales: 11000 }
+// { floorPrice: 0.649, floorPriceUsd: 1340, numOwners: 1510, totalSales: 24278, avgPrice: 0.55, volume24h: 2.37, marketCapUsd: 9344543 }
 
 // Fetch recent sales
-const sales = await fetch("https://api-hazel-pi-72.vercel.app/api/recent-sales?limit=10").then(r => r.json());
-// [{ tokenId: "3101", priceEth: 0.611, buyer: "0x...", imageUrl: "...", timestamp: "..." }]
+const sales = await fetch("https://api-hazel-pi-72.vercel.app/api/sales?limit=10").then(r => r.json());
+// [{ txHash: "0x...", priceEth: 0.65, paymentSymbol: "ETH", imageUrl: "https://i2c.seadn.io/...", timestamp: "2026-04-03T..." }]
 
 // Fetch top holders
 const holders = await fetch("https://api-hazel-pi-72.vercel.app/api/holders?limit=20").then(r => r.json());
@@ -517,9 +517,9 @@ function generateStarterPage(templateType, projectName, description, addons, pro
     ``,
     `| Endpoint | Returns |`,
     `|---|---|`,
-    `| GET /stats | Floor price, market cap, 24h volume, total sales, ETH price, VIBESTR price |`,
-    `| GET /sales?limit=10 | Recent GVC sales with price, image, timestamp |`,
-    `| GET /sales/history?limit=100 | Historical GVC sales (max 1000) |`,
+    `| GET /stats | { floorPrice, floorPriceUsd, volume24h, volume24hUsd, numOwners, totalSales, avgPrice, marketCap, marketCapUsd } |`,
+    `| GET /sales?limit=10 | [{ txHash, priceEth, priceUsd, paymentSymbol, imageUrl, timestamp }] |`,
+    `| GET /sales/history?limit=100 | Same shape as /sales, max 1000 |`,
     `| GET /activity | 30-day buys/sells, accumulator leaderboard |`,
     `| GET /vibestr | VIBESTR token data |`,
     `| GET /vibestr/history | Daily VIBESTR price snapshots |`,
@@ -531,7 +531,7 @@ function generateStarterPage(templateType, projectName, description, addons, pro
     `Example:`,
     `\`\`\`ts`,
     `const stats = await fetch("https://api-hazel-pi-72.vercel.app/api/stats").then(r => r.json());`,
-    `// { floorPrice: 0.65, numOwners: 1513, marketCapUsd: 9247054, volume24h: 2.1, ... }`,
+    `// { floorPrice: 0.649, floorPriceUsd: 1340, numOwners: 1510, totalSales: 24278, avgPrice: 0.55, volume24h: 2.37, marketCapUsd: 9344543 }`,
     `\`\`\``,
     ``,
     `## Contracts & Tokens (only use these)`,
@@ -914,9 +914,9 @@ ${addonDescriptions || "None selected -- you can always add capabilities later b
 
 ## GVC API (no API key needed)
 All GVC collection data is available from: https://api-hazel-pi-72.vercel.app/api
-- GET /stats -- floor price, market cap, 24h volume, total sales, ETH price, VIBESTR price
-- GET /sales?limit=10 -- recent GVC sales with price, image, timestamp
-- GET /sales/history?limit=100 -- historical GVC sales (max 1000)
+- GET /stats -- returns: { floorPrice, floorPriceUsd, volume24h, volume24hUsd, numOwners, totalSales, avgPrice, marketCap, marketCapUsd, totalVolume, totalVolumeUsd }
+- GET /sales?limit=10 -- returns: [{ txHash, priceEth, priceUsd, paymentSymbol, imageUrl, timestamp }]
+- GET /sales/history?limit=100 -- same shape as /sales, max 1000
 - GET /activity -- 30-day buys/sells, accumulator leaderboard
 - GET /vibestr -- VIBESTR token data
 - GET /vibestr/history -- daily VIBESTR price snapshots
@@ -1115,7 +1115,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.4.3");
+    console.log("create-gvc-app v0.4.4");
     return;
   }
 
@@ -1314,7 +1314,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.4.3")
+      dim("// gvc-builder-kit v0.4.4")
   );
 }
 
