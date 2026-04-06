@@ -375,7 +375,7 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-6 mb-6">
               <div className="flex items-center gap-3 mb-4">
                 <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-                <h2 className="text-lg font-display font-bold text-white">Enter Your Token ID</h2>
+                <h2 className="text-lg font-display font-bold text-white">Enter Your GVC&apos;s Token ID</h2>
               </div>
               <div className="flex gap-3 mb-4">
                 <input type="text" placeholder="Enter your token ID (0-6968)" value={tokenId} onChange={(e) => setTokenId(e.target.value)} onKeyDown={(e) => e.key === "Enter" && lookupToken()} className="flex-1 px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors" />
@@ -393,6 +393,12 @@ export default function Home() {
                   )}
                   <div className="flex-1 min-w-0">
                     <p className="text-white font-display font-bold">{tokenMeta.name}</p>
+                    {imageUrl && (
+                      <a href={imageUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-3 py-1.5 mt-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                        Save your GVC image
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                      </a>
+                    )}
                   </div>
                 </motion.div>
               )}
@@ -413,17 +419,11 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="rounded-2xl bg-gvc-dark border border-gvc-gold/20 p-6 mb-6">
               <div className="flex items-center gap-3 mb-2">
                 <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-                <h2 className="text-lg font-display font-bold text-white">Let &apos;errrr rip!</h2>
+                <h2 className="text-lg font-display font-bold text-white">Let &apos;Errrr Rip!</h2>
               </div>
               <p className="text-white/40 font-body text-sm mb-5 pl-11">Copy the prompt below and follow the instructions.</p>
 
-              <div className="flex items-center justify-between mb-4 pl-11">
-                <div>
-                  <p className="text-white/60 font-body text-sm">{selectedPrompt.title}</p>
-                  <a href={`https://x.com/${selectedPrompt.author.replace("@", "")}`} target="_blank" rel="noopener noreferrer" className="text-white/30 font-body text-xs hover:text-gvc-gold/60 transition-colors">By {selectedPrompt.author}</a>
-                </div>
-                <span className="text-gvc-gold font-body text-xs">for {tokenMeta.name}</span>
-              </div>
+              
 
               <div className="bg-black/40 rounded-xl p-4 mb-4 border border-white/[0.06]">
                 <p className="text-white/70 font-body text-sm leading-relaxed whitespace-pre-wrap">{assembledPrompt}</p>
@@ -437,10 +437,7 @@ export default function Home() {
                   Open Gemini
                   <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                 </a>
-                <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 font-display font-bold text-sm rounded-xl border border-white/[0.08] text-white/40 hover:border-white/15 hover:text-white/60 transition-all">
-                  ChatGPT
-                  <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                </a>
+                
               </div>
 
               <div className="mt-5 pt-5 border-t border-white/[0.06]">
@@ -469,7 +466,7 @@ export default function Home() {
                     </div>
                     <ol className="text-white/50 font-body text-sm space-y-2 list-decimal list-inside mb-4">
                       <li>Download both images above</li>
-                      <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or ChatGPT)</li>
+                      <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or Midjourney, Dall-E, ChatGPT, etc)</li>
                       <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat</li>
                       <li>Paste the prompt and hit send</li>
                     </ol>

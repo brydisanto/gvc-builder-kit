@@ -20,7 +20,7 @@ const PROMPTS: Prompt[] = [
     icon: "body",
     author: "@GoodVibesClub",
     exampleImage: "/examples/full-body.png",
-    exampleTokenId: "4217",
+    exampleTokenId: "2375",
     hasReferenceImage: true,
     template: `I've uploaded two images.
 
