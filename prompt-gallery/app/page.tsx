@@ -531,40 +531,51 @@ export default function Home() {
                   <div className="mt-4 pt-4 border-t border-white/[0.06]">
                     {selectedPrompt.hasReferenceImage ? (
                       <>
-                        <p className="text-white/50 font-body text-xs font-semibold mb-3">This prompt requires 2 images:</p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
-                          <div className="rounded-xl bg-black/30 border border-white/[0.06] p-3">
-                            <div className="flex items-center gap-2 mb-2">
-                              <span className="w-5 h-5 rounded-full bg-gvc-gold/15 text-gvc-gold text-[10px] font-bold flex items-center justify-center">1</span>
-                              <p className="text-white/60 font-body text-xs font-semibold">Your GVC character</p>
+                        <h3 className="text-white font-display font-bold text-base mb-4">This prompt requires 2 images</h3>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                          <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
+                            <div className="flex items-center gap-2.5 mb-3">
+                              <span className="w-7 h-7 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center">1</span>
+                              <p className="text-white font-body text-sm font-semibold">Your GVC character</p>
                             </div>
-                            <p className="text-white/30 font-body text-xs">Save your GVC image from above. This is what the character will look like.</p>
+                            <p className="text-white/40 font-body text-sm mb-3">This is what the character will look like. Save it from above.</p>
+                            {imageUrl && (
+                              <a
+                                href={imageUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors"
+                              >
+                                Save your GVC image
+                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                              </a>
+                            )}
                           </div>
-                          <div className="rounded-xl bg-black/30 border border-gvc-gold/15 p-3">
-                            <div className="flex items-center gap-2 mb-2">
-                              <span className="w-5 h-5 rounded-full bg-gvc-gold/15 text-gvc-gold text-[10px] font-bold flex items-center justify-center">2</span>
-                              <p className="text-white/60 font-body text-xs font-semibold">Proportion reference</p>
+                          <div className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
+                            <div className="flex items-center gap-2.5 mb-3">
+                              <span className="w-7 h-7 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center">2</span>
+                              <p className="text-white font-body text-sm font-semibold">Proportion reference</p>
                             </div>
-                            <p className="text-white/30 font-body text-xs mb-2">This tells AI the body proportions to use.</p>
+                            <p className="text-white/40 font-body text-sm mb-3">This tells the AI the body proportions to use.</p>
                             <a
                               href="/ref/ReferenceImage.png"
                               download="GVC-Proportion-Reference.png"
-                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors"
+                              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors"
                             >
                               Download reference image
-                              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                             </a>
                           </div>
                         </div>
-                        <p className="text-white/40 font-body text-xs font-semibold mb-2">Steps:</p>
-                        <ol className="text-white/30 font-body text-xs space-y-1.5 list-decimal list-inside">
-                          <li>Save your GVC image from above</li>
-                          <li>Download the proportion reference image</li>
-                          <li>Open <span className="text-white/50">Gemini</span> (or ChatGPT)</li>
-                          <li>Upload <span className="text-white/50">both images</span> to the chat &mdash; your GVC first, then the reference</li>
-                          <li>Paste the prompt and send</li>
+                        <h3 className="text-white font-display font-bold text-base mb-3">Then follow these steps</h3>
+                        <ol className="text-white/50 font-body text-sm space-y-3 list-decimal list-inside mb-4">
+                          <li>Save your GVC image <span className="text-white/30">(Image 1)</span></li>
+                          <li>Download the proportion reference <span className="text-white/30">(Image 2)</span></li>
+                          <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or ChatGPT)</li>
+                          <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat &mdash; your GVC first, then the reference</li>
+                          <li>Paste the prompt above and hit send</li>
                         </ol>
-                        <p className="text-white/20 font-body text-xs mt-2">We recommend <span className="text-white/35">Gemini</span> for best results. Make sure to upload both images before pasting the prompt.</p>
+                        <p className="text-white/30 font-body text-sm">We recommend <span className="text-white/50">Gemini</span> for best image generation results.</p>
                       </>
                     ) : (
                       <>
