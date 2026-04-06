@@ -437,9 +437,20 @@ export default function Home() {
               <p className="text-white/40 font-body text-sm leading-relaxed">
                 {prompt.description}
               </p>
-              <span className="inline-block mt-2 px-2 py-0.5 rounded-full bg-white/[0.04] text-white/25 text-xs font-body capitalize">
-                {prompt.category}
-              </span>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="inline-block px-2 py-0.5 rounded-full bg-white/[0.04] text-white/25 text-xs font-body capitalize">
+                  {prompt.category}
+                </span>
+                <a
+                  href={`https://x.com/${prompt.author.replace("@", "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-white/20 text-xs font-body hover:text-gvc-gold/60 transition-colors"
+                >
+                  {prompt.author}
+                </a>
+              </div>
             </motion.button>
           ))}
         </div>
@@ -488,9 +499,19 @@ export default function Home() {
               className="rounded-2xl bg-gvc-dark border border-gvc-gold/20 p-6 mb-8"
             >
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-display font-bold text-white">
-                  {selectedPrompt.title}
-                </h2>
+                <div>
+                  <h2 className="text-lg font-display font-bold text-white">
+                    {selectedPrompt.title}
+                  </h2>
+                  <a
+                    href={`https://x.com/${selectedPrompt.author.replace("@", "")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-white/30 font-body text-xs hover:text-gvc-gold/60 transition-colors"
+                  >
+                    by {selectedPrompt.author}
+                  </a>
+                </div>
                 {tokenMeta && (
                   <span className="text-gvc-gold font-body text-xs">
                     for {tokenMeta.name}

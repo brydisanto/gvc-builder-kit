@@ -5,6 +5,7 @@ export interface Prompt {
   category: "profile" | "scene" | "meme" | "cinematic" | "artistic" | "character";
   template: string;
   icon: "body" | "film" | "pixel" | "camera" | "scroll" | "sword" | "sparkle" | "paint" | "city" | "trophy" | "music" | "rocket" | "heart";
+  author: string; // X handle, e.g. "@GoodVibesClub"
   exampleImage?: string;
   exampleTokenId?: string;
   hasReferenceImage?: boolean;
@@ -17,6 +18,7 @@ const PROMPTS: Prompt[] = [
     description: "See your GVC citizen as a complete full-body 3D character",
     category: "character",
     icon: "body",
+    author: "@GoodVibesClub",
     exampleImage: "/examples/full-body.png",
     exampleTokenId: "4217",
     hasReferenceImage: true,
