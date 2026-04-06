@@ -5,6 +5,18 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import PROMPTS, { CATEGORIES, Prompt } from "./prompts";
 
+function PromptIcon({ type, className = "w-6 h-6" }: { type: string; className?: string }) {
+  const icons: Record<string, React.ReactNode> = {
+    body: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>,
+    film: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-2.625 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-1.5A1.125 1.125 0 0118 18.375M20.625 4.5H3.375m17.25 0c.621 0 1.125.504 1.125 1.125M20.625 4.5h-1.5C18.504 4.5 18 5.004 18 5.625m3.75 0v1.5c0 .621-.504 1.125-1.125 1.125M3.375 4.5c-.621 0-1.125.504-1.125 1.125M3.375 4.5h1.5C5.496 4.5 6 5.004 6 5.625m-2.625 0v1.5c0 .621.504 1.125 1.125 1.125m0 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75C5.496 8.25 6 7.746 6 7.125v-1.5M4.875 8.25C5.496 8.25 6 8.754 6 9.375v1.5c0 .621-.504 1.125-1.125 1.125m1.5 0h12m-12 0c-.621 0-1.125.504-1.125 1.125M18 12.375c.621 0 1.125-.504 1.125-1.125m0 0v-1.5c0-.621-.504-1.125-1.125-1.125m1.5 3.75c-.621 0-1.125.504-1.125 1.125" /></svg>,
+    pixel: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.25 9.75L16.5 12l-2.25 2.25m-4.5 0L7.5 12l2.25-2.25M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>,
+    camera: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316a2.192 2.192 0 00-1.736-1.039 48.774 48.774 0 00-5.232 0 2.192 2.192 0 00-1.736 1.039l-.821 1.316z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16.5 12.75a4.5 4.5 0 11-9 0 4.5 4.5 0 019 0z" /></svg>,
+    sparkle: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" /></svg>,
+    paint: <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" /></svg>,
+  };
+  return <>{icons[type] || icons.sparkle}</>;
+}
+
 interface TokenMeta {
   name: string;
   traits: Record<string, string>;
@@ -26,7 +38,7 @@ const TYPE_DESCRIPTIONS: Record<string, string> = {
 function describeTraits(traits: Record<string, string>): string {
   const parts: string[] = [];
 
-  // Type — the most defining visual characteristic
+  // Type -the most defining visual characteristic
   const typeVal = traits["Type"] || "";
   if (typeVal.startsWith("Gradient")) {
     parts.push(`with a vibrant gradient color scheme (${typeVal.replace("Gradient ", "")})`);
@@ -52,7 +64,7 @@ function describeTraits(traits: Record<string, string>): string {
     parts.push(`dressed in a ${traits["Body"].toLowerCase()}`);
   }
 
-  // Background — used as scene context
+  // Background -used as scene context
   if (traits["Background"]) {
     const bg = traits["Background"].replace("BG ", "").toLowerCase();
     parts.push(`originally on a ${bg} background`);
@@ -71,7 +83,7 @@ const GVC_STYLE_PREFIX = `I've uploaded an image of my Good Vibes Club (GVC) NFT
 
 Using this exact character as the subject (keep their specific look, outfit, and features), create the following:\n\n`;
 
-const GVC_STYLE_SUFFIX = `\n\nIMPORTANT: The character in the generated image must look like the uploaded GVC character — same outfit, same features, same vibe. Adapt them into the new scene/style while keeping them recognizable.`;
+const GVC_STYLE_SUFFIX = `\n\nIMPORTANT: The character in the generated image must look like the uploaded GVC character -same outfit, same features, same vibe. Adapt them into the new scene/style while keeping them recognizable.`;
 
 function assemblePrompt(template: string, traits: Record<string, string>, hasReferenceImage?: boolean): string {
   const description = describeTraits(traits);
@@ -140,7 +152,7 @@ export default function Home() {
     };
     console.log("Prompt submission:", submission);
 
-    // Simulate success — backend comes later
+    // Simulate success -backend comes later
     setTimeout(() => {
       setSubmitStatus("sent");
       setShowSuccessModal(true);
@@ -158,8 +170,8 @@ export default function Home() {
   }
 
   const shareText = submitTitle
-    ? `Just submitted "${submitTitle}" to the GVC Prompt Gallery! 🤙✨ Create AI art with your Good Vibes Club character → `
-    : "Just submitted a prompt to the GVC Prompt Gallery! 🤙✨ → ";
+    ? `Just submitted "${submitTitle}" to the GVC Prompt Gallery!  Create AI art with your Good Vibes Club character -`
+    : "Just submitted a prompt to the GVC Prompt Gallery!  -";
   const shareUrl = "https://prompt-gallery-theta.vercel.app";
 
   // Load metadata
@@ -410,7 +422,9 @@ export default function Home() {
                   : "bg-gvc-dark border-white/[0.08] hover:border-white/15"
               }`}
             >
-              <div className="text-3xl mb-3">{prompt.previewEmoji}</div>
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${selectedPrompt?.id === prompt.id ? "bg-gvc-gold/20 text-gvc-gold" : "bg-white/[0.04] text-white/40"}`}>
+                <PromptIcon type={prompt.icon} />
+              </div>
               <h3
                 className={`font-display font-bold text-base mb-1 ${
                   selectedPrompt?.id === prompt.id
@@ -443,7 +457,7 @@ export default function Home() {
               <div className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-5">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-gvc-gold font-display font-bold text-sm">Example</span>
-                  <span className="text-white/20 font-body text-xs">&mdash;</span>
+                  <span className="text-white/20 font-body text-xs">-</span>
                   <span className="text-white/40 font-body text-xs">{selectedPrompt.title}</span>
                   {selectedPrompt.exampleTokenId && (
                     <span className="text-white/20 font-body text-xs ml-auto">Token #{selectedPrompt.exampleTokenId}</span>
@@ -572,7 +586,7 @@ export default function Home() {
                           <li>Save your GVC image <span className="text-white/30">(Image 1)</span></li>
                           <li>Download the proportion reference <span className="text-white/30">(Image 2)</span></li>
                           <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or ChatGPT)</li>
-                          <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat &mdash; your GVC first, then the reference</li>
+                          <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat - your GVC first, then the reference</li>
                           <li>Paste the prompt above and hit send</li>
                         </ol>
                         <p className="text-white/30 font-body text-sm">We recommend <span className="text-white/50">Gemini</span> for best image generation results.</p>
@@ -677,7 +691,9 @@ export default function Home() {
                     onChange={handleFileSelect}
                     className="hidden"
                   />
-                  <div className="text-3xl mb-2">🖼️</div>
+                  <div className="w-10 h-10 rounded-xl bg-white/[0.04] flex items-center justify-center mx-auto mb-2 text-white/30">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" /></svg>
+                  </div>
                   <p className="text-white/50 font-body text-sm mb-1">
                     Drag and drop or click to upload
                   </p>
@@ -760,9 +776,9 @@ export default function Home() {
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                  className="text-5xl mb-4"
+                  className="mb-4"
                 >
-                  🤙
+                  <Image src="/shaka.png" alt="GVC" width={56} height={56} className="mx-auto drop-shadow-[0_0_20px_rgba(255,224,72,0.3)]" />
                 </motion.div>
                 <h3 className="text-2xl font-display font-black text-shimmer mb-2">
                   Prompt Submitted!
