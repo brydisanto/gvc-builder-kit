@@ -22,8 +22,8 @@ const mundial = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "GVC Prompt Gallery",
-  description: "Creative image prompts for your Good Vibes Club characters",
+  title: "The Prompt Machine - Good Vibes Club",
+  description: "Generate AI images of your Good Vibes Club characters",
 };
 
 export default function RootLayout({

@@ -198,8 +198,8 @@ export default function Home() {
   }
 
   const shareText = submitTitle
-    ? `Just submitted "${submitTitle}" to the GVC Prompt Gallery!  Create AI art with your Good Vibes Club character -`
-    : "Just submitted a prompt to the GVC Prompt Gallery!  -";
+    ? `Just submitted "${submitTitle}" to the The Prompt Machine!  Create AI art with your Good Vibes Club character -`
+    : "Just submitted a prompt to the The Prompt Machine!  -";
   const shareUrl = "https://prompt-gallery-theta.vercel.app";
 
   // Load metadata
@@ -302,7 +302,7 @@ export default function Home() {
             transition={{ delay: 0.1 }}
             className="text-3xl sm:text-5xl font-display font-black text-shimmer mb-3"
           >
-            Prompt Gallery
+            The Prompt Machine
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 10 }}
@@ -787,7 +787,7 @@ export default function Home() {
             className="mx-auto mb-2 opacity-30"
           />
           <p className="text-white/15 text-xs font-body">
-            Good Vibes Club Prompt Gallery
+            Good Vibes Club - The Prompt Machine
           </p>
         </div>
       </div>
