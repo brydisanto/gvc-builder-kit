@@ -2,7 +2,7 @@ export interface Prompt {
   id: string;
   title: string;
   description: string;
-  category: "profile" | "scene" | "meme" | "cinematic" | "artistic";
+  category: "profile" | "scene" | "meme" | "cinematic" | "artistic" | "character";
   template: string;
   previewEmoji: string;
   exampleImage?: string; // path to /examples/[id].png — add your own!
@@ -10,6 +10,68 @@ export interface Prompt {
 }
 
 const PROMPTS: Prompt[] = [
+  {
+    id: "full-body",
+    title: "Full Body Character",
+    description: "See your GVC citizen as a complete full-body 3D character",
+    category: "character",
+    previewEmoji: "🧍",
+    exampleImage: "/examples/full-body.png",
+    exampleTokenId: "4217",
+    template: `Generate a full-body version of my character.
+
+IDENTITY LOCK (CRITICAL)
+Preserve exactly:
+• head shape, facial features, expression
+• material finish (glossy, matte, soft plastic, etc.)
+• color palette and shading behavior
+• accessories and clothing from the original image
+Do not redesign or reinterpret the character's style.
+The result must feel like the same exact character, simply revealed as full body.
+
+STYLE CONTINUATION (VERY IMPORTANT)
+Extend the existing outfit naturally into a full-body design:
+• continue fabric types, stitching logic, and material behavior from the upper body
+• maintain the same design language, color transitions, and detailing
+• avoid adding unrelated fashion elements
+• everything must feel like it belongs to the same original design
+
+PROPORTION GUIDE
+Use standard GVC character proportions:
+• head is approximately 1/4 of total body height (stylized large head)
+• short legs relative to torso (premium toy/vinyl figure proportions)
+• simplified mitten-like hands
+• chunky sneakers with visible sole detail
+
+GVC STYLE TARGET
+Render in a vibrant, high-quality stylized 3D aesthetic:
+• soft rounded forms
+• premium toy-like finish
+• clean surfaces with subtle micro-texture
+• global illumination, soft reflections, and bounce light
+• cinematic but playful lighting
+
+POSE
+Neutral standing pose, relaxed and balanced
+Feet fully visible
+Arms naturally positioned (slight variation allowed)
+
+CAMERA
+Full-body centered framing
+Slight perspective (85mm lens feel)
+Character standing on a subtle platform or ground plane
+
+BACKGROUND
+Minimal gradient background matching the character's color palette
+Soft studio lighting, no distractions
+
+OUTPUT
+Highly polished 3D render, consistent with high-end character design
+Add subtle Vibetown energy:
+• soft colored rim light (matching palette)
+• gentle glow accents
+• clean studio + dreamy gradient blend`,
+  },
   {
     id: "action-hero",
     title: "80s Action Hero",
@@ -124,6 +186,7 @@ export default PROMPTS;
 
 export const CATEGORIES = [
   { id: "all", label: "All" },
+  { id: "character", label: "Character" },
   { id: "profile", label: "Profile Pics" },
   { id: "scene", label: "Scenes" },
   { id: "cinematic", label: "Cinematic" },
