@@ -520,7 +520,7 @@ export default function Home() {
 
               {!selectedPrompt.hasReferenceImage && (
                 <div className="mt-5 pt-5 border-t border-white/[0.06]">
-                  <p className="text-white/30 font-body text-sm">We recommend using <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors">Gemini</a> for the best results (or you can use ChatGPT, Midjourney, Dall-E, etc). Upload your GVC image and paste the prompt.</p>
+                  <p className="text-white/30 font-body text-sm">Open <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors">Gemini</a>. We recommend using Gemini for the best results (but you can also use ChatGPT, Midjourney, Dall-E, etc). Upload your GVC image and paste the prompt.</p>
                 </div>
               )}
 
@@ -560,11 +560,10 @@ export default function Home() {
                   </div>
                   <ol className="text-white/50 font-body text-sm space-y-2 list-decimal list-inside mb-4">
                     <li>Download both images above</li>
-                    <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or Midjourney, Dall-E, ChatGPT, etc)</li>
+                    <li>Open <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors font-semibold">Gemini</a>. We recommend using Gemini for the best results (but you can also use ChatGPT, Midjourney, Dall-E, etc).</li>
                     <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat</li>
                     <li>Paste the prompt and hit send</li>
                   </ol>
-              <p className="text-white/30 font-body text-sm">We recommend using <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors">Gemini</a> for the best results (or you can use ChatGPT, Midjourney, Dall-E, etc).</p>
             </motion.div>
           )}
         </AnimatePresence>
