@@ -11,14 +11,72 @@ interface TokenMeta {
   image: string;
 }
 
-function formatTraits(traits: Record<string, string>): string {
+// Map raw trait values to richer descriptions
+const TYPE_DESCRIPTIONS: Record<string, string> = {
+  "Grayscale": "rendered in a monochrome grayscale palette",
+  "Robot": "a metallic robot with mechanical joints and glowing circuit details",
+  "Plastic": "made of glossy smooth plastic with a toy-like sheen",
+  "Skeleton": "a skeletal figure with exposed bones and hollow eye sockets",
+  "Zombie": "a zombie with decayed skin and eerie undead features",
+  "Alien": "an alien with otherworldly skin tone and extraterrestrial features",
+  "Gold": "made entirely of polished gold with a luxurious metallic finish",
+  "Ghost": "a translucent ghostly figure with an ethereal glow",
+};
+
+function describeTraits(traits: Record<string, string>): string {
+  const parts: string[] = [];
+
+  // Type — the most defining visual characteristic
+  const typeVal = traits["Type"] || "";
+  if (typeVal.startsWith("Gradient")) {
+    parts.push(`with a vibrant gradient color scheme (${typeVal.replace("Gradient ", "")})`);
+  } else if (TYPE_DESCRIPTIONS[typeVal]) {
+    parts.push(TYPE_DESCRIPTIONS[typeVal]);
+  } else if (typeVal) {
+    parts.push(`with a ${typeVal.toLowerCase()} appearance`);
+  }
+
+  // Face
+  if (traits["Face"]) {
+    parts.push(`wearing ${traits["Face"].toLowerCase()} on their face`);
+  }
+
+  // Hair
+  if (traits["Hair"]) {
+    const hair = traits["Hair"];
+    parts.push(`with ${hair.toLowerCase()} hairstyle`);
+  }
+
+  // Body
+  if (traits["Body"]) {
+    parts.push(`dressed in a ${traits["Body"].toLowerCase()}`);
+  }
+
+  // Background — used as scene context
+  if (traits["Background"]) {
+    const bg = traits["Background"].replace("BG ", "").toLowerCase();
+    parts.push(`originally on a ${bg} background`);
+  }
+
+  return parts.join(", ");
+}
+
+function formatTraitsShort(traits: Record<string, string>): string {
   return Object.entries(traits)
     .map(([type, value]) => `${type}: ${value}`)
     .join(", ");
 }
 
+const GVC_STYLE_PREFIX = `I've uploaded an image of my Good Vibes Club (GVC) NFT character. This is a 3D-rendered collectible character from an NFT collection created by award-winning animation studio Toast. The art style features smooth, stylized 3D rendering with clean surfaces, expressive features, and a premium animated movie quality.
+
+Using this exact character as the subject (keep their specific look, outfit, and features), create the following:\n\n`;
+
+const GVC_STYLE_SUFFIX = `\n\nIMPORTANT: The character in the generated image must look like the uploaded GVC character — same outfit, same features, same vibe. Adapt them into the new scene/style while keeping them recognizable.`;
+
 function assemblePrompt(template: string, traits: Record<string, string>): string {
-  return template.replace("{TRAITS}", formatTraits(traits));
+  const description = describeTraits(traits);
+  const filled = template.replace("{TRAITS}", description);
+  return GVC_STYLE_PREFIX + filled + GVC_STYLE_SUFFIX;
 }
 
 export default function Home() {
@@ -178,10 +236,10 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex items-center gap-4 mt-2"
+              className="flex items-start gap-4 mt-2"
             >
               {imageUrl && (
-                <div className="w-16 h-16 rounded-xl overflow-hidden bg-black/40 flex-shrink-0">
+                <div className="w-20 h-20 rounded-xl overflow-hidden bg-black/40 flex-shrink-0">
                   <img
                     src={imageUrl}
                     alt={tokenMeta.name}
@@ -189,13 +247,24 @@ export default function Home() {
                   />
                 </div>
               )}
-              <div>
+              <div className="flex-1 min-w-0">
                 <p className="text-white font-display font-bold">
                   {tokenMeta.name}
                 </p>
-                <p className="text-white/40 font-body text-xs">
-                  {formatTraits(tokenMeta.traits)}
+                <p className="text-white/40 font-body text-xs mb-2">
+                  {formatTraitsShort(tokenMeta.traits)}
                 </p>
+                {imageUrl && (
+                  <a
+                    href={imageUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors"
+                  >
+                    Save your GVC image
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                  </a>
+                )}
               </div>
             </motion.div>
           )}
@@ -281,8 +350,7 @@ export default function Home() {
               {!tokenMeta ? (
                 <div className="text-center py-8">
                   <p className="text-white/40 font-body text-sm">
-                    Enter your token ID above to see the prompt with your
-                    character&apos;s traits
+                    Enter your token ID above to generate a custom prompt for your character
                   </p>
                 </div>
               ) : (
@@ -323,9 +391,16 @@ export default function Home() {
                       <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                     </a>
                   </div>
-                  <p className="text-white/25 font-body text-xs mt-3 text-center">
-                    Copy the prompt and paste it into Gemini, ChatGPT, Midjourney, or any image generator. We recommend <span className="text-white/40">Gemini</span> for best results.
-                  </p>
+                  <div className="mt-4 pt-4 border-t border-white/[0.06]">
+                    <p className="text-white/40 font-body text-xs font-semibold mb-2">How to use:</p>
+                    <ol className="text-white/30 font-body text-xs space-y-1 list-decimal list-inside">
+                      <li>Save your GVC image above (right-click &rarr; Save Image)</li>
+                      <li>Open Gemini (or ChatGPT)</li>
+                      <li>Upload your GVC image to the chat</li>
+                      <li>Paste the prompt below the image and send</li>
+                    </ol>
+                    <p className="text-white/20 font-body text-xs mt-2">We recommend <span className="text-white/35">Gemini</span> for best image generation results.</p>
+                  </div>
                 </>
               )}
             </motion.div>

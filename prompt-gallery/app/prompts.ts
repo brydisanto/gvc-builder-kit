@@ -14,7 +14,7 @@ const PROMPTS: Prompt[] = [
     description: "Your GVC citizen as the star of a 1980s action movie poster",
     category: "cinematic",
     previewEmoji: "🎬",
-    template: `A dramatic 1980s action movie poster featuring a character with these traits: {TRAITS}. The character is posed heroically with explosions behind them, neon lights, retro VHS aesthetic. Title text reads "VIBETOWN" in chrome metallic lettering. Cinematic lighting, lens flare, synthwave color palette with gold accents.`,
+    template: `Create a dramatic 1980s action movie poster. The character ({TRAITS}) is posed heroically with explosions behind them. Neon lights, retro VHS aesthetic, film grain. Title text reads "VIBETOWN" in chrome metallic lettering. Cinematic lighting, lens flare, synthwave color palette with gold (#FFE048) accents. Full poster composition with tagline at the bottom.`,
   },
   {
     id: "pixel-art",
@@ -22,7 +22,7 @@ const PROMPTS: Prompt[] = [
     description: "Your character reimagined as a 16-bit pixel art sprite",
     category: "artistic",
     previewEmoji: "👾",
-    template: `A 16-bit pixel art portrait of a character with these traits: {TRAITS}. Retro video game style, clean pixel edges, limited color palette with gold (#FFE048) as the primary accent color. Dark background (#050505). Nostalgic, charming, game-ready sprite aesthetic.`,
+    template: `Reimagine this character ({TRAITS}) as a 16-bit pixel art sprite. Retro video game style, clean pixel edges, limited color palette with gold (#FFE048) highlights. Dark background (#050505). The character should be recognizable but translated into charming nostalgic pixel art. Game-ready sprite aesthetic, like a character select screen.`,
   },
   {
     id: "vogue-cover",
@@ -30,7 +30,7 @@ const PROMPTS: Prompt[] = [
     description: "Your citizen on the cover of a high-fashion magazine",
     category: "profile",
     previewEmoji: "📸",
-    template: `A high-fashion magazine cover photograph featuring a character with these traits: {TRAITS}. Vogue magazine style, dramatic studio lighting, editorial pose. "VIBETOWN VOGUE" masthead in elegant gold typography. Minimal, luxurious, high-end fashion photography aesthetic with dark background and gold accents.`,
+    template: `Place this character ({TRAITS}) on the cover of a luxury fashion magazine. "VIBETOWN VOGUE" masthead in elegant gold serif typography at the top. Dramatic studio lighting, editorial pose, high-end photography aesthetic. Dark moody background with gold (#FFE048) accents. Cover lines like "The Citizen Issue" and "Good Vibes Only" in small white text. Magazine layout composition.`,
   },
   {
     id: "wanted-poster",
@@ -38,7 +38,7 @@ const PROMPTS: Prompt[] = [
     description: "An Old West wanted poster for your GVC character",
     category: "meme",
     previewEmoji: "🤠",
-    template: `A weathered Wild West wanted poster featuring a character with these traits: {TRAITS}. Aged parchment paper, distressed typography reading "WANTED" at the top and "FOR SPREADING GOOD VIBES" at the bottom. Reward listed as "6,969 VIBESTR". Sepia tones with gold (#FFE048) accents. Hand-drawn illustration style.`,
+    template: `Create a weathered Wild West wanted poster featuring this character ({TRAITS}). Aged yellowed parchment paper with burned edges, distressed woodblock typography. "WANTED" in large bold text at top, character portrait in the center, "FOR SPREADING GOOD VIBES" below. Reward listed as "6,969 VIBESTR". Sepia tones with subtle gold (#FFE048) accents. Hand-drawn illustration style matching the character's appearance.`,
   },
   {
     id: "anime-hero",
@@ -46,7 +46,7 @@ const PROMPTS: Prompt[] = [
     description: "Your character as an anime hero mid-battle",
     category: "cinematic",
     previewEmoji: "⚔️",
-    template: `An anime-style illustration of a character with these traits: {TRAITS}. Dynamic action pose with flowing energy effects in gold (#FFE048). Speed lines, dramatic lighting, manga-inspired composition. Dark atmospheric background with glowing gold particles. Studio Ghibli meets Shonen style.`,
+    template: `Transform this character ({TRAITS}) into an anime-style illustration. Dynamic action pose with flowing energy effects in gold (#FFE048). Speed lines, dramatic lighting, manga-inspired composition. Dark atmospheric background with glowing gold particles. The character's outfit and features should be translated into anime style while staying recognizable. High quality, Studio Ghibli meets Shonen aesthetic.`,
   },
   {
     id: "trading-card",
@@ -54,7 +54,7 @@ const PROMPTS: Prompt[] = [
     description: "A rare holographic collectible card of your citizen",
     category: "profile",
     previewEmoji: "✨",
-    template: `A holographic collectible trading card featuring a character with these traits: {TRAITS}. Prismatic rainbow holographic foil effect, premium card stock appearance. Character stats displayed: "VIBES: MAX", "RARITY: LEGENDARY". Gold (#FFE048) border and accents. Card name in bold display font. Dark background with iridescent shimmer.`,
+    template: `Design a premium holographic collectible trading card featuring this character ({TRAITS}). Prismatic rainbow holographic foil effect on the border and background. Character centered on the card with stats displayed: "VIBES: MAX" and "RARITY: LEGENDARY". Gold (#FFE048) metallic border. Card name in bold display font at the bottom. The card appears to be floating with light refracting off the holographic surface. Premium collector quality.`,
   },
   {
     id: "renaissance",
@@ -62,7 +62,7 @@ const PROMPTS: Prompt[] = [
     description: "Your GVC as a classical Renaissance oil painting",
     category: "artistic",
     previewEmoji: "🎨",
-    template: `A Renaissance-era oil painting portrait of a character with these traits: {TRAITS}. Classical composition, dramatic chiaroscuro lighting, rich oil paint textures. Ornate gold (#FFE048) gilded frame visible. Baroque style, museum-quality, reminiscent of Rembrandt or Vermeer. Dark moody background with warm gold highlights.`,
+    template: `Paint this character ({TRAITS}) as a classical Renaissance-era oil painting portrait. Dramatic chiaroscuro lighting (Rembrandt style), rich oil paint textures with visible brushstrokes. The character is posed regally, wearing their original outfit but rendered in classical painting technique. Ornate gold (#FFE048) gilded frame visible around the edges. Dark moody background with warm golden highlights. Museum-quality, old master aesthetic.`,
   },
   {
     id: "neon-cyberpunk",
@@ -70,7 +70,7 @@ const PROMPTS: Prompt[] = [
     description: "Your citizen in a futuristic neon-lit cyberpunk city",
     category: "scene",
     previewEmoji: "🌃",
-    template: `A cyberpunk scene featuring a character with these traits: {TRAITS}. Standing in a rain-soaked neon-lit alley in a futuristic city. Holographic advertisements, flying vehicles in the background. Primary neon color is gold (#FFE048) with deep black (#050505) shadows. Blade Runner meets Akira aesthetic. Cinematic, moody, atmospheric.`,
+    template: `Place this character ({TRAITS}) in a rain-soaked cyberpunk city alley at night. Neon signs in gold (#FFE048) reflecting off wet pavement. Holographic advertisements floating in the air, flying vehicles in the distant sky. The character stands confidently in the scene, their original outfit fitting naturally into the futuristic setting. Deep black (#050505) shadows with vibrant neon highlights. Blade Runner meets Akira aesthetic. Cinematic, moody, atmospheric.`,
   },
   {
     id: "sports-card",
@@ -78,7 +78,7 @@ const PROMPTS: Prompt[] = [
     description: "Your character as an all-star athlete trading card",
     category: "meme",
     previewEmoji: "🏆",
-    template: `A premium sports trading card featuring a character with these traits: {TRAITS}. Posed as an MVP athlete with dynamic action photography. Stats panel showing "VIBES: 99 OVR". Team name "VIBETOWN CITIZENS". Gold (#FFE048) foil accents, jersey number #6969. Professional sports photography lighting with bokeh background.`,
+    template: `Design a premium sports trading card featuring this character ({TRAITS}) as an MVP athlete. Dynamic action pose as if mid-play. Stats panel showing "VIBES: 99 OVR". Team name "VIBETOWN CITIZENS" with jersey number #6969. Gold (#FFE048) foil accents and premium card design. Professional sports photography lighting with bokeh background. The character's features and outfit adapted into athletic gear while staying recognizable.`,
   },
   {
     id: "album-cover",
@@ -86,7 +86,7 @@ const PROMPTS: Prompt[] = [
     description: "Your GVC citizen's debut album artwork",
     category: "artistic",
     previewEmoji: "🎵",
-    template: `A music album cover featuring a character with these traits: {TRAITS}. Artistic, moody composition. Album title "GOOD VIBES ONLY" in bold display typography. Dark (#050505) background with gold (#FFE048) graphic elements. Modern, minimal, premium music artwork aesthetic. Could be hip-hop, electronic, or indie — the vibe is confident and cool.`,
+    template: `Design a music album cover featuring this character ({TRAITS}). Artistic, moody composition. Album title "GOOD VIBES ONLY" in bold display typography. Dark (#050505) background with gold (#FFE048) graphic elements. The character is posed confidently, their outfit and look adapted to feel like a recording artist. Modern, minimal, premium music artwork aesthetic. Could be hip-hop, electronic, or indie — the vibe is confident and cool. Square format.`,
   },
   {
     id: "space-explorer",
@@ -94,7 +94,7 @@ const PROMPTS: Prompt[] = [
     description: "Your citizen exploring the cosmos in a spacesuit",
     category: "scene",
     previewEmoji: "🚀",
-    template: `A character with these traits: {TRAITS}, wearing a futuristic gold-accented spacesuit, floating in space with Earth visible in the background. Helmet visor reflects stars. Gold (#FFE048) trim on the suit. The word "VIBETOWN" is embroidered on the chest patch. Photorealistic, cinematic space photography, deep blacks with gold highlights.`,
+    template: `Place this character ({TRAITS}) in outer space, wearing a futuristic spacesuit with gold (#FFE048) trim and accents. They're floating weightlessly with Earth visible in the background. Helmet visor reflects stars and nebulae. "VIBETOWN" embroidered on the chest patch. The character's face and features are visible through the visor. Photorealistic space photography, deep blacks with gold highlights and cosmic colors.`,
   },
   {
     id: "chibi",
@@ -102,7 +102,7 @@ const PROMPTS: Prompt[] = [
     description: "An adorable chibi version of your character",
     category: "profile",
     previewEmoji: "🥺",
-    template: `An adorable chibi/kawaii illustration of a character with these traits: {TRAITS}. Oversized head, tiny body, big sparkly eyes. Cute pose with peace sign or heart gesture. Soft pastel gold (#FFE048) accents on dark background. Clean vector-style illustration, sticker-ready, incredibly cute and wholesome.`,
+    template: `Reimagine this character ({TRAITS}) as an adorable chibi/kawaii illustration. Oversized head (3x body ratio), tiny body, big sparkly eyes full of joy. Cute pose — peace sign or holding a heart. Keep their original outfit and distinctive features but make everything impossibly cute. Soft gold (#FFE048) accents on dark background. Clean vector-style illustration, sticker-ready. Maximum wholesome energy.`,
   },
 ];
 
