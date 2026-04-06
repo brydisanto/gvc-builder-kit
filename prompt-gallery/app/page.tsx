@@ -90,6 +90,7 @@ export default function Home() {
   const [selectedPrompt, setSelectedPrompt] = useState<Prompt | null>(null);
   const [copied, setCopied] = useState(false);
   const [category, setCategory] = useState("all");
+  const [activeTab, setActiveTab] = useState<"browse" | "submit">("browse");
 
   // Submission form state
   const [submitTitle, setSubmitTitle] = useState("");
@@ -272,6 +273,36 @@ export default function Home() {
           </motion.p>
         </div>
 
+        {/* Tab switcher */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.25 }}
+          className="flex justify-center gap-2 mb-8"
+        >
+          <button
+            onClick={() => setActiveTab("browse")}
+            className={`px-6 py-2.5 rounded-xl font-display font-bold text-sm transition-all ${
+              activeTab === "browse"
+                ? "bg-gvc-gold/15 text-gvc-gold border border-gvc-gold/30"
+                : "border border-white/[0.08] text-white/40 hover:text-white/60 hover:border-white/15"
+            }`}
+          >
+            Browse Prompts
+          </button>
+          <button
+            onClick={() => setActiveTab("submit")}
+            className={`px-6 py-2.5 rounded-xl font-display font-bold text-sm transition-all ${
+              activeTab === "submit"
+                ? "bg-gvc-gold/15 text-gvc-gold border border-gvc-gold/30"
+                : "border border-white/[0.08] text-white/40 hover:text-white/60 hover:border-white/15"
+            }`}
+          >
+            Submit a Prompt
+          </button>
+        </motion.div>
+
+        {activeTab === "browse" && (<>
         {/* Token lookup */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -553,7 +584,9 @@ export default function Home() {
             </motion.div>
           )}
         </AnimatePresence>
+        </>)}
 
+        {activeTab === "submit" && (<>
         {/* Submit your prompt */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -692,6 +725,7 @@ export default function Home() {
             </button>
           </div>
         </motion.div>
+        </>)}
 
         {/* Success Modal */}
         <AnimatePresence>
