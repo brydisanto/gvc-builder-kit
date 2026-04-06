@@ -315,16 +315,18 @@ export default function Home() {
         </motion.div>
 
         {activeTab === "browse" && (<>
-        {/* Token lookup */}
+
+        {/* STEP 1 */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-6 mb-8"
+          className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-6 mb-6"
         >
-          <h2 className="text-lg font-display font-bold text-white mb-3">
-            Your GVC
-          </h2>
+          <div className="flex items-center gap-3 mb-4">
+            <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
+            <h2 className="text-lg font-display font-bold text-white">Enter Your Token ID</h2>
+          </div>
           <div className="flex gap-3 mb-4">
             <input
               type="text"
@@ -385,13 +387,19 @@ export default function Home() {
           )}
         </motion.div>
 
-        {/* Category filter */}
+        {/* STEP 2 */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="flex flex-wrap gap-2 mb-6"
+          className="mb-6"
         >
+          <div className="flex items-center gap-3 mb-4">
+            <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+            <h2 className="text-lg font-display font-bold text-white">Choose Your Prompt</h2>
+          </div>
+
+          <div className="flex flex-wrap gap-2 mb-4">
           {CATEGORIES.map((cat) => (
             <button
               key={cat.id}
@@ -405,7 +413,7 @@ export default function Home() {
               {cat.label}
             </button>
           ))}
-        </motion.div>
+          </div>
 
         {/* Prompt grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
@@ -448,12 +456,13 @@ export default function Home() {
                   onClick={(e) => e.stopPropagation()}
                   className="text-white/20 text-xs font-body hover:text-gvc-gold/60 transition-colors"
                 >
-                  {prompt.author}
+                  By {prompt.author}
                 </a>
               </div>
             </motion.button>
           ))}
         </div>
+        </motion.div>
 
         {/* Example generation slidedown */}
         <AnimatePresence>
@@ -489,27 +498,32 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        {/* Assembled prompt output */}
+        {/* STEP 3 - Assembled prompt output */}
         <AnimatePresence>
           {selectedPrompt && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="rounded-2xl bg-gvc-dark border border-gvc-gold/20 p-6 mb-8"
+              className="rounded-2xl bg-gvc-dark border border-gvc-gold/20 p-6 mb-6"
             >
-              <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+                <div className="flex-1">
+                  <h2 className="text-lg font-display font-bold text-white">Copy and Generate</h2>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between mb-4 pl-11">
                 <div>
-                  <h2 className="text-lg font-display font-bold text-white">
-                    {selectedPrompt.title}
-                  </h2>
+                  <p className="text-white/60 font-body text-sm">{selectedPrompt.title}</p>
                   <a
                     href={`https://x.com/${selectedPrompt.author.replace("@", "")}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-white/30 font-body text-xs hover:text-gvc-gold/60 transition-colors"
                   >
-                    by {selectedPrompt.author}
+                    By {selectedPrompt.author}
                   </a>
                 </div>
                 {tokenMeta && (
@@ -522,7 +536,7 @@ export default function Home() {
               {!tokenMeta ? (
                 <div className="text-center py-8">
                   <p className="text-white/40 font-body text-sm">
-                    Enter your token ID above to generate a custom prompt for your character
+                    Complete Step 1 first to generate a custom prompt for your character
                   </p>
                 </div>
               ) : (
