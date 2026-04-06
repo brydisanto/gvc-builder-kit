@@ -90,38 +90,74 @@ export default function Home() {
   const [category, setCategory] = useState("all");
 
   // Submission form state
+  const [submitTitle, setSubmitTitle] = useState("");
+  const [submitPromptText, setSubmitPromptText] = useState("");
   const [submitTokenId, setSubmitTokenId] = useState("");
-  const [submitPromptId, setSubmitPromptId] = useState("");
-  const [submitImageUrl, setSubmitImageUrl] = useState("");
-  const [submitName, setSubmitName] = useState("");
+  const [submitHandle, setSubmitHandle] = useState("");
+  const [submitFile, setSubmitFile] = useState<File | null>(null);
+  const [submitPreview, setSubmitPreview] = useState("");
+  const [submitDragOver, setSubmitDragOver] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  function handleFileDrop(e: React.DragEvent) {
+    e.preventDefault();
+    setSubmitDragOver(false);
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith("image/")) {
+      setSubmitFile(file);
+      setSubmitPreview(URL.createObjectURL(file));
+    }
+  }
+
+  function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (file && file.type.startsWith("image/")) {
+      setSubmitFile(file);
+      setSubmitPreview(URL.createObjectURL(file));
+    }
+  }
+
+  function clearFile() {
+    setSubmitFile(null);
+    setSubmitPreview("");
+  }
 
   function handleSubmit() {
-    if (!submitImageUrl || !submitTokenId) return;
+    if (!submitTitle || !submitPromptText || !submitTokenId || !submitFile) return;
     setSubmitStatus("sending");
 
-    // For now, log the submission — backend approval pipeline comes later
     const submission = {
+      title: submitTitle,
+      prompt: submitPromptText,
       tokenId: submitTokenId,
-      promptId: submitPromptId,
-      imageUrl: submitImageUrl,
-      name: submitName,
+      handle: submitHandle,
+      fileName: submitFile.name,
       timestamp: new Date().toISOString(),
     };
-    console.log("Community submission:", submission);
+    console.log("Prompt submission:", submission);
 
-    // Simulate success
+    // Simulate success — backend comes later
     setTimeout(() => {
       setSubmitStatus("sent");
-      setTimeout(() => {
-        setSubmitStatus("idle");
-        setSubmitTokenId("");
-        setSubmitPromptId("");
-        setSubmitImageUrl("");
-        setSubmitName("");
-      }, 3000);
+      setShowSuccessModal(true);
     }, 800);
   }
+
+  function closeSuccessModal() {
+    setShowSuccessModal(false);
+    setSubmitStatus("idle");
+    setSubmitTitle("");
+    setSubmitPromptText("");
+    setSubmitTokenId("");
+    setSubmitHandle("");
+    clearFile();
+  }
+
+  const shareText = submitTitle
+    ? `Just submitted "${submitTitle}" to the GVC Prompt Gallery! 🤙✨ Create AI art with your Good Vibes Club character → `
+    : "Just submitted a prompt to the GVC Prompt Gallery! 🤙✨ → ";
+  const shareUrl = "https://prompt-gallery-theta.vercel.app";
 
   // Load metadata
   useEffect(() => {
@@ -475,23 +511,54 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        {/* Community submission form */}
+        {/* Submit your prompt */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-6 mb-8"
+          id="submit"
+          className="rounded-2xl bg-gvc-dark border border-gvc-gold/20 p-6 sm:p-8 mb-8 max-w-2xl mx-auto"
         >
-          <h2 className="text-lg font-display font-bold text-white mb-2">
-            Share your creation
-          </h2>
-          <p className="text-white/40 font-body text-sm mb-5">
-            Made something cool? Submit your generated image and it could be featured in the gallery.
-          </p>
+          <div className="text-center mb-6">
+            <h2 className="text-2xl font-display font-black text-shimmer mb-2">
+              Submit Your Prompt
+            </h2>
+            <p className="text-white/40 font-body text-sm">
+              Created an amazing prompt? Share it with the community. The best ones get added to the gallery.
+            </p>
+          </div>
 
-          <div className="space-y-4">
+          <div className="space-y-5">
+            {/* Prompt Title */}
             <div>
-              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Token ID</label>
+              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Prompt Title</label>
+              <input
+                type="text"
+                placeholder='e.g. "Underwater Explorer" or "Vaporwave Portrait"'
+                value={submitTitle}
+                onChange={(e) => setSubmitTitle(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors"
+              />
+            </div>
+
+            {/* Prompt Text */}
+            <div>
+              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Your Prompt</label>
+              <textarea
+                placeholder="Paste the full prompt you used to generate the image. Include style details, scene description, and any specific instructions that made it work well."
+                value={submitPromptText}
+                onChange={(e) => setSubmitPromptText(e.target.value)}
+                rows={4}
+                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors resize-none"
+              />
+              <p className="text-white/20 font-body text-xs mt-1">
+                Tip: The best prompts are specific about style, lighting, composition, and mood.
+              </p>
+            </div>
+
+            {/* Token ID */}
+            <div>
+              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">GVC Token ID</label>
               <input
                 type="text"
                 placeholder="Which GVC did you use? (e.g. 142)"
@@ -501,75 +568,152 @@ export default function Home() {
               />
             </div>
 
+            {/* Image Upload */}
             <div>
-              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Prompt used</label>
-              <select
-                value={submitPromptId}
-                onChange={(e) => setSubmitPromptId(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm focus:outline-none focus:border-gvc-gold/30 transition-colors appearance-none"
-              >
-                <option value="" className="bg-gvc-dark">Select a prompt...</option>
-                {PROMPTS.map((p) => (
-                  <option key={p.id} value={p.id} className="bg-gvc-dark">{p.title}</option>
-                ))}
-                <option value="custom" className="bg-gvc-dark">Custom prompt (my own)</option>
-              </select>
+              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Example Image</label>
+              {!submitPreview ? (
+                <div
+                  onDragOver={(e) => { e.preventDefault(); setSubmitDragOver(true); }}
+                  onDragLeave={() => setSubmitDragOver(false)}
+                  onDrop={handleFileDrop}
+                  onClick={() => document.getElementById("file-input")?.click()}
+                  className={`relative rounded-xl border-2 border-dashed p-8 text-center cursor-pointer transition-all duration-200 ${
+                    submitDragOver
+                      ? "border-gvc-gold/50 bg-gvc-gold/5"
+                      : "border-white/15 hover:border-gvc-gold/30 hover:bg-white/[0.02]"
+                  }`}
+                >
+                  <input
+                    id="file-input"
+                    type="file"
+                    accept="image/png,image/jpeg,image/webp"
+                    onChange={handleFileSelect}
+                    className="hidden"
+                  />
+                  <div className="text-3xl mb-2">🖼️</div>
+                  <p className="text-white/50 font-body text-sm mb-1">
+                    Drag and drop or click to upload
+                  </p>
+                  <p className="text-white/20 font-body text-xs">
+                    PNG, JPG, or WebP. Max 10MB.
+                  </p>
+                </div>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="relative rounded-xl overflow-hidden bg-black/40 border border-white/[0.08]"
+                >
+                  <img
+                    src={submitPreview}
+                    alt="Upload preview"
+                    className="w-full max-h-[300px] object-contain"
+                  />
+                  <button
+                    onClick={clearFile}
+                    className="absolute top-3 right-3 w-8 h-8 rounded-full bg-black/60 backdrop-blur-sm border border-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-red-500/30 hover:border-red-500/30 transition-all"
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                  </button>
+                </motion.div>
+              )}
             </div>
 
+            {/* X Handle */}
             <div>
-              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Image URL</label>
-              <input
-                type="text"
-                placeholder="Link to your generated image (Imgur, Discord CDN, etc.)"
-                value={submitImageUrl}
-                onChange={(e) => setSubmitImageUrl(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors"
-              />
-              <p className="text-white/20 font-body text-xs mt-1">Upload to <a href="https://imgur.com/upload" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/50 hover:text-gvc-gold underline underline-offset-2">Imgur</a> and paste the direct image link</p>
-            </div>
-
-            <div>
-              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Your name or handle <span className="text-white/20">(optional)</span></label>
-              <input
-                type="text"
-                placeholder="@yourhandle or display name"
-                value={submitName}
-                onChange={(e) => setSubmitName(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors"
-              />
-            </div>
-
-            {/* Preview */}
-            {submitImageUrl && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                className="rounded-xl overflow-hidden bg-black/40 border border-white/[0.06]"
-              >
-                <img
-                  src={submitImageUrl}
-                  alt="Preview"
-                  className="w-full max-h-[300px] object-contain"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = "none";
-                  }}
+              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">X / Twitter Handle</label>
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-white/30 font-body text-sm">@</span>
+                <input
+                  type="text"
+                  placeholder="yourhandle"
+                  value={submitHandle}
+                  onChange={(e) => setSubmitHandle(e.target.value.replace(/^@/, "").replace(/[^a-zA-Z0-9_]/g, "").slice(0, 15))}
+                  className="w-full pl-9 pr-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors"
                 />
-              </motion.div>
-            )}
+              </div>
+            </div>
 
+            {/* Submit button */}
             <button
               onClick={handleSubmit}
-              disabled={submitStatus === "sending" || !submitImageUrl || !submitTokenId}
-              className={`w-full inline-flex items-center justify-center gap-2 px-5 py-3.5 font-display font-bold text-sm rounded-xl transition-all duration-300 ${
-                submitStatus === "sent"
-                  ? "bg-gvc-green/20 text-gvc-green border border-gvc-green/30"
-                  : "bg-gvc-gold text-gvc-black hover:shadow-[0_0_20px_rgba(255,224,72,0.3)] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:shadow-none"
-              }`}
+              disabled={submitStatus === "sending" || !submitTitle || !submitPromptText || !submitTokenId || !submitFile}
+              className="w-full inline-flex items-center justify-center gap-2 px-5 py-4 font-display font-bold text-base rounded-xl transition-all duration-300 bg-gvc-gold text-gvc-black hover:shadow-[0_0_20px_rgba(255,224,72,0.3)] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:shadow-none"
             >
-              {submitStatus === "sending" ? "Submitting..." : submitStatus === "sent" ? "Submitted! We'll review it soon." : "Submit for review"}
+              {submitStatus === "sending" ? (
+                <span className="inline-flex items-center gap-2">
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
+                  Submitting...
+                </span>
+              ) : "Submit Prompt"}
             </button>
           </div>
         </motion.div>
+
+        {/* Success Modal */}
+        <AnimatePresence>
+          {showSuccessModal && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+              onClick={closeSuccessModal}
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                onClick={(e) => e.stopPropagation()}
+                className="w-full max-w-md rounded-2xl bg-gvc-dark border border-gvc-gold/30 p-8 text-center shadow-[0_0_60px_rgba(255,224,72,0.15)]"
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                  className="text-5xl mb-4"
+                >
+                  🤙
+                </motion.div>
+                <h3 className="text-2xl font-display font-black text-shimmer mb-2">
+                  Prompt Submitted!
+                </h3>
+                <p className="text-white/50 font-body text-sm mb-6">
+                  We&apos;ll review your prompt and add the best ones to the gallery. Good vibes only.
+                </p>
+
+                {/* Social share buttons */}
+                <div className="space-y-3 mb-6">
+                  <a
+                    href={`https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 font-display font-bold text-sm rounded-xl bg-white text-black hover:bg-white/90 transition-all"
+                  >
+                    Share on X
+                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                  </a>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText(`${shareText}${shareUrl}`);
+                    }}
+                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 font-display font-bold text-sm rounded-xl border border-white/[0.12] text-white/70 hover:border-gvc-gold/30 hover:text-gvc-gold transition-all"
+                  >
+                    Copy share link
+                  </button>
+                </div>
+
+                <button
+                  onClick={closeSuccessModal}
+                  className="text-white/30 font-body text-sm hover:text-white/60 transition-colors"
+                >
+                  Close
+                </button>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Footer */}
         <div className="text-center pt-4 pb-8">
