@@ -90,7 +90,7 @@ Go to [claude.ai/download](https://claude.ai/download) and install the desktop a
 If you want to use Claude right from your terminal, type this command and press Enter:
 
 ```
-npm install -g @anthropic-ai/claude-code
+curl -fsSL https://claude.ai/install.sh | bash
 ```
 
 Either option works. Pick whichever feels more comfortable.
@@ -109,22 +109,19 @@ Here's what it looks like:
 ? What's your project called? my-gvc-tracker
 
 ? What do you want to build?
-  * A website for my project
-    A tool that tracks something
-    A game or interactive experience
-    A place to show off my collection
+    Blank canvas — you describe the vibe, Claude builds it
+  * A website or landing page
+    A dashboard or tracker
+    A game
+    A gallery
     A voting or ranking page
-    A community hub
-    A blog or content page
-    A simple links page
-    I have my own idea (blank start)
+    A lookup tool
+    A card or image maker
+    A profile page
 
 ? Describe your idea in a sentence or two:
   > A dashboard that shows which GVCs are listed
     under 0.5 ETH and tracks who's been sweeping
-
-  Got it! Setting you up with the Tracker template
-  and including GVC Collection data + Stats panel.
 ```
 
 You describe what you want. The Builder Kit figures out the rest.
@@ -201,15 +198,15 @@ Anything you can imagine. The Builder Kit gives you a starting point, and you ta
 
 | You say... | What you get |
 |---|---|
-| "A website for my project" | Hero, about section, features grid, CTA, footer |
-| "A tool that tracks something" | Stats cards, charts, live data feeds, auto-refresh |
-| "A game or interactive experience" | Game board, scoring, game-over screen, leaderboard |
-| "A place to show off my collection" | Image grid with gold glow cards, uploads, filtering |
-| "A voting or ranking page" | 1v1 matchups or poll-style voting, leaderboard, results |
-| "A community hub" | Member highlights, activity feed, badge wall, links |
-| "A blog or content page" | Post list, individual post pages, writing support |
-| "A simple links page" | Profile card, link list, socials, all GVC-styled |
-| "I have my own idea" | Just the brand system, ready for anything |
+| "A website or landing page" | Hero, about section, features grid, CTA, footer |
+| "A dashboard or tracker" | Stats cards, floor price, leaderboards, charts, live data |
+| "A game" | Game board, scoring, game-over screen |
+| "A gallery" | Image grid, filtering, search, uploads |
+| "A voting or ranking page" | 1v1 matchups, polls, leaderboard |
+| "A lookup tool" | Search by wallet or token ID, see badges, traits, rarity |
+| "A card or image maker" | Shareable profile cards, badge flexes, memes |
+| "A profile page" | Connect wallet, show your GVCs, badges, stats |
+| "Blank canvas" | Just the brand system, ready for anything you describe |
 
 ---
 
@@ -233,7 +230,7 @@ When you pick extras during setup, they get added to your project's Claude guide
 
 | Power-up | What it gives you |
 |---|---|
-| **Badge collection** | All 90 GVC badges across 4 tiers with a collection UI |
+| **Badge collection** | All 101 GVC badges across 5 tiers with a collection UI |
 | **Leaderboard** | Daily, weekly, and all-time rankings |
 | **User accounts** | Let people sign up and save their progress |
 | **Game engine** | Scoring, daily challenges, and game logic ready to go |
@@ -291,8 +288,8 @@ Your project can pull live GVC data with zero setup. The community API is alread
 |---|---|
 | Collection stats | Floor price, market cap, 24h volume, total owners |
 | Holder rankings | All holders ranked by token count, diamond hands stats |
-| Recent sales | Live sales feed with buyer, seller, price, images |
-| Sales history | 11,000+ historical sales for charts |
+| Recent sales | Live GVC sales feed with price, images, timestamps |
+| Sales history | Historical GVC sales for charts |
 | Community activity | 30-day buys, sells, accumulator leaderboard |
 | VIBESTR data | Token price, liquidity, volume, burned amount |
 | Market depth | Bid and offer levels |

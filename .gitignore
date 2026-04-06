@@ -2,5 +2,11 @@ node_modules/
 .next/
 .env
 .env.local
+.env.prod
+.env.vercel
 .DS_Store
 *.tsbuildinfo
+
+# Test projects created during development
+cli/floortracker*/
+cli/gvcfloortracker*/

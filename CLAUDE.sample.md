@@ -41,25 +41,31 @@ This project was created with the GVC Builder Kit. It uses the Good Vibes Club b
 
 ## Contracts and Data
 
-### Smart Contracts (Ethereum Mainnet)
-- **GVC NFT:** `0xB8Ea78fcaCEf50d41375E44E6814ebbA36Bb33c4`
-- **VIBESTR Token:** `0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196`
-- **WETH:** `0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2`
-- **Burn Address:** `0x000000000000000000000000000000000000dEaD`
+### Contracts & Tokens (only use these)
+- **GVC NFT:** `0xB8Ea78fcaCEf50d41375E44E6814ebbA36Bb33c4` (ERC-721, 6969 tokens)
+- **HighKey Moments:** `0x74fcb6eb2a2d02207b36e804d800687ce78d210c` (ERC-1155)
+- **VIBESTR Token:** `0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196` (ERC-20, 18 decimals)
+- **ETH** is the base currency for all GVC transactions
 
-### APIs
-- **OpenSea Collection Slug:** `good-vibes-club`
-- **OpenSea API v2:** `https://api.opensea.io/api/v2`
-  - Listings: `GET /listings/collection/good-vibes-club/all`
-  - Collection stats: `GET /collection/good-vibes-club`
-  - NFT by token: `GET /chain/ethereum/contract/{address}/nfts/{tokenId}`
-  - Requires header: `x-api-key: {OPENSEA_API_KEY}`
-  - To get a key: go to https://opensea.io/account/settings, sign in, scroll to Developer, click Create API Key
-- **Token Prices:**
-  - ETH: `https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd`
-  - VIBESTR: `https://api.dexscreener.com/latest/dex/tokens/0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196`
-- **Ethereum RPC:** `https://ethereum-rpc.publicnode.com` (free, no key needed)
-- **NFT Images:** `https://i.seadn.io` (OpenSea CDN)
+### GVC API (no API key needed)
+All GVC data comes from: `https://api-hazel-pi-72.vercel.app/api`
+- `GET /stats` — { floorPrice, floorPriceUsd, volume24h, numOwners, totalSales, avgPrice, marketCap, marketCapUsd }
+- `GET /sales?limit=10` — [{ txHash, priceEth, paymentSymbol, imageUrl, timestamp }]
+- `GET /sales/history?limit=100` — same shape as /sales, max 1000
+- `GET /activity` — 30-day buys/sells, accumulator leaderboard
+- `GET /vibestr` — { priceUsd, priceChange24h, volume24h, liquidity, marketCap }
+- `GET /vibestr/history` — daily VIBESTR price snapshots
+- `GET /market-depth` — bid/offer depth, floor price, lowest listing
+- `GET /traders` — 30-day trade stats
+- `GET /wallet/[address]` — ENS name, Twitter handle for a wallet
+- `GET /mentions` — recent X/Twitter mentions
+
+Do NOT use the OpenSea API directly. Use the GVC API above instead.
+
+### Token Prices
+- ETH: `https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd`
+- VIBESTR: `https://api.dexscreener.com/latest/dex/tokens/0xd0cC2b0eFb168bFe1f94a948D8df70FA10257196`
+- Ethereum RPC: `https://ethereum-rpc.publicnode.com` (free, no key needed)
 
 ### Key URLs
 - **OpenSea Collection:** https://opensea.io/collection/good-vibes-club
