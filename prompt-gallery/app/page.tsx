@@ -305,29 +305,26 @@ export default function Home() {
                       {copied ? "Copied!" : "Copy Prompt"}
                     </button>
                     <a
-                      href="https://chatgpt.com"
+                      href="https://gemini.google.com/app"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 font-display font-bold text-sm rounded-xl border border-white/[0.12] text-white/70 hover:border-gvc-gold/30 hover:text-gvc-gold transition-all"
                     >
-                      Open ChatGPT
-                      <svg
-                        className="w-3.5 h-3.5 opacity-60"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                        />
-                      </svg>
+                      Open Gemini
+                      <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    </a>
+                    <a
+                      href="https://chatgpt.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 font-display font-bold text-sm rounded-xl border border-white/[0.08] text-white/40 hover:border-white/15 hover:text-white/60 transition-all"
+                    >
+                      ChatGPT
+                      <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                     </a>
                   </div>
                   <p className="text-white/25 font-body text-xs mt-3 text-center">
-                    Copy the prompt and paste it into ChatGPT, Midjourney, or any image generator.
+                    Copy the prompt and paste it into Gemini, ChatGPT, Midjourney, or any image generator. We recommend <span className="text-white/40">Gemini</span> for best results.
                   </p>
                 </>
               )}
