@@ -202,7 +202,7 @@ export default function Home() {
     const token = metadata[id];
 
     if (!token) {
-      setError(`Token #${id} not found. Enter a number between 0 and 6968.`);
+      setError(`Token #${id} not found. Enter a number between 1 and 6969.`);
       setTokenMeta(null);
     } else {
       setTokenMeta(token);
@@ -388,7 +388,7 @@ export default function Home() {
                 <h2 className="text-lg font-display font-bold text-white">Enter Your GVC&apos;s Token ID</h2>
               </div>
               <div className="flex gap-3 mb-4">
-                <input type="text" placeholder="Enter your token ID (0-6968)" value={tokenId} onChange={(e) => setTokenId(e.target.value)} onKeyDown={(e) => e.key === "Enter" && lookupToken()} className="flex-1 px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors" />
+                <input type="text" placeholder="Enter your token ID (1-6969)" value={tokenId} onChange={(e) => setTokenId(e.target.value)} onKeyDown={(e) => e.key === "Enter" && lookupToken()} className="flex-1 px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors" />
                 <button onClick={lookupToken} disabled={loading || !metadata} className="px-6 py-3 bg-gvc-gold text-gvc-black font-display font-bold rounded-xl hover:shadow-[0_0_20px_rgba(255,224,72,0.3)] transition-all disabled:opacity-50">
                   {loading ? "..." : "Look Up"}
                 </button>
