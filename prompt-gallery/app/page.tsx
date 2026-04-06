@@ -548,7 +548,7 @@ export default function Home() {
                       <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat</li>
                       <li>Paste the prompt and hit send</li>
                     </ol>
-                    <p className="text-white/30 font-body text-sm">We recommend <span className="text-white/50">Gemini</span> for best results.</p>
+                    <p className="text-white/30 font-body text-sm">We recommend using <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors">Gemini</a> for the best results (or you can use ChatGPT, Midjourney, Dall-E, etc).</p>
                   </>
                 ) : (
                   <>
@@ -558,7 +558,7 @@ export default function Home() {
                       <li>Upload your GVC image to the chat</li>
                       <li>Paste the prompt and hit send</li>
                     </ol>
-                    <p className="text-white/30 font-body text-sm">We recommend <span className="text-white/50">Gemini</span> for best results.</p>
+                    <p className="text-white/30 font-body text-sm">We recommend using <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors">Gemini</a> for the best results (or you can use ChatGPT, Midjourney, Dall-E, etc).</p>
                   </>
                 )}
               </div>
