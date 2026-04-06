@@ -103,6 +103,7 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [category, setCategory] = useState("all");
   const [activeTab, setActiveTab] = useState<"browse" | "submit">("browse");
+  const [promptGenerated, setPromptGenerated] = useState(false);
 
   // Submission form state
   const [submitTitle, setSubmitTitle] = useState("");
@@ -316,329 +317,176 @@ export default function Home() {
 
         {activeTab === "browse" && (<>
 
-        {/* STEP 1 */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-6 mb-6"
-        >
+        {/* STEP 1 - Select Your Prompt */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="mb-6">
           <div className="flex items-center gap-3 mb-4">
             <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">1</span>
-            <h2 className="text-lg font-display font-bold text-white">Enter Your Token ID</h2>
-          </div>
-          <div className="flex gap-3 mb-4">
-            <input
-              type="text"
-              placeholder="Enter your token ID (0-6968)"
-              value={tokenId}
-              onChange={(e) => setTokenId(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && lookupToken()}
-              className="flex-1 px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors"
-            />
-            <button
-              onClick={lookupToken}
-              disabled={loading || !metadata}
-              className="px-6 py-3 bg-gvc-gold text-gvc-black font-display font-bold rounded-xl hover:shadow-[0_0_20px_rgba(255,224,72,0.3)] transition-all disabled:opacity-50"
-            >
-              {loading ? "..." : "Look Up"}
-            </button>
-          </div>
-
-          {error && (
-            <p className="text-red-400 font-body text-sm">{error}</p>
-          )}
-
-          {tokenMeta && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="flex items-start gap-4 mt-2"
-            >
-              {imageUrl && (
-                <div className="w-20 h-20 rounded-xl overflow-hidden bg-black/40 flex-shrink-0">
-                  <img
-                    src={imageUrl}
-                    alt={tokenMeta.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              )}
-              <div className="flex-1 min-w-0">
-                <p className="text-white font-display font-bold">
-                  {tokenMeta.name}
-                </p>
-                <div className="mb-2" />
-                {imageUrl && (
-                  <a
-                    href={imageUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors"
-                  >
-                    Save your GVC image
-                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                  </a>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </motion.div>
-
-        {/* STEP 2 */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mb-6"
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
-            <h2 className="text-lg font-display font-bold text-white">Choose Your Prompt</h2>
+            <h2 className="text-lg font-display font-bold text-white">Select Your Prompt</h2>
           </div>
 
           <div className="flex flex-wrap gap-2 mb-4">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setCategory(cat.id)}
-              className={`px-4 py-2 rounded-xl font-display font-bold text-sm transition-all ${
-                category === cat.id
-                  ? "bg-gvc-gold/15 text-gvc-gold border border-gvc-gold/30"
-                  : "border border-white/[0.08] text-white/40 hover:text-white/60 hover:border-white/15"
-              }`}
-            >
-              {cat.label}
-            </button>
-          ))}
+            {CATEGORIES.map((cat) => (
+              <button key={cat.id} onClick={() => setCategory(cat.id)} className={`px-4 py-2 rounded-xl font-display font-bold text-sm transition-all ${category === cat.id ? "bg-gvc-gold/15 text-gvc-gold border border-gvc-gold/30" : "border border-white/[0.08] text-white/40 hover:text-white/60 hover:border-white/15"}`}>
+                {cat.label}
+              </button>
+            ))}
           </div>
 
-        {/* Prompt grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
-          {filteredPrompts.map((prompt, i) => (
-            <motion.button
-              key={prompt.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 + i * 0.05 }}
-              onClick={() => setSelectedPrompt(prompt)}
-              className={`text-left p-5 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${
-                selectedPrompt?.id === prompt.id
-                  ? "bg-gvc-gold/[0.08] border-gvc-gold/30 shadow-[0_0_20px_rgba(255,224,72,0.15)]"
-                  : "bg-gvc-dark border-white/[0.08] hover:border-white/15"
-              }`}
-            >
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${selectedPrompt?.id === prompt.id ? "bg-gvc-gold/20 text-gvc-gold" : "bg-white/[0.04] text-white/40"}`}>
-                <PromptIcon type={prompt.icon} />
-              </div>
-              <h3
-                className={`font-display font-bold text-base mb-1 ${
-                  selectedPrompt?.id === prompt.id
-                    ? "text-gvc-gold"
-                    : "text-white"
-                }`}
-              >
-                {prompt.title}
-              </h3>
-              <p className="text-white/40 font-body text-sm leading-relaxed">
-                {prompt.description}
-              </p>
-              <div className="flex items-center gap-2 mt-2">
-                <span className="inline-block px-2 py-0.5 rounded-full bg-white/[0.04] text-white/25 text-xs font-body capitalize">
-                  {prompt.category}
-                </span>
-                <a
-                  href={`https://x.com/${prompt.author.replace("@", "")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={(e) => e.stopPropagation()}
-                  className="text-white/20 text-xs font-body hover:text-gvc-gold/60 transition-colors"
-                >
-                  By {prompt.author}
-                </a>
-              </div>
-            </motion.button>
-          ))}
-        </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredPrompts.map((prompt, i) => (
+              <motion.button key={prompt.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + i * 0.05 }} onClick={() => { setSelectedPrompt(prompt); setPromptGenerated(false); }} className={`text-left p-5 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${selectedPrompt?.id === prompt.id ? "bg-gvc-gold/[0.08] border-gvc-gold/30 shadow-[0_0_20px_rgba(255,224,72,0.15)]" : "bg-gvc-dark border-white/[0.08] hover:border-white/15"}`}>
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${selectedPrompt?.id === prompt.id ? "bg-gvc-gold/20 text-gvc-gold" : "bg-white/[0.04] text-white/40"}`}>
+                  <PromptIcon type={prompt.icon} />
+                </div>
+                <h3 className={`font-display font-bold text-base mb-1 ${selectedPrompt?.id === prompt.id ? "text-gvc-gold" : "text-white"}`}>{prompt.title}</h3>
+                <p className="text-white/40 font-body text-sm leading-relaxed">{prompt.description}</p>
+                <div className="flex items-center gap-2 mt-2">
+                  <span className="inline-block px-2 py-0.5 rounded-full bg-white/[0.04] text-white/25 text-xs font-body capitalize">{prompt.category}</span>
+                  <a href={`https://x.com/${prompt.author.replace("@", "")}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-white/20 text-xs font-body hover:text-gvc-gold/60 transition-colors">By {prompt.author}</a>
+                </div>
+              </motion.button>
+            ))}
+          </div>
         </motion.div>
 
-        {/* Example generation slidedown */}
+        {/* Example slidedown */}
         <AnimatePresence>
           {selectedPrompt?.exampleImage && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="overflow-hidden mb-4"
-            >
+            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden mb-6">
               <div className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-5">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="text-gvc-gold font-display font-bold text-sm">Example</span>
                   <span className="text-white/20 font-body text-xs">-</span>
                   <span className="text-white/40 font-body text-xs">{selectedPrompt.title}</span>
-                  {selectedPrompt.exampleTokenId && (
-                    <span className="text-white/20 font-body text-xs ml-auto">Token #{selectedPrompt.exampleTokenId}</span>
-                  )}
+                  {selectedPrompt.exampleTokenId && (<span className="text-white/20 font-body text-xs ml-auto">Token #{selectedPrompt.exampleTokenId}</span>)}
                 </div>
                 <div className="rounded-xl overflow-hidden bg-black/40 flex items-center justify-center">
-                  <img
-                    src={selectedPrompt.exampleImage}
-                    alt={`Example: ${selectedPrompt.title}`}
-                    className="max-w-full max-h-[500px] object-contain"
-                  />
+                  <img src={selectedPrompt.exampleImage} alt={`Example: ${selectedPrompt.title}`} className="max-w-full max-h-[500px] object-contain" />
                 </div>
-                <p className="text-white/20 font-body text-xs mt-2 text-center">
-                  Generated with Gemini. Your results will vary based on your character.
-                </p>
+                <p className="text-white/20 font-body text-xs mt-2 text-center">Generated with Gemini. Your results will vary based on your character.</p>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* STEP 3 - Assembled prompt output */}
+        {/* STEP 2 - Enter Your Token ID */}
         <AnimatePresence>
           {selectedPrompt && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="rounded-2xl bg-gvc-dark border border-gvc-gold/20 p-6 mb-6"
-            >
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-6 mb-6">
               <div className="flex items-center gap-3 mb-4">
-                <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-                <div className="flex-1">
-                  <h2 className="text-lg font-display font-bold text-white">Copy and Generate</h2>
-                </div>
+                <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">2</span>
+                <h2 className="text-lg font-display font-bold text-white">Enter Your Token ID</h2>
               </div>
+              <div className="flex gap-3 mb-4">
+                <input type="text" placeholder="Enter your token ID (0-6968)" value={tokenId} onChange={(e) => setTokenId(e.target.value)} onKeyDown={(e) => e.key === "Enter" && lookupToken()} className="flex-1 px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors" />
+                <button onClick={lookupToken} disabled={loading || !metadata} className="px-6 py-3 bg-gvc-gold text-gvc-black font-display font-bold rounded-xl hover:shadow-[0_0_20px_rgba(255,224,72,0.3)] transition-all disabled:opacity-50">
+                  {loading ? "..." : "Look Up"}
+                </button>
+              </div>
+              {error && <p className="text-red-400 font-body text-sm">{error}</p>}
+              {tokenMeta && (
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-start gap-4 mt-2">
+                  {imageUrl && (
+                    <div className="w-20 h-20 rounded-xl overflow-hidden bg-black/40 flex-shrink-0">
+                      <img src={imageUrl} alt={tokenMeta.name} className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white font-display font-bold">{tokenMeta.name}</p>
+                  </div>
+                </motion.div>
+              )}
+              {tokenMeta && (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-5">
+                  <button onClick={() => setPromptGenerated(true)} className="w-full px-6 py-4 bg-gvc-gold text-gvc-black font-display font-black text-base rounded-xl hover:shadow-[0_0_30px_rgba(255,224,72,0.3)] transition-all">
+                    Generate Prompt
+                  </button>
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* STEP 3 - Let 'errrr rip! */}
+        <AnimatePresence>
+          {promptGenerated && selectedPrompt && tokenMeta && (
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="rounded-2xl bg-gvc-dark border border-gvc-gold/20 p-6 mb-6">
+              <div className="flex items-center gap-3 mb-2">
+                <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
+                <h2 className="text-lg font-display font-bold text-white">Let &apos;errrr rip!</h2>
+              </div>
+              <p className="text-white/40 font-body text-sm mb-5 pl-11">Copy the prompt below and follow the instructions.</p>
 
               <div className="flex items-center justify-between mb-4 pl-11">
                 <div>
                   <p className="text-white/60 font-body text-sm">{selectedPrompt.title}</p>
-                  <a
-                    href={`https://x.com/${selectedPrompt.author.replace("@", "")}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/30 font-body text-xs hover:text-gvc-gold/60 transition-colors"
-                  >
-                    By {selectedPrompt.author}
-                  </a>
+                  <a href={`https://x.com/${selectedPrompt.author.replace("@", "")}`} target="_blank" rel="noopener noreferrer" className="text-white/30 font-body text-xs hover:text-gvc-gold/60 transition-colors">By {selectedPrompt.author}</a>
                 </div>
-                {tokenMeta && (
-                  <span className="text-gvc-gold font-body text-xs">
-                    for {tokenMeta.name}
-                  </span>
-                )}
+                <span className="text-gvc-gold font-body text-xs">for {tokenMeta.name}</span>
               </div>
 
-              {!tokenMeta ? (
-                <div className="text-center py-8">
-                  <p className="text-white/40 font-body text-sm">
-                    Complete Step 1 first to generate a custom prompt for your character
-                  </p>
-                </div>
-              ) : (
-                <>
-                  <div className="bg-black/40 rounded-xl p-4 mb-4 border border-white/[0.06]">
-                    <p className="text-white/70 font-body text-sm leading-relaxed whitespace-pre-wrap">
-                      {assembledPrompt}
-                    </p>
-                  </div>
+              <div className="bg-black/40 rounded-xl p-4 mb-4 border border-white/[0.06]">
+                <p className="text-white/70 font-body text-sm leading-relaxed whitespace-pre-wrap">{assembledPrompt}</p>
+              </div>
 
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <button
-                      onClick={copyPrompt}
-                      className={`flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 font-display font-bold text-sm rounded-xl transition-all duration-300 ${
-                        copied
-                          ? "bg-gvc-green/20 text-gvc-green border border-gvc-green/30"
-                          : "bg-gvc-gold text-gvc-black hover:shadow-[0_0_20px_rgba(255,224,72,0.3)]"
-                      }`}
-                    >
-                      {copied ? "Copied!" : "Copy Prompt"}
-                    </button>
-                    <a
-                      href="https://gemini.google.com/app"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 font-display font-bold text-sm rounded-xl border border-white/[0.12] text-white/70 hover:border-gvc-gold/30 hover:text-gvc-gold transition-all"
-                    >
-                      Open Gemini
-                      <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                    </a>
-                    <a
-                      href="https://chatgpt.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 font-display font-bold text-sm rounded-xl border border-white/[0.08] text-white/40 hover:border-white/15 hover:text-white/60 transition-all"
-                    >
-                      ChatGPT
-                      <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                    </a>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-white/[0.06]">
-                    {selectedPrompt.hasReferenceImage ? (
-                      <>
-                        <h3 className="text-white font-display font-bold text-base mb-4">This prompt requires 2 images</h3>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                          <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
-                            <div className="flex items-center gap-2.5 mb-3">
-                              <span className="w-7 h-7 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center">1</span>
-                              <p className="text-white font-body text-sm font-semibold">Image 1 - Your GVC character</p>
-                            </div>
-                            <p className="text-white/40 font-body text-sm mb-3">The prompt references this as Image 1. This is what the character will look like.</p>
-                            {imageUrl && (
-                              <a
-                                href={imageUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors"
-                              >
-                                Download Image 1
-                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                              </a>
-                            )}
-                          </div>
-                          <div className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
-                            <div className="flex items-center gap-2.5 mb-3">
-                              <span className="w-7 h-7 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center">2</span>
-                              <p className="text-white font-body text-sm font-semibold">Image 2 - Proportion reference</p>
-                            </div>
-                            <p className="text-white/40 font-body text-sm mb-3">The prompt references this as Image 2. Tells the AI the body proportions to use.</p>
-                            <a
-                              href="/ref/ReferenceImage.png"
-                              download="Image-2-GVC-Proportion-Reference.png"
-                              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors"
-                            >
-                              Download Image 2
-                              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                            </a>
-                          </div>
-                        </div>
-                        <h3 className="text-white font-display font-bold text-base mb-3">Then follow these steps</h3>
-                        <ol className="text-white/50 font-body text-sm space-y-3 list-decimal list-inside mb-4">
-                          <li>Download your <span className="text-white/80 font-semibold">GVC character image</span></li>
-                          <li>Download the <span className="text-white/80 font-semibold">proportion reference</span></li>
-                          <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or ChatGPT)</li>
-                          <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat</li>
-                          <li>Paste the prompt above and hit send</li>
-                        </ol>
-                        <p className="text-white/30 font-body text-sm">We recommend <span className="text-white/50">Gemini</span> for best image generation results.</p>
-                      </>
-                    ) : (
-                      <>
-                        <p className="text-white/40 font-body text-xs font-semibold mb-2">How to use:</p>
-                        <ol className="text-white/30 font-body text-xs space-y-1 list-decimal list-inside">
-                          <li>Save your GVC image above (right-click &rarr; Save Image)</li>
-                          <li>Open Gemini (or ChatGPT)</li>
-                          <li>Upload your GVC image to the chat</li>
-                          <li>Paste the prompt below the image and send</li>
-                        </ol>
-                        <p className="text-white/20 font-body text-xs mt-2">We recommend <span className="text-white/35">Gemini</span> for best image generation results.</p>
-                      </>
-                    )}
-                  </div>
-                </>
-              )}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button onClick={copyPrompt} className={`flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 font-display font-bold text-sm rounded-xl transition-all duration-300 ${copied ? "bg-gvc-green/20 text-gvc-green border border-gvc-green/30" : "bg-gvc-gold text-gvc-black hover:shadow-[0_0_20px_rgba(255,224,72,0.3)]"}`}>
+                  {copied ? "Copied!" : "Copy Prompt"}
+                </button>
+                <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 font-display font-bold text-sm rounded-xl border border-white/[0.12] text-white/70 hover:border-gvc-gold/30 hover:text-gvc-gold transition-all">
+                  Open Gemini
+                  <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
+                <a href="https://chatgpt.com" target="_blank" rel="noopener noreferrer" className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 font-display font-bold text-sm rounded-xl border border-white/[0.08] text-white/40 hover:border-white/15 hover:text-white/60 transition-all">
+                  ChatGPT
+                  <svg className="w-3.5 h-3.5 opacity-60" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                </a>
+              </div>
+
+              <div className="mt-5 pt-5 border-t border-white/[0.06]">
+                {selectedPrompt.hasReferenceImage ? (
+                  <>
+                    <h3 className="text-white font-display font-bold text-base mb-4">This prompt requires 2 images</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                      <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
+                        <p className="text-white font-body text-sm font-semibold mb-2">Your GVC character</p>
+                        <p className="text-white/40 font-body text-sm mb-3">Save your character image and upload it to the chat.</p>
+                        {imageUrl && (
+                          <a href={imageUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                            Save GVC image
+                            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                          </a>
+                        )}
+                      </div>
+                      <div className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
+                        <p className="text-white font-body text-sm font-semibold mb-2">Proportion reference</p>
+                        <p className="text-white/40 font-body text-sm mb-3">Download and upload this alongside your character.</p>
+                        <a href="/ref/ReferenceImage.png" download="Image-2-GVC-Proportion-Reference.png" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                          Download reference
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        </a>
+                      </div>
+                    </div>
+                    <ol className="text-white/50 font-body text-sm space-y-2 list-decimal list-inside mb-4">
+                      <li>Download both images above</li>
+                      <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or ChatGPT)</li>
+                      <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat</li>
+                      <li>Paste the prompt and hit send</li>
+                    </ol>
+                    <p className="text-white/30 font-body text-sm">We recommend <span className="text-white/50">Gemini</span> for best results.</p>
+                  </>
+                ) : (
+                  <>
+                    <ol className="text-white/50 font-body text-sm space-y-2 list-decimal list-inside mb-4">
+                      <li>Save your GVC image from Step 2</li>
+                      <li>Open <span className="text-white/80 font-semibold">Gemini</span> (or ChatGPT)</li>
+                      <li>Upload your GVC image to the chat</li>
+                      <li>Paste the prompt and hit send</li>
+                    </ol>
+                    <p className="text-white/30 font-body text-sm">We recommend <span className="text-white/50">Gemini</span> for best results.</p>
+                  </>
+                )}
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
