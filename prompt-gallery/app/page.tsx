@@ -416,11 +416,11 @@ export default function Home() {
                     <span className="text-white/20 font-body text-xs ml-auto">Token #{selectedPrompt.exampleTokenId}</span>
                   )}
                 </div>
-                <div className="rounded-xl overflow-hidden bg-black/40 aspect-square sm:aspect-video max-h-[400px]">
+                <div className="rounded-xl overflow-hidden bg-black/40 flex items-center justify-center">
                   <img
                     src={selectedPrompt.exampleImage}
                     alt={`Example: ${selectedPrompt.title}`}
-                    className="w-full h-full object-cover"
+                    className="max-w-full max-h-[500px] object-contain"
                   />
                 </div>
                 <p className="text-white/20 font-body text-xs mt-2 text-center">
