@@ -9,6 +9,7 @@ export interface Prompt {
   exampleImage?: string;
   exampleTokenId?: string;
   hasReferenceImage?: boolean;
+  pinned?: boolean;
 }
 
 const PROMPTS: Prompt[] = [
@@ -22,6 +23,7 @@ const PROMPTS: Prompt[] = [
     exampleImage: "/examples/full-body.png",
     exampleTokenId: "2375",
     hasReferenceImage: true,
+    pinned: true,
     template: `I've uploaded two images.
 
 MY CHARACTER: This is my Good Vibes Club (GVC) NFT character. Use this as the definitive reference for the character's identity - head, face, expression, outfit, colors, materials, and accessories. This is the image that is NOT named "Image-2-GVC-Proportion-Reference.png".

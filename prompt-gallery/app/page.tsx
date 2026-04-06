@@ -227,11 +227,12 @@ export default function Home() {
     setLoading(false);
   }
 
-  const filteredPrompts = useMemo(
-    () =>
-      category === "all"
-        ? PROMPTS
-        : PROMPTS.filter((p) => p.category === category),
+  const filteredPrompts = useMemo(() => {
+      const list = category === "all"
+        ? [...PROMPTS]
+        : PROMPTS.filter((p) => p.category === category || p.pinned);
+      return list.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+    },
     [category]
   );
 
