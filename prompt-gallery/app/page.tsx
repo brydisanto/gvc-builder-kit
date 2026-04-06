@@ -104,6 +104,16 @@ export default function Home() {
   const [category, setCategory] = useState("all");
   const [activeTab, setActiveTab] = useState<"browse" | "submit">("browse");
   const [promptGenerated, setPromptGenerated] = useState(false);
+  const [generating, setGenerating] = useState(false);
+
+  function handleGenerate() {
+    setGenerating(true);
+    setPromptGenerated(false);
+    setTimeout(() => {
+      setGenerating(false);
+      setPromptGenerated(true);
+    }, 1800);
+  }
 
   // Submission form state
   const [submitTitle, setSubmitTitle] = useState("");
@@ -403,10 +413,61 @@ export default function Home() {
                 </motion.div>
               )}
               {tokenMeta && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-5">
-                  <button onClick={() => setPromptGenerated(true)} className="w-full px-6 py-4 bg-gvc-gold text-gvc-black font-display font-black text-base rounded-xl hover:shadow-[0_0_30px_rgba(255,224,72,0.3)] transition-all">
-                    Generate Prompt
-                  </button>
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-5 relative">
+                  {/* Particle burst on generate */}
+                  <AnimatePresence>
+                    {generating && (
+                      <>
+                        {[...Array(12)].map((_, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 1, scale: 0, x: 0, y: 0 }}
+                            animate={{
+                              opacity: 0,
+                              scale: 1,
+                              x: (Math.random() - 0.5) * 300,
+                              y: (Math.random() - 0.5) * 200 - 50,
+                            }}
+                            transition={{ duration: 0.8 + Math.random() * 0.4, ease: "easeOut" }}
+                            className="absolute left-1/2 top-1/2 w-2 h-2 rounded-full bg-gvc-gold pointer-events-none z-10"
+                          />
+                        ))}
+                      </>
+                    )}
+                  </AnimatePresence>
+
+                  <motion.button
+                    onClick={handleGenerate}
+                    disabled={generating}
+                    whileHover={!generating ? { scale: 1.02, boxShadow: "0 0 40px rgba(255,224,72,0.4)" } : {}}
+                    whileTap={!generating ? { scale: 0.97 } : {}}
+                    animate={generating ? {
+                      boxShadow: [
+                        "0 0 20px rgba(255,224,72,0.2)",
+                        "0 0 60px rgba(255,224,72,0.5)",
+                        "0 0 20px rgba(255,224,72,0.2)",
+                      ],
+                    } : {}}
+                    transition={generating ? { duration: 1.2, repeat: Infinity } : { type: "spring", stiffness: 400, damping: 25 }}
+                    className={`w-full px-6 py-5 font-display font-black text-lg rounded-xl transition-colors duration-300 relative overflow-hidden ${
+                      generating
+                        ? "bg-gvc-gold/80 text-gvc-black cursor-wait"
+                        : "bg-gvc-gold text-gvc-black"
+                    }`}
+                  >
+                    {/* Shimmer sweep during generation */}
+                    {generating && (
+                      <motion.div
+                        initial={{ x: "-100%" }}
+                        animate={{ x: "200%" }}
+                        transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
+                      />
+                    )}
+                    <span className="relative z-10">
+                      {generating ? "Generating..." : promptGenerated ? "Regenerate Prompt" : "Generate Prompt"}
+                    </span>
+                  </motion.button>
                 </motion.div>
               )}
             </motion.div>
