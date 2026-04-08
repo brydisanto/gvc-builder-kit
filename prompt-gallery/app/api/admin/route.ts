@@ -7,7 +7,7 @@ export async function GET() {
     await ensureTable();
 
     const { rows } = await pool.query(
-      `SELECT id, title, prompt, token_id, image_url, x_handle, status, category, created_at, updated_at
+      `SELECT id, title, prompt, token_id, image_url, x_handle, status, category, generations, created_at, updated_at
        FROM prompt_submissions
        ORDER BY
          CASE status WHEN 'pending' THEN 0 WHEN 'approved' THEN 1 WHEN 'rejected' THEN 2 END,

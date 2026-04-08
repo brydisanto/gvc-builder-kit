@@ -23,19 +23,32 @@ interface Stats {
   rejected: number;
 }
 
+interface Category {
+  id: string;
+  slug: string;
+  label: string;
+}
+
 export default function AdminPage() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [stats, setStats] = useState<Stats>({ total: 0, pending: 0, approved: 0, rejected: 0 });
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [newCategoryName, setNewCategoryName] = useState("");
   const [loading, setLoading] = useState(true);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "pending" | "approved" | "rejected">("all");
 
   async function fetchData() {
     try {
-      const res = await fetch("/api/admin");
-      const data = await res.json();
+      const [adminRes, catRes] = await Promise.all([
+        fetch("/api/admin"),
+        fetch("/api/categories"),
+      ]);
+      const data = await adminRes.json();
+      const cats = await catRes.json();
       setSubmissions(data.submissions || []);
       setStats(data.stats || { total: 0, pending: 0, approved: 0, rejected: 0 });
+      setCategories(Array.isArray(cats) ? cats : []);
     } catch (e) {
       console.error("Failed to fetch:", e);
     } finally {
@@ -69,6 +82,37 @@ export default function AdminPage() {
       });
     } catch (e) {
       console.error("Update failed:", e);
+    }
+  }
+
+  async function createCategory() {
+    if (!newCategoryName.trim()) return;
+    try {
+      const res = await fetch("/api/categories", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ label: newCategoryName.trim() }),
+      });
+      if (res.ok) {
+        const cat = await res.json();
+        setCategories((prev) => [...prev, cat]);
+        setNewCategoryName("");
+      }
+    } catch (e) {
+      console.error("Create category failed:", e);
+    }
+  }
+
+  async function deleteCategory(catId: string) {
+    try {
+      await fetch("/api/categories", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: catId }),
+      });
+      setCategories((prev) => prev.filter((c) => c.id !== catId));
+    } catch (e) {
+      console.error("Delete category failed:", e);
     }
   }
 
@@ -135,6 +179,36 @@ export default function AdminPage() {
               <p className="text-white/40 font-body text-xs uppercase tracking-wider">{s.label}</p>
             </div>
           ))}
+        </div>
+
+        {/* Category Management */}
+        <div className="rounded-xl bg-[#121212] border border-white/[0.08] p-4 mb-6">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-display font-bold text-white/60">Categories</h3>
+          </div>
+          <div className="flex flex-wrap gap-2 mb-3">
+            {categories.map((cat) => (
+              <div key={cat.id} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.04] border border-white/[0.06]">
+                <span className="text-white/50 font-body text-xs">{cat.label}</span>
+                <button onClick={() => { if (confirm(`Delete "${cat.label}" category?`)) deleteCategory(cat.id); }} className="text-white/20 hover:text-red-400/60 transition-colors">
+                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="New category name"
+              value={newCategoryName}
+              onChange={(e) => setNewCategoryName(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && createCategory()}
+              className="flex-1 px-3 py-2 rounded-lg bg-black/40 border border-white/[0.08] text-white font-body text-xs placeholder:text-white/20 focus:outline-none focus:border-gvc-gold/30 transition-colors"
+            />
+            <button onClick={createCategory} className="px-4 py-2 rounded-lg bg-gvc-gold/15 text-gvc-gold font-display font-bold text-xs hover:bg-gvc-gold/25 transition-colors">
+              Add
+            </button>
+          </div>
         </div>
 
         {/* Filter */}
@@ -204,6 +278,7 @@ export default function AdminPage() {
                             {sub.x_handle && ` - @${sub.x_handle}`}
                             {" - "}
                             {new Date(sub.created_at).toLocaleDateString()}
+                            {(sub as any).generations > 0 && ` - ${(sub as any).generations} generations`}
                           </p>
                         </div>
                         <span
@@ -257,12 +332,9 @@ export default function AdminPage() {
                         className="px-2 py-1 rounded-lg bg-black/40 border border-white/[0.08] text-white/60 font-body text-xs focus:outline-none focus:border-gvc-gold/30 appearance-none cursor-pointer"
                       >
                         <option value="" className="bg-[#121212]">Unassigned</option>
-                        <option value="foundational" className="bg-[#121212]">Foundational</option>
-                        <option value="scene" className="bg-[#121212]">Scenes</option>
-                        <option value="profile" className="bg-[#121212]">Profile Pics</option>
-                        <option value="cinematic" className="bg-[#121212]">Cinematic</option>
-                        <option value="artistic" className="bg-[#121212]">Artistic</option>
-                        <option value="meme" className="bg-[#121212]">Memes and Fun</option>
+                        {categories.map((cat) => (
+                          <option key={cat.slug} value={cat.slug} className="bg-[#121212]">{cat.label}</option>
+                        ))}
                       </select>
                     </div>
                   </div>
