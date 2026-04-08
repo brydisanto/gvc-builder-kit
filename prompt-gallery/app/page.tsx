@@ -85,9 +85,10 @@ Using this exact character as the subject (keep their specific look, outfit, and
 
 const GVC_STYLE_SUFFIX = `\n\nIMPORTANT: The character in the generated image must look like the uploaded GVC character -same outfit, same features, same vibe. Adapt them into the new scene/style while keeping them recognizable.`;
 
-function assemblePrompt(template: string, traits: Record<string, string>, hasReferenceImage?: boolean): string {
+function assemblePrompt(template: string, traits: Record<string, string>, hasReferenceImage?: boolean, tid?: string): string {
   const description = describeTraits(traits);
-  const filled = template.replace("{TRAITS}", description);
+  let filled = template.replace("{TRAITS}", description);
+  if (tid) filled = filled.replaceAll("{TOKEN_ID}", tid);
   // Prompts with their own multi-image instructions (like Full Body) skip the generic prefix/suffix
   if (hasReferenceImage) return filled;
   return GVC_STYLE_PREFIX + filled + GVC_STYLE_SUFFIX;
@@ -238,7 +239,7 @@ export default function Home() {
 
   const assembledPrompt = useMemo(() => {
     if (!selectedPrompt || !tokenMeta) return "";
-    return assemblePrompt(selectedPrompt.template, tokenMeta.traits, selectedPrompt.hasReferenceImage);
+    return assemblePrompt(selectedPrompt.template, tokenMeta.traits, selectedPrompt.hasReferenceImage, tokenId);
   }, [selectedPrompt, tokenMeta]);
 
   async function copyPrompt() {

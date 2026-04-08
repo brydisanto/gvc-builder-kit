@@ -26,14 +26,15 @@ const PROMPTS: Prompt[] = [
     pinned: true,
     template: `I've uploaded two images.
 
-MY CHARACTER: This is my Good Vibes Club (GVC) NFT character. Use this as the definitive reference for the character's identity - head, face, expression, outfit, colors, materials, and accessories. This is the image that is NOT named "Image-2-GVC-Proportion-Reference.png".
+MY CHARACTER (GVC-{TOKEN_ID}.png): This is my Good Vibes Club (GVC) NFT character. Use this as the definitive reference for identity - head, face, expression, outfit, colors, materials, and accessories.
 
-PROPORTION REFERENCE (the file named "Image-2-GVC-Proportion-Reference.png"): This is a proportion guide showing the standard GVC full-body character from multiple angles. Use this ONLY for body proportions, limb length, stance, and overall height ratio. Do NOT copy the style, clothing, colors, or materials from this image.
+PROPORTION REFERENCE (Image-2-GVC-Proportion-Reference.png): Use ONLY for body proportions, limb length, stance, and camera angles. Do NOT copy style, clothing, colors, or materials from this image.
 
-TASK: Generate a full-body version of my character using the body proportions from the proportion reference.
+TASK
+Generate a full-body version of the character from GVC-{TOKEN_ID}.png in 3 different angles using the body proportions from Image-2-GVC-Proportion-Reference.png.
 
 IDENTITY LOCK (CRITICAL)
-Preserve exactly from my character image:
+Preserve exactly from GVC-{TOKEN_ID}.png:
 - head shape, facial features, expression
 - material finish (glossy, matte, soft plastic, etc.)
 - color palette and shading behavior
@@ -42,19 +43,19 @@ Do not redesign or reinterpret the character's style.
 The result must feel like the same exact character, simply revealed as full body.
 
 STYLE CONTINUATION (VERY IMPORTANT)
-Extend the existing outfit from my character image naturally into a full-body design:
+Extend the existing outfit naturally into a full-body design:
 - continue fabric types, stitching logic, and material behavior from the upper body
 - maintain the same design language, color transitions, and detailing
 - avoid adding unrelated fashion elements
 - everything must feel like it belongs to the same original design
+- never apply a pattern to the pants, pants should only appear as one color
 
-PROPORTION GUIDE (from "Image-2-GVC-Proportion-Reference.png" ONLY)
-Use the proportion reference image for:
-- body height ratio (head is ~1/4 of total height)
-- limb proportions (short legs, simplified hands)
+PROPORTION GUIDE (from Image-2-GVC-Proportion-Reference.png ONLY)
+Use Image-2-GVC-Proportion-Reference.png to guide:
+- body height ratio
+- limb proportions
 - pose balance and stance
-- chunky sneaker style on feet
-Do NOT transfer any style, clothing, colors, or materials from the proportion reference.
+Do NOT transfer style, clothing, or materials from Image-2-GVC-Proportion-Reference.png.
 
 GVC STYLE TARGET
 Render in a vibrant, high-quality stylized 3D aesthetic:
@@ -65,23 +66,28 @@ Render in a vibrant, high-quality stylized 3D aesthetic:
 - cinematic but playful lighting
 
 POSE
-Neutral standing pose, relaxed and balanced
-Feet fully visible
-Arms naturally positioned (slight variation allowed)
+Single T Pose identical across all 3 angles:
+- feet fully visible
+- arms naturally positioned
+- the pose must not change between views
 
 CAMERA
-Full-body centered framing
-Slight perspective (85mm lens feel)
-Character standing on a subtle platform or ground plane
+3 angles of the same pose:
+- front view
+- 3/4 view
+- rear view
+Full-body centered framing in each.
+Slight perspective (85mm lens feel).
+Character standing on a subtle elevated platform (toy collectible feel).
 
 BACKGROUND
-Minimal gradient background matching the character's color palette from my character image
-Soft studio lighting, no distractions
+Minimal gradient background matching the character's color palette from GVC-{TOKEN_ID}.png.
+Soft studio lighting, no distractions.
 
 OUTPUT
-Highly polished 3D render, consistent with high-end character design
+Highly polished 3D render, consistent with high-end collectible character design.
 Add subtle Vibetown energy:
-- soft colored rim light (matching the character's palette)
+- soft colored rim light (matching palette from GVC-{TOKEN_ID}.png)
 - gentle glow accents
 - clean studio + dreamy gradient blend`,
   },
