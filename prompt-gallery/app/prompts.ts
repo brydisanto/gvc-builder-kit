@@ -168,7 +168,7 @@ Add subtle Vibetown energy:
   {
     id: "welcome-to-vibetown",
     title: "Welcome to Vibetown",
-    description: "Place your full-body GVC character into the iconic Vibetown street scene. Requires your T-Pose output from the prompt above.",
+    description: "Place your GVC character into the iconic Vibetown street scene. Requires your T-Pose output from the pinned prompt.",
     category: "scene",
     icon: "city",
     author: "@GoodVibesClub",

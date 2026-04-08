@@ -558,7 +558,7 @@ export default function Home() {
                     </div>
                     <div className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
                       <p className="text-white font-body text-sm font-semibold mb-2">Your T-Pose</p>
-                      <p className="text-white/40 font-body text-sm mb-3">Use the T-Pose you generated from the T-Pose prompt above. If you haven't generated one yet, do that first.</p>
+                      <p className="text-white/40 font-body text-sm mb-3">Use the T-Pose you generated from the pinned T-Pose prompt. If you haven't generated one yet, do that first.</p>
                     </div>
                   </div>
                 </>
