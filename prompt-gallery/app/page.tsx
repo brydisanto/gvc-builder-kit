@@ -479,22 +479,24 @@ export default function Home() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredPrompts.map((prompt, i) => (
-              <motion.button key={prompt.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + i * 0.05 }} onClick={() => { setSelectedPrompt(prompt); setPromptGenerated(false); }} className={`text-left p-5 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${selectedPrompt?.id === prompt.id ? "bg-gvc-gold/[0.08] border-gvc-gold/30 shadow-[0_0_20px_rgba(255,224,72,0.15)]" : "bg-gvc-dark border-white/[0.08] hover:border-white/15"}`}>
+              <motion.button key={prompt.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 + i * 0.05 }} onClick={() => { setSelectedPrompt(prompt); setPromptGenerated(false); }} className={`relative text-left p-5 rounded-2xl border transition-all duration-300 hover:scale-[1.02] ${selectedPrompt?.id === prompt.id ? "bg-gvc-gold/[0.08] border-gvc-gold/30 shadow-[0_0_20px_rgba(255,224,72,0.15)]" : "bg-gvc-dark border-white/[0.08] hover:border-white/15"} ${prompt.pinned ? "border-l-[3px] border-l-gvc-gold/40" : ""}`}>
+                {prompt.pinned && (
+                  <span className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-gvc-gold/10 text-gvc-gold text-[9px] font-bold uppercase tracking-wider">Pinned</span>
+                )}
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${selectedPrompt?.id === prompt.id ? "bg-gvc-gold/20 text-gvc-gold" : "bg-white/[0.04] text-white/40"}`}>
                   <PromptIcon type={prompt.icon} />
                 </div>
-                <h3 className={`font-display font-bold text-base mb-1 flex items-center gap-1.5 ${selectedPrompt?.id === prompt.id ? "text-gvc-gold" : "text-white"}`}>
-                  {prompt.pinned && <svg className="w-3.5 h-3.5 flex-shrink-0 opacity-50" fill="currentColor" viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z" /></svg>}
+                <h3 className={`font-display font-bold text-base mb-1 ${selectedPrompt?.id === prompt.id ? "text-gvc-gold" : "text-white"}`}>
                   {prompt.title}
                 </h3>
                 <p className="text-white/40 font-body text-sm leading-relaxed">{prompt.description}</p>
-                <div className="flex items-center gap-2 mt-2 flex-wrap">
+                <div className="flex items-center gap-2 mt-2">
                   <span className="inline-block px-2 py-0.5 rounded-full bg-white/[0.04] text-white/25 text-xs font-body capitalize">{prompt.category}</span>
                   <a href={`https://x.com/${prompt.author.replace("@", "")}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-white/20 text-xs font-body hover:text-gvc-gold/60 transition-colors">By {prompt.author}</a>
-                  {getGenerations(prompt) > 0 && (
-                    <span className="text-white/15 text-xs font-body">{getGenerations(prompt)} prompts generated</span>
-                  )}
                 </div>
+                {getGenerations(prompt) > 0 && (
+                  <p className="text-white/15 text-xs font-body mt-2">{getGenerations(prompt)} prompts generated</p>
+                )}
               </motion.button>
             ))}
           </div>
