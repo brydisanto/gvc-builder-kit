@@ -766,7 +766,7 @@ export default function Home() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
               onClick={closeSuccessModal}
             >
               <motion.div
@@ -775,50 +775,70 @@ export default function Home() {
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
                 onClick={(e) => e.stopPropagation()}
-                className="w-full max-w-md rounded-2xl bg-gvc-dark border border-gvc-gold/30 p-8 text-center shadow-[0_0_60px_rgba(255,224,72,0.15)]"
+                className="w-full max-w-md rounded-3xl bg-gvc-dark border border-gvc-gold/20 overflow-hidden shadow-[0_0_80px_rgba(255,224,72,0.1)]"
               >
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                  className="mb-4"
-                >
-                  <Image src="/shaka.png" alt="GVC" width={56} height={56} className="mx-auto drop-shadow-[0_0_20px_rgba(255,224,72,0.3)]" />
-                </motion.div>
-                <h3 className="text-2xl font-display font-black text-shimmer mb-2">
-                  Prompt Submitted!
-                </h3>
-                <p className="text-white/50 font-body text-sm mb-6">
-                  We&apos;ll review your prompt and add the best ones to the gallery. Good vibes only.
-                </p>
-
-                {/* Social share buttons */}
-                <div className="space-y-3 mb-6">
-                  <a
-                    href={`https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 font-display font-bold text-sm rounded-xl bg-white text-black hover:bg-white/90 transition-all"
-                  >
-                    Share on X
-                    <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
-                  </a>
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText(`${shareText}${shareUrl}`);
-                    }}
-                    className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 font-display font-bold text-sm rounded-xl border border-white/[0.12] text-white/70 hover:border-gvc-gold/30 hover:text-gvc-gold transition-all"
-                  >
-                    Copy share link
+                {/* Close button */}
+                <div className="flex justify-end p-4 pb-0">
+                  <button onClick={closeSuccessModal} className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/40 hover:text-white hover:bg-white/20 transition-all">
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                   </button>
                 </div>
 
-                <button
-                  onClick={closeSuccessModal}
-                  className="text-white/30 font-body text-sm hover:text-white/60 transition-colors"
-                >
-                  Close
-                </button>
+                {/* Uploaded image preview */}
+                {submitPreview && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="px-6 mb-4"
+                  >
+                    <div className="rounded-2xl overflow-hidden border border-gvc-gold/10">
+                      <img src={submitPreview} alt="Your submission" className="w-full max-h-[350px] object-contain bg-black/40" />
+                    </div>
+                  </motion.div>
+                )}
+
+                <div className="px-6 pb-8 text-center">
+                  <motion.h3
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="text-2xl font-display font-black text-shimmer mb-2"
+                  >
+                    You rock, dude!
+                  </motion.h3>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                    className="text-white/50 font-body text-sm mb-6"
+                  >
+                    Your prompt was submitted and is in review with the GVC team. Go share it with the community while you wait!
+                  </motion.p>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    <a
+                      href={`https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex items-center justify-center gap-3 px-5 py-4 font-display font-bold text-base rounded-xl bg-white text-black hover:bg-white/90 transition-all"
+                    >
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /></svg>
+                      Share on X
+                    </a>
+                  </motion.div>
+
+                  <button
+                    onClick={closeSuccessModal}
+                    className="mt-4 text-white/30 font-body text-sm hover:text-white/60 transition-colors"
+                  >
+                    Close
+                  </button>
+                </div>
               </motion.div>
             </motion.div>
           )}
