@@ -18,6 +18,32 @@ body {
   font-family: var(--font-mundial), system-ui, sans-serif;
 }
 
+/* Grid background texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("/grid.svg");
+  background-repeat: repeat;
+  background-size: 60px 60px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Gold/orange bottom gradient */
+body::after {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60vh;
+  background: radial-gradient(ellipse at 50% 100%, rgba(255, 95, 31, 0.12) 0%, rgba(255, 224, 72, 0.06) 30%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 ::selection {
   background-color: var(--color-gvc-gold);
   color: var(--color-gvc-black);
