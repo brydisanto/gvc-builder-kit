@@ -167,25 +167,35 @@ export default function Home() {
     setSubmitPreview("");
   }
 
-  function handleSubmit() {
+  async function handleSubmit() {
     if (!submitTitle || !submitPromptText || !submitTokenId || !submitFile) return;
     setSubmitStatus("sending");
 
-    const submission = {
-      title: submitTitle,
-      prompt: submitPromptText,
-      tokenId: submitTokenId,
-      handle: submitHandle,
-      fileName: submitFile.name,
-      timestamp: new Date().toISOString(),
-    };
-    console.log("Prompt submission:", submission);
+    try {
+      const formData = new FormData();
+      formData.append("title", submitTitle);
+      formData.append("prompt", submitPromptText);
+      formData.append("tokenId", submitTokenId);
+      formData.append("xHandle", submitHandle);
+      formData.append("image", submitFile);
 
-    // Simulate success -backend comes later
-    setTimeout(() => {
+      const res = await fetch("/api/submissions", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Submission failed");
+      }
+
       setSubmitStatus("sent");
       setShowSuccessModal(true);
-    }, 800);
+    } catch (e: any) {
+      console.error("Submission error:", e);
+      setSubmitStatus("error");
+      setTimeout(() => setSubmitStatus("idle"), 3000);
+    }
   }
 
   function closeSuccessModal() {
