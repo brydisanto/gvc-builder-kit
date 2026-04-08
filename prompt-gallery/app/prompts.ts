@@ -2,7 +2,7 @@ export interface Prompt {
   id: string;
   title: string;
   description: string;
-  category: "profile" | "scene" | "meme" | "cinematic" | "artistic" | "character";
+  category: "must-haves" | "scene" | "profile" | "cinematic" | "artistic" | "meme";
   template: string;
   icon: "body" | "film" | "pixel" | "camera" | "scroll" | "sword" | "sparkle" | "paint" | "city" | "trophy" | "music" | "rocket" | "heart";
   author: string;
@@ -18,7 +18,7 @@ const PROMPTS: Prompt[] = [
     id: "full-body",
     title: "Full Body Character",
     description: "Generate your GVC as a complete, full-body, 3D character. Exporting your full-body character will produce better quality outputs in all future prompts.",
-    category: "character",
+    category: "must-haves",
     icon: "body",
     author: "@GoodVibesClub",
     exampleImage: "/examples/full-body.png",
@@ -91,7 +91,7 @@ Add subtle Vibetown energy:
     id: "t-pose",
     title: "T-Pose",
     description: "Generate your GVC in a T-Pose from 3 angles (front, 3/4, rear). Ideal for character sheets, 3D modeling reference, and animation-ready assets.",
-    category: "character",
+    category: "must-haves",
     icon: "body",
     author: "@GoodVibesClub",
     exampleImage: "/examples/t-pose.png",
@@ -187,10 +187,6 @@ export default PROMPTS;
 
 export const CATEGORIES = [
   { id: "all", label: "All" },
-  { id: "character", label: "Character" },
-  { id: "profile", label: "Profile Pics" },
+  { id: "must-haves", label: "Must Haves" },
   { id: "scene", label: "Scenes" },
-  { id: "cinematic", label: "Cinematic" },
-  { id: "artistic", label: "Artistic" },
-  { id: "meme", label: "Memes and Fun" },
 ] as const;
