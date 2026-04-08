@@ -96,6 +96,7 @@ Add subtle Vibetown energy:
     exampleImage: "/examples/t-pose.png",
     exampleTokenId: "1330",
     hasReferenceImage: true,
+    pinned: true,
     template: `I've uploaded two images.
 
 MY CHARACTER (GVC-{TOKEN_ID}.png): This is my Good Vibes Club (GVC) NFT character. Use this as the definitive reference for identity - head, face, expression, outfit, colors, materials, and accessories.
