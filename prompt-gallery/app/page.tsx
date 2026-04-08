@@ -1023,13 +1023,13 @@ export default function Home() {
         </AnimatePresence>
 
         {/* Footer */}
-        <div className="text-center pt-4 pb-8">
+        <div className="text-center pt-20 pb-12">
           <Image
             src="/gvc-logotype.svg"
             alt="Good Vibes Club"
-            width={100}
-            height={20}
-            className="mx-auto mb-2 opacity-30"
+            width={160}
+            height={32}
+            className="mx-auto opacity-30"
           />
         </div>
       </div>
