@@ -187,6 +187,6 @@ export default PROMPTS;
 
 export const CATEGORIES = [
   { id: "all", label: "All" },
-  { id: "foundational", label: "Must Haves" },
+  { id: "foundational", label: "Foundational" },
   { id: "scene", label: "Scenes" },
 ] as const;

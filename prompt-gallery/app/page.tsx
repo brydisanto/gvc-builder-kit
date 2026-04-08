@@ -244,12 +244,26 @@ export default function Home() {
   }
 
   const filteredPrompts = useMemo(() => {
+      // Convert community prompts to the same shape as built-in prompts
+      const communityAsPrompts: Prompt[] = communityPrompts.map((cp: any) => ({
+        id: cp.id,
+        title: cp.title,
+        description: "",
+        category: cp.category || "scene",
+        template: cp.prompt || "",
+        icon: "sparkle" as const,
+        author: cp.x_handle ? `@${cp.x_handle}` : "@community",
+        exampleImage: cp.image_url,
+        exampleTokenId: cp.token_id,
+      }));
+
+      const all = [...PROMPTS, ...communityAsPrompts];
       const list = category === "all"
-        ? [...PROMPTS]
-        : PROMPTS.filter((p) => p.category === category || p.pinned);
+        ? all
+        : all.filter((p) => p.category === category || p.pinned);
       return list.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
     },
-    [category]
+    [category, communityPrompts]
   );
 
   const assembledPrompt = useMemo(() => {
@@ -326,7 +340,7 @@ export default function Home() {
             transition={{ delay: 0.2 }}
             className="text-white/40 font-body text-lg max-w-xl mx-auto"
           >
-            Pick a prompt, enter your GVC token ID, and get a custom image prompt featuring your character.
+            Prompts to help bring your GVC characters to life. Vibetown is built by the community, for the community.
           </motion.p>
         </div>
 
@@ -620,65 +634,6 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        {/* Community Prompts */}
-        {communityPrompts.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            className="mt-10 mb-6"
-          >
-            <h2 className="text-xl font-display font-bold text-white mb-4">Community Prompts</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {communityPrompts.map((cp: any) => (
-                <motion.button
-                  key={cp.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  onClick={() => {
-                    setSelectedPrompt({
-                      id: cp.id,
-                      title: cp.title,
-                      description: "",
-                      category: cp.category || "scene",
-                      template: cp.prompt,
-                      icon: "sparkle",
-                      author: cp.x_handle ? `@${cp.x_handle}` : "@community",
-                      exampleImage: cp.image_url,
-                      exampleTokenId: cp.token_id,
-                    } as any);
-                    setPromptGenerated(false);
-                  }}
-                  className={`text-left rounded-2xl border overflow-hidden transition-all duration-300 hover:scale-[1.02] ${
-                    selectedPrompt?.id === cp.id
-                      ? "bg-gvc-gold/[0.08] border-gvc-gold/30 shadow-[0_0_20px_rgba(255,224,72,0.15)]"
-                      : "bg-gvc-dark border-white/[0.08] hover:border-white/15"
-                  }`}
-                >
-                  {cp.image_url && (
-                    <div className="aspect-video bg-black/40 overflow-hidden">
-                      <img src={cp.image_url} alt={cp.title} className="w-full h-full object-cover" />
-                    </div>
-                  )}
-                  <div className="p-4">
-                    <h3 className={`font-display font-bold text-sm mb-1 ${selectedPrompt?.id === cp.id ? "text-gvc-gold" : "text-white"}`}>
-                      {cp.title}
-                    </h3>
-                    <div className="flex items-center gap-2">
-                      {cp.category && (
-                        <span className="inline-block px-2 py-0.5 rounded-full bg-white/[0.04] text-white/25 text-xs font-body capitalize">{cp.category}</span>
-                      )}
-                      {cp.x_handle && (
-                        <span className="text-white/20 text-xs font-body">By @{cp.x_handle}</span>
-                      )}
-                      <span className="text-white/15 text-xs font-body">#{cp.token_id}</span>
-                    </div>
-                  </div>
-                </motion.button>
-              ))}
-            </div>
-          </motion.div>
-        )}
         </>)}
 
         {activeTab === "submit" && (<>
