@@ -28,6 +28,7 @@ export async function ensureTable() {
   await pool.query(`ALTER TABLE prompt_submissions ADD COLUMN IF NOT EXISTS generations INTEGER NOT NULL DEFAULT 0`).catch(() => {});
   await pool.query(`ALTER TABLE prompt_submissions ADD COLUMN IF NOT EXISTS more_details TEXT`).catch(() => {});
   await pool.query(`ALTER TABLE prompt_submissions ADD COLUMN IF NOT EXISTS ref_images TEXT`).catch(() => {});
+  await pool.query(`ALTER TABLE prompt_submissions ADD COLUMN IF NOT EXISTS requires_ref_images BOOLEAN DEFAULT false`).catch(() => {});
 
   // Generation counts for built-in prompts
   await pool.query(`

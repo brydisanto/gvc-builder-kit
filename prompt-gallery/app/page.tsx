@@ -287,17 +287,21 @@ export default function Home() {
 
   const filteredPrompts = useMemo(() => {
       // Convert community prompts to the same shape as built-in prompts
-      const communityAsPrompts: Prompt[] = communityPrompts.map((cp: any) => ({
+      const communityAsPrompts = communityPrompts.map((cp: any) => ({
         id: cp.id,
         title: cp.title,
-        description: "",
+        description: cp.more_details || "",
         category: cp.category || "scene",
         template: cp.prompt || "",
         icon: "sparkle" as const,
         author: cp.x_handle ? `@${cp.x_handle}` : "@community",
         exampleImage: cp.image_url,
         exampleTokenId: cp.token_id,
-      }));
+        generations: cp.generations || 0,
+        hasReferenceImage: cp.requires_ref_images && cp.ref_images,
+        refImageUrls: cp.ref_images ? JSON.parse(cp.ref_images) : [],
+        moreDetails: cp.more_details || "",
+      } as any));
 
       const all = [...PROMPTS, ...communityAsPrompts];
       const list = category === "all"
@@ -464,7 +468,7 @@ export default function Home() {
                   <span className="inline-block px-2 py-0.5 rounded-full bg-white/[0.04] text-white/25 text-xs font-body capitalize">{prompt.category}</span>
                   <a href={`https://x.com/${prompt.author.replace("@", "")}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-white/20 text-xs font-body hover:text-gvc-gold/60 transition-colors">By {prompt.author}</a>
                   {getGenerations(prompt) > 0 && (
-                    <span className="text-white/15 text-xs font-body">{getGenerations(prompt)} generated</span>
+                    <span className="text-white/15 text-xs font-body">{getGenerations(prompt)} prompts generated</span>
                   )}
                 </div>
               </motion.button>
@@ -593,7 +597,7 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="rounded-2xl bg-gvc-dark border border-gvc-gold/20 p-6 mb-6">
               <div className="flex items-center gap-3 mb-2">
                 <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-                <h2 className="text-lg font-display font-bold text-white">{(selectedPrompt.hasReferenceImage || selectedPrompt.requiresTpose) ? "Copy The Prompt Below" : "Let \u0027Errrr Rip!"}</h2>
+                <h2 className="text-lg font-display font-bold text-white">{(selectedPrompt.hasReferenceImage || selectedPrompt.requiresTpose || (selectedPrompt as any).refImageUrls?.length > 0) ? "Copy The Prompt Below" : "Let \u0027Errrr Rip!"}</h2>
               </div>
 
               
@@ -613,7 +617,7 @@ export default function Home() {
 
               </div>
 
-              {!selectedPrompt.hasReferenceImage && !selectedPrompt.requiresTpose && (
+              {!selectedPrompt.hasReferenceImage && !selectedPrompt.requiresTpose && !((selectedPrompt as any).refImageUrls?.length > 0) && (
                 <div className="mt-5 pt-5 border-t border-white/[0.06]">
                   <p className="text-white/30 font-body text-sm">Open <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors">Gemini</a>. We recommend using Gemini for the best results (but you can also use ChatGPT, Midjourney, Dall-E, etc). Upload your GVC image and paste the prompt.</p>
                 </div>
@@ -625,69 +629,97 @@ export default function Home() {
 
         {/* STEP 4 - Let 'Errrr Rip! (only for prompts with reference images) */}
         <AnimatePresence>
-          {promptGenerated && selectedPrompt && tokenMeta && (selectedPrompt.hasReferenceImage || selectedPrompt.requiresTpose) && (
+          {promptGenerated && selectedPrompt && tokenMeta && (selectedPrompt.hasReferenceImage || selectedPrompt.requiresTpose || ((selectedPrompt as any).refImageUrls?.length > 0)) && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-6 mb-6">
               <div className="flex items-center gap-3 mb-2">
                 <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
                 <h2 className="text-lg font-display font-bold text-white">Let &apos;Errrr Rip!</h2>
               </div>
 
-              {selectedPrompt.requiresTpose ? (
-                <>
-                  <p className="text-white/40 font-body text-sm mb-5 pl-11">This prompt requires 3 images. Download and prepare them below, then upload all three to Gemini along with the prompt.</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                    <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
-                      <p className="text-white font-body text-sm font-semibold mb-2">Your GVC character</p>
-                      <p className="text-white/40 font-body text-xs mb-3">Your original GVC PFP image.</p>
-                      {imageUrl && (
-                        <button onClick={() => downloadImage(imageUrl, `GVC-${tokenId}.png`)} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
-                          Download GVC-{tokenId}.png
-                          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                        </button>
+              {(() => {
+                const refUrls = (selectedPrompt as any).refImageUrls || [];
+                const isTpose = selectedPrompt.requiresTpose;
+                const isBuiltInRef = selectedPrompt.hasReferenceImage && !isTpose && !(selectedPrompt as any).refImageUrls?.length;
+                const isCommunityRef = refUrls.length > 0 && !isTpose;
+                const totalImages = 1 + (isTpose ? 2 : isBuiltInRef ? 1 : refUrls.length);
+
+                return (
+                  <>
+                    <p className="text-white/40 font-body text-sm mb-5 pl-11">
+                      This prompt requires {totalImages} images. Download them below, then upload all to Gemini along with the prompt.
+                    </p>
+
+                    <div className={`grid grid-cols-1 gap-4 mb-6 ${totalImages <= 2 ? "sm:grid-cols-2" : "sm:grid-cols-3"}`}>
+                      {/* Always: GVC character */}
+                      <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
+                        <p className="text-white font-body text-sm font-semibold mb-2">Your GVC character</p>
+                        <p className="text-white/40 font-body text-xs mb-3">Your original GVC PFP image.</p>
+                        {imageUrl && (
+                          <button onClick={() => downloadImage(imageUrl, `GVC-${tokenId}.png`)} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                            Download GVC-{tokenId}.png
+                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Built-in: proportion reference */}
+                      {isBuiltInRef && (
+                        <div className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
+                          <p className="text-white font-body text-sm font-semibold mb-2">Proportion reference</p>
+                          <p className="text-white/40 font-body text-xs mb-3">Download and upload this alongside your character.</p>
+                          <a href="/ref/ReferenceImage.png" download="Image-2-GVC-Proportion-Reference.png" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                            Download reference
+                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                          </a>
+                        </div>
                       )}
-                    </div>
-                    <div className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
-                      <p className="text-white font-body text-sm font-semibold mb-2">Your T-Pose</p>
-                      <p className="text-white/40 font-body text-xs mb-3">Use the T-Pose you generated from the pinned prompt. Save it as <span className="text-white/60 font-mono">TPoseReference-{tokenId}.png</span></p>
-                    </div>
-                    <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
-                      <p className="text-white font-body text-sm font-semibold mb-2">Scene image</p>
-                      <p className="text-white/40 font-body text-xs mb-3">The base scene your character will be placed into.</p>
-                      <a href="/examples/welcome-to-vibetown.png" download="welcome-to-vibetown.png" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
-                        Download scene
-                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                      </a>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <>
-                <p className="text-white/40 font-body text-sm mb-5 pl-11">This prompt requires 2 images. Download them below, then upload both to Gemini along with the prompt.</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                    <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
-                      <p className="text-white font-body text-sm font-semibold mb-2">Your GVC character</p>
-                      <p className="text-white/40 font-body text-sm mb-3">Save your character image and upload it to the chat.</p>
-                      {imageUrl && (
-                        <button onClick={() => downloadImage(imageUrl, `GVC-${tokenId}.png`)} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
-                          Save GVC image
-                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                        </button>
+
+                      {/* T-Pose: T-Pose + scene */}
+                      {isTpose && (
+                        <>
+                          <div className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
+                            <p className="text-white font-body text-sm font-semibold mb-2">Your T-Pose</p>
+                            <p className="text-white/40 font-body text-xs mb-3">Use the T-Pose you generated from the pinned prompt. Save it as <span className="text-white/60 font-mono">TPoseReference-{tokenId}.png</span></p>
+                          </div>
+                          <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
+                            <p className="text-white font-body text-sm font-semibold mb-2">Scene image</p>
+                            <p className="text-white/40 font-body text-xs mb-3">The base scene your character will be placed into.</p>
+                            <a href="/examples/welcome-to-vibetown.png" download="welcome-to-vibetown.png" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                              Download scene
+                              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                            </a>
+                          </div>
+                        </>
                       )}
+
+                      {/* Community: reference images from submission */}
+                      {isCommunityRef && refUrls.map((url: string, i: number) => (
+                        <div key={i} className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
+                          <p className="text-white font-body text-sm font-semibold mb-2">Reference image {i + 1}</p>
+                          <div className="w-16 h-16 rounded-lg overflow-hidden bg-black/40 mb-3">
+                            <img src={url} alt={`Reference ${i + 1}`} className="w-full h-full object-cover" />
+                          </div>
+                          <a href={url} download={`reference-${i + 1}.png`} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                            Download
+                            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                          </a>
+                        </div>
+                      ))}
                     </div>
-                    <div className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
-                      <p className="text-white font-body text-sm font-semibold mb-2">Proportion reference</p>
-                      <p className="text-white/40 font-body text-sm mb-3">Download and upload this alongside your character.</p>
-                      <a href="/ref/ReferenceImage.png" download="Image-2-GVC-Proportion-Reference.png" className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
-                        Download reference
-                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                      </a>
-                    </div>
-                  </div>
-                </>
-              )}
+
+                    {/* More details from submitter */}
+                    {(selectedPrompt as any).moreDetails && (
+                      <div className="bg-black/20 rounded-xl p-3 mb-4 border border-white/[0.06]">
+                        <p className="text-white/30 font-body text-xs mb-1">Notes from the prompt creator:</p>
+                        <p className="text-white/50 font-body text-xs leading-relaxed">{(selectedPrompt as any).moreDetails}</p>
+                      </div>
+                    )}
+                  </>
+                );
+              })()}
 
               <ol className="text-white/50 font-body text-sm space-y-2 list-decimal list-inside mb-4">
-                <li>Download {selectedPrompt.requiresTpose ? "all three images " : "both images "}above</li>
+                <li>Download all images above</li>
                 <li>Open <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors font-semibold">Gemini</a>. We recommend using Gemini for the best results (but you can also use ChatGPT, Midjourney, Dall-E, etc).</li>
                 <li>Upload <span className="text-white/80 font-semibold">{selectedPrompt.requiresTpose ? "all three images" : "both images"}</span> to the chat</li>
                 <li>Paste the prompt and hit send</li>

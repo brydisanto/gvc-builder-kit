@@ -13,6 +13,10 @@ interface Submission {
   x_handle: string | null;
   status: "pending" | "approved" | "rejected";
   category: string | null;
+  generations: number;
+  more_details: string | null;
+  ref_images: string | null;
+  requires_ref_images: boolean;
   created_at: string;
 }
 
@@ -113,6 +117,21 @@ export default function AdminPage() {
       setCategories((prev) => prev.filter((c) => c.id !== catId));
     } catch (e) {
       console.error("Delete category failed:", e);
+    }
+  }
+
+  async function toggleRefImages(id: string, current: boolean) {
+    try {
+      await fetch("/api/admin", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, requires_ref_images: !current }),
+      });
+      setSubmissions((prev) =>
+        prev.map((s) => (s.id === id ? { ...s, requires_ref_images: !current } : s))
+      );
+    } catch (e) {
+      console.error("Toggle ref images failed:", e);
     }
   }
 
@@ -304,7 +323,7 @@ export default function AdminPage() {
                     </div>
                   </div>
 
-                  {/* Expanded prompt */}
+                  {/* Expanded details */}
                   <AnimatePresence>
                     {expandedId === sub.id && (
                       <motion.div
@@ -313,9 +332,49 @@ export default function AdminPage() {
                         exit={{ height: 0, opacity: 0 }}
                         className="overflow-hidden"
                       >
-                        <div className="px-4 pb-4">
+                        <div className="px-4 pb-4 space-y-3">
+                          {/* Prompt text */}
                           <div className="bg-black/40 rounded-lg p-3 border border-white/[0.06]">
                             <p className="text-white/60 font-body text-xs leading-relaxed whitespace-pre-wrap">{sub.prompt}</p>
+                          </div>
+
+                          {/* More details */}
+                          {sub.more_details && (
+                            <div>
+                              <p className="text-white/30 font-body text-xs mb-1">Additional details:</p>
+                              <div className="bg-black/40 rounded-lg p-3 border border-white/[0.06]">
+                                <p className="text-white/50 font-body text-xs leading-relaxed whitespace-pre-wrap">{sub.more_details}</p>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Reference images */}
+                          {sub.ref_images && (() => {
+                            const refs = JSON.parse(sub.ref_images);
+                            if (!Array.isArray(refs) || refs.length === 0) return null;
+                            return (
+                              <div>
+                                <p className="text-white/30 font-body text-xs mb-2">Reference images ({refs.length}):</p>
+                                <div className="flex flex-wrap gap-2">
+                                  {refs.map((url: string, i: number) => (
+                                    <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="w-24 h-24 rounded-lg overflow-hidden bg-black/40 border border-white/[0.08] hover:border-gvc-gold/30 transition-colors block">
+                                      <img src={url} alt={`Reference ${i + 1}`} className="w-full h-full object-cover" />
+                                    </a>
+                                  ))}
+                                </div>
+                              </div>
+                            );
+                          })()}
+
+                          {/* Requires reference images toggle */}
+                          <div className="flex items-center gap-3 pt-2 border-t border-white/[0.04]">
+                            <button
+                              onClick={() => toggleRefImages(sub.id, sub.requires_ref_images)}
+                              className={`relative w-10 h-5 rounded-full transition-colors ${sub.requires_ref_images ? "bg-gvc-gold/30" : "bg-white/10"}`}
+                            >
+                              <div className={`absolute top-0.5 w-4 h-4 rounded-full transition-all ${sub.requires_ref_images ? "left-5.5 bg-gvc-gold" : "left-0.5 bg-white/40"}`} style={{ left: sub.requires_ref_images ? "22px" : "2px" }} />
+                            </button>
+                            <span className="text-white/40 font-body text-xs">Requires reference images for users</span>
                           </div>
                         </div>
                       </motion.div>

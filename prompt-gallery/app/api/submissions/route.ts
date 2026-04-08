@@ -56,7 +56,7 @@ export async function GET() {
   try {
     await ensureTable();
     const { rows } = await pool.query(
-      `SELECT id, title, prompt, token_id, image_url, x_handle, status, category, generations, created_at
+      `SELECT id, title, prompt, token_id, image_url, x_handle, status, category, generations, more_details, ref_images, requires_ref_images, created_at
        FROM prompt_submissions
        WHERE status = 'approved'
        ORDER BY created_at DESC`

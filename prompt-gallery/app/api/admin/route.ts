@@ -7,7 +7,7 @@ export async function GET() {
     await ensureTable();
 
     const { rows } = await pool.query(
-      `SELECT id, title, prompt, token_id, image_url, x_handle, status, category, generations, created_at, updated_at
+      `SELECT id, title, prompt, token_id, image_url, x_handle, status, category, generations, more_details, ref_images, requires_ref_images, created_at, updated_at
        FROM prompt_submissions
        ORDER BY
          CASE status WHEN 'pending' THEN 0 WHEN 'approved' THEN 1 WHEN 'rejected' THEN 2 END,
@@ -33,7 +33,7 @@ export async function PATCH(request: NextRequest) {
     await ensureTable();
 
     const body = await request.json();
-    const { id, status, category } = body;
+    const { id, status, category, requires_ref_images } = body;
 
     if (!id) {
       return NextResponse.json({ error: "Missing id" }, { status: 400 });
@@ -50,6 +50,10 @@ export async function PATCH(request: NextRequest) {
     if (category !== undefined) {
       updates.push(`category = $${idx++}`);
       values.push(category);
+    }
+    if (requires_ref_images !== undefined) {
+      updates.push(`requires_ref_images = $${idx++}`);
+      values.push(requires_ref_images);
     }
 
     updates.push(`updated_at = NOW()`);
