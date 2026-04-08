@@ -541,29 +541,37 @@ export default function Home() {
                 <h2 className="text-lg font-display font-bold text-white">Let &apos;Errrr Rip!</h2>
               </div>
 
-              <p className="text-white/40 font-body text-sm mb-5 pl-11">This prompt requires 2 images. Download them below, then upload both to Gemini along with the prompt.</p>
-
               {selectedPrompt.requiresTpose ? (
                 <>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                  <p className="text-white/40 font-body text-sm mb-5 pl-11">This prompt requires 3 images. Download and prepare them below, then upload all three to Gemini along with the prompt.</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                     <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
                       <p className="text-white font-body text-sm font-semibold mb-2">Your GVC character</p>
-                      <p className="text-white/40 font-body text-sm mb-3">Your original GVC PFP image.</p>
+                      <p className="text-white/40 font-body text-xs mb-3">Your original GVC PFP image.</p>
                       {imageUrl && (
-                        <button onClick={() => downloadImage(imageUrl, `GVC-${tokenId}.png`)} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
-                          Save GVC image
-                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        <button onClick={() => downloadImage(imageUrl, `GVC-${tokenId}.png`)} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                          Download GVC-{tokenId}.png
+                          <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
                         </button>
                       )}
                     </div>
                     <div className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
                       <p className="text-white font-body text-sm font-semibold mb-2">Your T-Pose</p>
-                      <p className="text-white/40 font-body text-sm mb-3">Use the T-Pose you generated from the pinned T-Pose prompt. If you haven't generated one yet, do that first.</p>
+                      <p className="text-white/40 font-body text-xs mb-3">Use the T-Pose you generated from the pinned prompt. Save it as <span className="text-white/60 font-mono">TPoseReference-{tokenId}.png</span></p>
+                    </div>
+                    <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
+                      <p className="text-white font-body text-sm font-semibold mb-2">Scene image</p>
+                      <p className="text-white/40 font-body text-xs mb-3">The base scene your character will be placed into.</p>
+                      <a href="/examples/welcome-to-vibetown.png" download="welcome-to-vibetown.png" className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-xs font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                        Download scene
+                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                      </a>
                     </div>
                   </div>
                 </>
               ) : (
                 <>
+                <p className="text-white/40 font-body text-sm mb-5 pl-11">This prompt requires 2 images. Download them below, then upload both to Gemini along with the prompt.</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
                       <p className="text-white font-body text-sm font-semibold mb-2">Your GVC character</p>
@@ -588,9 +596,9 @@ export default function Home() {
               )}
 
               <ol className="text-white/50 font-body text-sm space-y-2 list-decimal list-inside mb-4">
-                <li>Download both images above</li>
+                <li>Download {selectedPrompt.requiresTpose ? "all three images " : "both images "}above</li>
                 <li>Open <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors font-semibold">Gemini</a>. We recommend using Gemini for the best results (but you can also use ChatGPT, Midjourney, Dall-E, etc).</li>
-                <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat</li>
+                <li>Upload <span className="text-white/80 font-semibold">{selectedPrompt.requiresTpose ? "all three images" : "both images"}</span> to the chat</li>
                 <li>Paste the prompt and hit send</li>
               </ol>
             </motion.div>
