@@ -748,7 +748,7 @@ export default function Home() {
               disabled={submitStatus === "sending" || !submitTitle || !submitPromptText || !submitTokenId || !submitFile}
               className="w-full inline-flex items-center justify-center gap-2 px-5 py-4 font-display font-bold text-base rounded-xl transition-all duration-300 bg-gvc-gold text-gvc-black hover:shadow-[0_0_20px_rgba(255,224,72,0.3)] disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:shadow-none"
             >
-              {submitStatus === "sending" ? (
+              {submitStatus === "error" ? "Something went wrong. Try again." : submitStatus === "sending" ? (
                 <span className="inline-flex items-center gap-2">
                   <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
                   Submitting...
