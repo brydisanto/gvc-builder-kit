@@ -72,6 +72,21 @@ export default function AdminPage() {
     }
   }
 
+  async function updateCategory(id: string, category: string | null) {
+    try {
+      await fetch("/api/admin", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, category }),
+      });
+      setSubmissions((prev) =>
+        prev.map((s) => (s.id === id ? { ...s, category } : s))
+      );
+    } catch (e) {
+      console.error("Category update failed:", e);
+    }
+  }
+
   async function deleteSubmission(id: string) {
     try {
       await fetch("/api/admin", {
@@ -232,7 +247,25 @@ export default function AdminPage() {
                     )}
                   </AnimatePresence>
 
-                  {/* Actions */}
+                  {/* Category + Actions */}
+                  <div className="px-4 pb-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-white/30 font-body text-xs">Category:</span>
+                      <select
+                        value={sub.category || ""}
+                        onChange={(e) => updateCategory(sub.id, e.target.value || null)}
+                        className="px-2 py-1 rounded-lg bg-black/40 border border-white/[0.08] text-white/60 font-body text-xs focus:outline-none focus:border-gvc-gold/30 appearance-none cursor-pointer"
+                      >
+                        <option value="" className="bg-[#121212]">Unassigned</option>
+                        <option value="foundational" className="bg-[#121212]">Foundational</option>
+                        <option value="scene" className="bg-[#121212]">Scenes</option>
+                        <option value="profile" className="bg-[#121212]">Profile Pics</option>
+                        <option value="cinematic" className="bg-[#121212]">Cinematic</option>
+                        <option value="artistic" className="bg-[#121212]">Artistic</option>
+                        <option value="meme" className="bg-[#121212]">Memes and Fun</option>
+                      </select>
+                    </div>
+                  </div>
                   <div className="flex gap-2 px-4 pb-4">
                     {sub.status === "pending" && (
                       <>

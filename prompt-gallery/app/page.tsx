@@ -104,6 +104,7 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [category, setCategory] = useState("all");
   const [activeTab, setActiveTab] = useState<"browse" | "submit">("browse");
+  const [communityPrompts, setCommunityPrompts] = useState<any[]>([]);
   const [promptGenerated, setPromptGenerated] = useState(false);
   const [generating, setGenerating] = useState(false);
 
@@ -213,12 +214,16 @@ export default function Home() {
     : "Just submitted a prompt to the The Prompt Machine!  -";
   const shareUrl = "https://prompt-gallery-theta.vercel.app";
 
-  // Load metadata
+  // Load metadata and community prompts
   useEffect(() => {
     fetch("/gvc-metadata.json")
       .then((r) => r.json())
       .then(setMetadata)
       .catch(() => setError("Could not load token metadata."));
+    fetch("/api/submissions")
+      .then((r) => r.json())
+      .then((data) => setCommunityPrompts(Array.isArray(data) ? data : []))
+      .catch(() => {});
   }, []);
 
   function lookupToken() {
@@ -614,6 +619,66 @@ export default function Home() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Community Prompts */}
+        {communityPrompts.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mt-10 mb-6"
+          >
+            <h2 className="text-xl font-display font-bold text-white mb-4">Community Prompts</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {communityPrompts.map((cp: any) => (
+                <motion.button
+                  key={cp.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  onClick={() => {
+                    setSelectedPrompt({
+                      id: cp.id,
+                      title: cp.title,
+                      description: "",
+                      category: cp.category || "scene",
+                      template: cp.prompt,
+                      icon: "sparkle",
+                      author: cp.x_handle ? `@${cp.x_handle}` : "@community",
+                      exampleImage: cp.image_url,
+                      exampleTokenId: cp.token_id,
+                    } as any);
+                    setPromptGenerated(false);
+                  }}
+                  className={`text-left rounded-2xl border overflow-hidden transition-all duration-300 hover:scale-[1.02] ${
+                    selectedPrompt?.id === cp.id
+                      ? "bg-gvc-gold/[0.08] border-gvc-gold/30 shadow-[0_0_20px_rgba(255,224,72,0.15)]"
+                      : "bg-gvc-dark border-white/[0.08] hover:border-white/15"
+                  }`}
+                >
+                  {cp.image_url && (
+                    <div className="aspect-video bg-black/40 overflow-hidden">
+                      <img src={cp.image_url} alt={cp.title} className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  <div className="p-4">
+                    <h3 className={`font-display font-bold text-sm mb-1 ${selectedPrompt?.id === cp.id ? "text-gvc-gold" : "text-white"}`}>
+                      {cp.title}
+                    </h3>
+                    <div className="flex items-center gap-2">
+                      {cp.category && (
+                        <span className="inline-block px-2 py-0.5 rounded-full bg-white/[0.04] text-white/25 text-xs font-body capitalize">{cp.category}</span>
+                      )}
+                      {cp.x_handle && (
+                        <span className="text-white/20 text-xs font-body">By @{cp.x_handle}</span>
+                      )}
+                      <span className="text-white/15 text-xs font-body">#{cp.token_id}</span>
+                    </div>
+                  </div>
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        )}
         </>)}
 
         {activeTab === "submit" && (<>
