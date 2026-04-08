@@ -387,7 +387,7 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }} className="overflow-hidden mb-6">
               <div className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-5">
                 <div className="flex items-center gap-2 mb-3">
-                  <span className="text-gvc-gold font-display font-bold text-sm">Example</span>
+                  <span className="text-gvc-gold font-display font-bold text-sm">Example Output</span>
                   <span className="text-white/20 font-body text-xs">-</span>
                   <span className="text-white/40 font-body text-xs">{selectedPrompt.title}</span>
                   {selectedPrompt.exampleTokenId && (<span className="text-white/20 font-body text-xs ml-auto">Token #{selectedPrompt.exampleTokenId}</span>)}
