@@ -391,8 +391,9 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
+            whileHover={{ rotate: [0, -12, 8, -4, 0], transition: { duration: 0.5 } }}
             transition={{ type: "spring", stiffness: 150 }}
-            className="mb-4"
+            className="mb-4 cursor-pointer"
           >
             <Image
               src="/shaka.png"

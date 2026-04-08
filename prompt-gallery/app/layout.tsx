@@ -24,6 +24,10 @@ const mundial = localFont({
 export const metadata: Metadata = {
   title: "The Prompt Machine - Good Vibes Club",
   description: "Generate AI images of your Good Vibes Club characters",
+  icons: {
+    icon: "/shaka.png",
+    apple: "/shaka.png",
+  },
 };
 
 export default function RootLayout({
