@@ -120,6 +120,21 @@ export default function AdminPage() {
     }
   }
 
+  async function updateRefImages(id: string, urls: string[]) {
+    try {
+      await fetch("/api/admin", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, ref_images: JSON.stringify(urls) }),
+      });
+      setSubmissions((prev) =>
+        prev.map((s) => (s.id === id ? { ...s, ref_images: JSON.stringify(urls) } : s))
+      );
+    } catch (e) {
+      console.error("Update ref images failed:", e);
+    }
+  }
+
   async function toggleRefImages(id: string, current: boolean) {
     try {
       await fetch("/api/admin", {
@@ -348,18 +363,30 @@ export default function AdminPage() {
                             </div>
                           )}
 
-                          {/* Reference images */}
+                          {/* Reference images - selectable */}
                           {sub.ref_images && (() => {
-                            const refs = JSON.parse(sub.ref_images);
+                            const refs: string[] = JSON.parse(sub.ref_images);
                             if (!Array.isArray(refs) || refs.length === 0) return null;
                             return (
                               <div>
-                                <p className="text-white/30 font-body text-xs mb-2">Reference images ({refs.length}):</p>
+                                <p className="text-white/30 font-body text-xs mb-2">Reference images ({refs.length}) - click X to remove from prompt:</p>
                                 <div className="flex flex-wrap gap-2">
                                   {refs.map((url: string, i: number) => (
-                                    <a key={i} href={url} target="_blank" rel="noopener noreferrer" className="w-24 h-24 rounded-lg overflow-hidden bg-black/40 border border-white/[0.08] hover:border-gvc-gold/30 transition-colors block">
-                                      <img src={url} alt={`Reference ${i + 1}`} className="w-full h-full object-cover" />
-                                    </a>
+                                    <div key={i} className="relative group">
+                                      <a href={url} target="_blank" rel="noopener noreferrer" className="w-24 h-24 rounded-lg overflow-hidden bg-black/40 border border-white/[0.08] hover:border-gvc-gold/30 transition-colors block">
+                                        <img src={url} alt={`Reference ${i + 1}`} className="w-full h-full object-cover" />
+                                      </a>
+                                      <button
+                                        onClick={(e) => {
+                                          e.preventDefault();
+                                          const updated = refs.filter((_: string, idx: number) => idx !== i);
+                                          updateRefImages(sub.id, updated);
+                                        }}
+                                        className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500/80 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                                      >
+                                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                                      </button>
+                                    </div>
                                   ))}
                                 </div>
                               </div>

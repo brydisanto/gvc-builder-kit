@@ -33,7 +33,7 @@ export async function PATCH(request: NextRequest) {
     await ensureTable();
 
     const body = await request.json();
-    const { id, status, category, requires_ref_images } = body;
+    const { id, status, category, requires_ref_images, ref_images } = body;
 
     if (!id) {
       return NextResponse.json({ error: "Missing id" }, { status: 400 });
@@ -54,6 +54,10 @@ export async function PATCH(request: NextRequest) {
     if (requires_ref_images !== undefined) {
       updates.push(`requires_ref_images = $${idx++}`);
       values.push(requires_ref_images);
+    }
+    if (ref_images !== undefined) {
+      updates.push(`ref_images = $${idx++}`);
+      values.push(ref_images);
     }
 
     updates.push(`updated_at = NOW()`);

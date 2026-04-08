@@ -159,14 +159,26 @@ export default function Home() {
   const [submitRefFiles, setSubmitRefFiles] = useState<File[]>([]);
   const [submitRefPreviews, setSubmitRefPreviews] = useState<string[]>([]);
   const [submitMoreDetails, setSubmitMoreDetails] = useState("");
+  const [submitFileError, setSubmitFileError] = useState("");
   const [submitStatus, setSubmitStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+
+  const MAX_FILE_SIZE = 4.5 * 1024 * 1024; // 4.5MB (Vercel serverless limit)
+
+  function validateFileSize(file: File): boolean {
+    if (file.size > MAX_FILE_SIZE) {
+      setSubmitFileError(`"${file.name}" is too large (${(file.size / 1024 / 1024).toFixed(1)}MB). Max file size is 4.5MB. Try compressing or resizing the image.`);
+      return false;
+    }
+    setSubmitFileError("");
+    return true;
+  }
 
   function handleFileDrop(e: React.DragEvent) {
     e.preventDefault();
     setSubmitDragOver(false);
     const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith("image/")) {
+    if (file && file.type.startsWith("image/") && validateFileSize(file)) {
       setSubmitFile(file);
       setSubmitPreview(URL.createObjectURL(file));
     }
@@ -174,7 +186,7 @@ export default function Home() {
 
   function handleFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
-    if (file && file.type.startsWith("image/")) {
+    if (file && file.type.startsWith("image/") && validateFileSize(file)) {
       setSubmitFile(file);
       setSubmitPreview(URL.createObjectURL(file));
     }
@@ -183,10 +195,21 @@ export default function Home() {
   function clearFile() {
     setSubmitFile(null);
     setSubmitPreview("");
+    setSubmitFileError("");
   }
 
   function handleRefFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
     const files = Array.from(e.target.files || []).filter((f) => f.type.startsWith("image/"));
+    const oversized = files.filter((f) => f.size > MAX_FILE_SIZE);
+    if (oversized.length > 0) {
+      setSubmitFileError(`${oversized.map((f) => `"${f.name}"`).join(", ")} too large. Max 4.5MB per file.`);
+      const valid = files.filter((f) => f.size <= MAX_FILE_SIZE);
+      if (valid.length === 0) return;
+      setSubmitRefFiles((prev) => [...prev, ...valid]);
+      setSubmitRefPreviews((prev) => [...prev, ...valid.map((f) => URL.createObjectURL(f))]);
+      return;
+    }
+    setSubmitFileError("");
     setSubmitRefFiles((prev) => [...prev, ...files]);
     setSubmitRefPreviews((prev) => [...prev, ...files.map((f) => URL.createObjectURL(f))]);
   }
@@ -239,6 +262,7 @@ export default function Home() {
     setSubmitMoreDetails("");
     setSubmitRefFiles([]);
     setSubmitRefPreviews([]);
+    setSubmitFileError("");
     clearFile();
   }
 
@@ -817,7 +841,7 @@ export default function Home() {
                     Drag and drop or click to upload
                   </p>
                   <p className="text-white/20 font-body text-xs">
-                    PNG, JPG, or WebP. Max 10MB.
+                    PNG, JPG, or WebP. Max 4.5MB.
                   </p>
                 </div>
               ) : (
@@ -838,6 +862,9 @@ export default function Home() {
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
                   </button>
                 </motion.div>
+              )}
+              {submitFileError && (
+                <p className="text-red-400 font-body text-xs mt-2">{submitFileError}</p>
               )}
             </div>
 
