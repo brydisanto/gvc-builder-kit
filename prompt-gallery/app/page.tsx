@@ -367,7 +367,10 @@ export default function Home() {
                 <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${selectedPrompt?.id === prompt.id ? "bg-gvc-gold/20 text-gvc-gold" : "bg-white/[0.04] text-white/40"}`}>
                   <PromptIcon type={prompt.icon} />
                 </div>
-                <h3 className={`font-display font-bold text-base mb-1 ${selectedPrompt?.id === prompt.id ? "text-gvc-gold" : "text-white"}`}>{prompt.title}</h3>
+                <h3 className={`font-display font-bold text-base mb-1 flex items-center gap-1.5 ${selectedPrompt?.id === prompt.id ? "text-gvc-gold" : "text-white"}`}>
+                  {prompt.pinned && <svg className="w-3.5 h-3.5 flex-shrink-0 opacity-50" fill="currentColor" viewBox="0 0 24 24"><path d="M16 12V4h1V2H7v2h1v8l-2 2v2h5.2v6h1.6v-6H18v-2l-2-2z" /></svg>}
+                  {prompt.title}
+                </h3>
                 <p className="text-white/40 font-body text-sm leading-relaxed">{prompt.description}</p>
                 <div className="flex items-center gap-2 mt-2">
                   <span className="inline-block px-2 py-0.5 rounded-full bg-white/[0.04] text-white/25 text-xs font-body capitalize">{prompt.category}</span>
