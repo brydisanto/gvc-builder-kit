@@ -29,6 +29,15 @@ export async function ensureTable() {
   await pool.query(`ALTER TABLE prompt_submissions ADD COLUMN IF NOT EXISTS more_details TEXT`).catch(() => {});
   await pool.query(`ALTER TABLE prompt_submissions ADD COLUMN IF NOT EXISTS ref_images TEXT`).catch(() => {});
 
+  // Generation counts for built-in prompts
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS prompt_generations (
+      prompt_id TEXT PRIMARY KEY,
+      count INTEGER NOT NULL DEFAULT 0
+    )
+  `);
+
+
   // Categories table for custom categories
   await pool.query(`
     CREATE TABLE IF NOT EXISTS prompt_categories (

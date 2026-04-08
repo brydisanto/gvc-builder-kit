@@ -105,6 +105,7 @@ export default function Home() {
   const [category, setCategory] = useState("all");
   const [activeTab, setActiveTab] = useState<"browse" | "submit">("browse");
   const [communityPrompts, setCommunityPrompts] = useState<any[]>([]);
+  const [builtInGenerations, setBuiltInGenerations] = useState<Record<string, number>>({});
   const [sortBy, setSortBy] = useState<"popular" | "newest">("popular");
   const [promptGenerated, setPromptGenerated] = useState(false);
   const [generating, setGenerating] = useState(false);
@@ -129,13 +130,17 @@ export default function Home() {
   function handleGenerate() {
     setGenerating(true);
     setPromptGenerated(false);
-    // Track generation for community prompts
-    if (selectedPrompt && !PROMPTS.find((p) => p.id === selectedPrompt.id)) {
+    // Track generation
+    if (selectedPrompt) {
+      const isBuiltIn = !!PROMPTS.find((p) => p.id === selectedPrompt.id);
       fetch("/api/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ promptId: selectedPrompt.id }),
+        body: JSON.stringify({ promptId: selectedPrompt.id, isBuiltIn }),
       }).catch(() => {});
+      if (isBuiltIn) {
+        setBuiltInGenerations((prev) => ({ ...prev, [selectedPrompt.id]: (prev[selectedPrompt.id] || 0) + 1 }));
+      }
     }
     setTimeout(() => {
       setGenerating(false);
@@ -252,6 +257,10 @@ export default function Home() {
       .then((r) => r.json())
       .then((data) => setCommunityPrompts(Array.isArray(data) ? data : []))
       .catch(() => {});
+    fetch("/api/generate")
+      .then((r) => r.json())
+      .then((data) => setBuiltInGenerations(data || {}))
+      .catch(() => {});
   }, []);
 
   function lookupToken() {
@@ -269,6 +278,11 @@ export default function Home() {
       setTokenMeta(token);
     }
     setLoading(false);
+  }
+
+  function getGenerations(prompt: any): number {
+    // Community prompts have generations on the object, built-in use the separate table
+    return (prompt as any).generations || builtInGenerations[prompt.id] || 0;
   }
 
   const filteredPrompts = useMemo(() => {
@@ -293,7 +307,7 @@ export default function Home() {
       return list.sort((a, b) => {
         if (a.pinned && !b.pinned) return -1;
         if (!a.pinned && b.pinned) return 1;
-        if (sortBy === "popular") return ((b as any).generations || 0) - ((a as any).generations || 0);
+        if (sortBy === "popular") return getGenerations(b) - getGenerations(a);
         return 0; // newest = default order (built-in first, then DB order which is newest first)
       });
     },
@@ -416,19 +430,23 @@ export default function Home() {
             <h2 className="text-lg font-display font-bold text-white">Select Your Prompt</h2>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 mb-4">
-            {CATEGORIES.map((cat) => (
-              <button key={cat.id} onClick={() => setCategory(cat.id)} className={`px-4 py-2 rounded-xl font-display font-bold text-sm transition-all ${category === cat.id ? "bg-gvc-gold/15 text-gvc-gold border border-gvc-gold/30" : "border border-white/[0.08] text-white/40 hover:text-white/60 hover:border-white/15"}`}>
-                {cat.label}
-              </button>
-            ))}
-            <span className="w-px h-6 bg-white/[0.08] mx-1" />
-            <button onClick={() => setSortBy("popular")} className={`px-3 py-1.5 rounded-lg font-body text-xs transition-all ${sortBy === "popular" ? "bg-white/[0.06] text-white/60" : "text-white/25 hover:text-white/40"}`}>
-              Most Popular
-            </button>
-            <button onClick={() => setSortBy("newest")} className={`px-3 py-1.5 rounded-lg font-body text-xs transition-all ${sortBy === "newest" ? "bg-white/[0.06] text-white/60" : "text-white/25 hover:text-white/40"}`}>
-              Newest
-            </button>
+          <div className="flex items-center justify-between gap-4 mb-4">
+            <div className="flex flex-wrap gap-2">
+              {CATEGORIES.map((cat) => (
+                <button key={cat.id} onClick={() => setCategory(cat.id)} className={`px-4 py-2 rounded-xl font-display font-bold text-sm transition-all ${category === cat.id ? "bg-gvc-gold/15 text-gvc-gold border border-gvc-gold/30" : "border border-white/[0.08] text-white/40 hover:text-white/60 hover:border-white/15"}`}>
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value as "popular" | "newest")}
+              className="px-3 py-2 rounded-lg bg-white/[0.04] border border-white/[0.08] text-white/50 font-body text-xs cursor-pointer focus:outline-none focus:border-gvc-gold/30 appearance-none pr-7 transition-colors"
+              style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' viewBox='0 0 24 24' stroke='rgba(255,255,255,0.3)' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E\")", backgroundRepeat: "no-repeat", backgroundPosition: "right 8px center" }}
+            >
+              <option value="popular">Most Popular</option>
+              <option value="newest">Newest</option>
+            </select>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -445,8 +463,8 @@ export default function Home() {
                 <div className="flex items-center gap-2 mt-2 flex-wrap">
                   <span className="inline-block px-2 py-0.5 rounded-full bg-white/[0.04] text-white/25 text-xs font-body capitalize">{prompt.category}</span>
                   <a href={`https://x.com/${prompt.author.replace("@", "")}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-white/20 text-xs font-body hover:text-gvc-gold/60 transition-colors">By {prompt.author}</a>
-                  {((prompt as any).generations > 0) && (
-                    <span className="text-white/15 text-xs font-body">{(prompt as any).generations} generated</span>
+                  {getGenerations(prompt) > 0 && (
+                    <span className="text-white/15 text-xs font-body">{getGenerations(prompt)} generated</span>
                   )}
                 </div>
               </motion.button>
