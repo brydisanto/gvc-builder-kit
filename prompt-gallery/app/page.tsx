@@ -1029,9 +1029,6 @@ export default function Home() {
             height={20}
             className="mx-auto mb-2 opacity-30"
           />
-          <p className="text-white/15 text-xs font-body">
-            Good Vibes Club - The Prompt Machine
-          </p>
         </div>
       </div>
     </main>
