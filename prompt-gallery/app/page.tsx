@@ -151,6 +151,9 @@ export default function Home() {
   const [submitFile, setSubmitFile] = useState<File | null>(null);
   const [submitPreview, setSubmitPreview] = useState("");
   const [submitDragOver, setSubmitDragOver] = useState(false);
+  const [submitRefFiles, setSubmitRefFiles] = useState<File[]>([]);
+  const [submitRefPreviews, setSubmitRefPreviews] = useState<string[]>([]);
+  const [submitMoreDetails, setSubmitMoreDetails] = useState("");
   const [submitStatus, setSubmitStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
@@ -177,6 +180,17 @@ export default function Home() {
     setSubmitPreview("");
   }
 
+  function handleRefFileSelect(e: React.ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(e.target.files || []).filter((f) => f.type.startsWith("image/"));
+    setSubmitRefFiles((prev) => [...prev, ...files]);
+    setSubmitRefPreviews((prev) => [...prev, ...files.map((f) => URL.createObjectURL(f))]);
+  }
+
+  function removeRefFile(index: number) {
+    setSubmitRefFiles((prev) => prev.filter((_, i) => i !== index));
+    setSubmitRefPreviews((prev) => prev.filter((_, i) => i !== index));
+  }
+
   async function handleSubmit() {
     if (!submitTitle || !submitPromptText || !submitTokenId || !submitFile) return;
     setSubmitStatus("sending");
@@ -188,6 +202,8 @@ export default function Home() {
       formData.append("tokenId", submitTokenId);
       formData.append("xHandle", submitHandle);
       formData.append("image", submitFile);
+      if (submitMoreDetails) formData.append("moreDetails", submitMoreDetails);
+      submitRefFiles.forEach((f, i) => formData.append(`refImage${i}`, f));
 
       const res = await fetch("/api/submissions", {
         method: "POST",
@@ -215,6 +231,9 @@ export default function Home() {
     setSubmitPromptText("");
     setSubmitTokenId("");
     setSubmitHandle("");
+    setSubmitMoreDetails("");
+    setSubmitRefFiles([]);
+    setSubmitRefPreviews([]);
     clearFile();
   }
 
@@ -355,7 +374,7 @@ export default function Home() {
             transition={{ delay: 0.2 }}
             className="text-white/40 font-body text-lg max-w-xl mx-auto"
           >
-            Prompts to help bring your GVC characters to life. Vibetown is built by the community, for the community.
+            A place for prompts that can help bring your GVC characters to life. Vibetown is built by the community, for the community.
           </motion.p>
         </div>
 
@@ -721,7 +740,7 @@ export default function Home() {
 
             {/* Image Upload */}
             <div>
-              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Example Image</label>
+              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Example Output</label>
               {!submitPreview ? (
                 <div
                   onDragOver={(e) => { e.preventDefault(); setSubmitDragOver(true); }}
@@ -785,6 +804,41 @@ export default function Home() {
                   className="w-full pl-9 pr-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors"
                 />
               </div>
+            </div>
+
+            {/* Reference Images (optional) */}
+            <div>
+              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">Supporting Reference Images <span className="text-white/20">(optional)</span></label>
+              <div className="flex flex-wrap gap-3 mb-2">
+                {submitRefPreviews.map((preview, i) => (
+                  <div key={i} className="relative w-20 h-20 rounded-lg overflow-hidden bg-black/40 border border-white/[0.08]">
+                    <img src={preview} alt={`Reference ${i + 1}`} className="w-full h-full object-cover" />
+                    <button onClick={() => removeRefFile(i)} className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/60 flex items-center justify-center text-white/60 hover:text-white hover:bg-red-500/30 transition-all">
+                      <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+                    </button>
+                  </div>
+                ))}
+                <button
+                  onClick={() => document.getElementById("ref-file-input")?.click()}
+                  className="w-20 h-20 rounded-lg border-2 border-dashed border-white/10 hover:border-gvc-gold/30 flex items-center justify-center text-white/20 hover:text-white/40 transition-all"
+                >
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
+                </button>
+                <input id="ref-file-input" type="file" accept="image/png,image/jpeg,image/webp" multiple onChange={handleRefFileSelect} className="hidden" />
+              </div>
+              <p className="text-white/20 font-body text-xs">Add any reference images that should be included with your prompt (style references, scene references, etc).</p>
+            </div>
+
+            {/* More Details (optional) */}
+            <div>
+              <label className="text-white/50 font-body text-xs uppercase tracking-wider mb-1.5 block">More Details <span className="text-white/20">(optional)</span></label>
+              <textarea
+                placeholder="Describe any additional context about the reference images above, or any other details that would help someone use your prompt effectively."
+                value={submitMoreDetails}
+                onChange={(e) => setSubmitMoreDetails(e.target.value)}
+                rows={3}
+                className="w-full px-4 py-3 rounded-xl bg-black/40 border border-white/[0.08] text-white font-body text-sm placeholder:text-white/30 focus:outline-none focus:border-gvc-gold/30 transition-colors resize-none"
+              />
             </div>
 
             {/* Submit button */}

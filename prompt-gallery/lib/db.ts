@@ -24,10 +24,10 @@ export async function ensureTable() {
       updated_at TIMESTAMP DEFAULT NOW()
     )
   `);
-  // Add generations column if table already exists without it
-  await pool.query(`
-    ALTER TABLE prompt_submissions ADD COLUMN IF NOT EXISTS generations INTEGER NOT NULL DEFAULT 0
-  `).catch(() => {});
+  // Add columns if table already exists without them
+  await pool.query(`ALTER TABLE prompt_submissions ADD COLUMN IF NOT EXISTS generations INTEGER NOT NULL DEFAULT 0`).catch(() => {});
+  await pool.query(`ALTER TABLE prompt_submissions ADD COLUMN IF NOT EXISTS more_details TEXT`).catch(() => {});
+  await pool.query(`ALTER TABLE prompt_submissions ADD COLUMN IF NOT EXISTS ref_images TEXT`).catch(() => {});
 
   // Categories table for custom categories
   await pool.query(`
