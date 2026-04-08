@@ -9,6 +9,7 @@ export interface Prompt {
   exampleImage?: string;
   exampleTokenId?: string;
   hasReferenceImage?: boolean;
+  requiresTpose?: boolean; // user must upload their own T-pose output instead of the standard reference
   pinned?: boolean;
 }
 
@@ -163,6 +164,53 @@ Add subtle Vibetown energy:
 - soft colored rim light (matching palette from GVC-{TOKEN_ID}.png)
 - gentle glow accents
 - clean studio + dreamy gradient blend`,
+  },
+  {
+    id: "welcome-to-vibetown",
+    title: "Welcome to Vibetown",
+    description: "Place your full-body GVC character into the iconic Vibetown street scene. Requires your T-Pose output from the prompt above.",
+    category: "scene",
+    icon: "city",
+    author: "@GoodVibesClub",
+    exampleImage: "/examples/welcome-to-vibetown.png",
+    exampleTokenId: "1330",
+    requiresTpose: true,
+    template: `I've uploaded two images.
+
+MY CHARACTER (GVC-{TOKEN_ID}.png): This is my Good Vibes Club (GVC) NFT character. Use this as the definitive reference for my character's identity, outfit, colors, and materials.
+
+T-POSE REFERENCE: This is the full-body T-Pose render of my character. Use this to understand the character's full body, outfit details, and proportions.
+
+TASK
+Replace the character in the scene below with my character from GVC-{TOKEN_ID}.png and the T-Pose reference image.
+
+SCENE DESCRIPTION
+A stylized 3D street scene: the character is leaning casually against a metal roller shutter/garage door covered in colorful graffiti that reads "WELCOME TO VIBETOWN" in layered, vibrant spray-paint lettering. The setting is an urban alley with:
+- purple-tinted walls and neon accents
+- potted plants and small flowers on the ground
+- warm natural light mixed with neon glow
+- shallow depth of field (foreground foliage slightly blurred)
+- cinematic street photography composition
+
+CHARACTER PLACEMENT
+- leaning against the graffiti wall, one foot up against it
+- relaxed, confident pose (throwing up a shaka or peace sign)
+- camera at low angle, slight upward perspective
+- character positioned left of center
+
+IDENTITY LOCK (CRITICAL)
+The character must look exactly like GVC-{TOKEN_ID}.png:
+- same head, face, expression
+- same outfit, colors, materials
+- same accessories
+Use the T-Pose reference for full-body proportions and outfit details below the shoulders.
+
+RENDER STYLE
+- high-quality stylized 3D render
+- soft rounded forms, premium toy-like finish
+- cinematic lighting with warm and cool contrast
+- shallow depth of field for photographic feel
+- vibrant, saturated color palette`,
   },
 ];
 

@@ -85,12 +85,12 @@ Using this exact character as the subject (keep their specific look, outfit, and
 
 const GVC_STYLE_SUFFIX = `\n\nIMPORTANT: The character in the generated image must look like the uploaded GVC character -same outfit, same features, same vibe. Adapt them into the new scene/style while keeping them recognizable.`;
 
-function assemblePrompt(template: string, traits: Record<string, string>, hasReferenceImage?: boolean, tid?: string): string {
+function assemblePrompt(template: string, traits: Record<string, string>, skipPrefix?: boolean, tid?: string): string {
   const description = describeTraits(traits);
   let filled = template.replace("{TRAITS}", description);
   if (tid) filled = filled.replaceAll("{TOKEN_ID}", tid);
-  // Prompts with their own multi-image instructions (like Full Body) skip the generic prefix/suffix
-  if (hasReferenceImage) return filled;
+  // Prompts with their own multi-image instructions skip the generic prefix/suffix
+  if (skipPrefix) return filled;
   return GVC_STYLE_PREFIX + filled + GVC_STYLE_SUFFIX;
 }
 
@@ -239,7 +239,7 @@ export default function Home() {
 
   const assembledPrompt = useMemo(() => {
     if (!selectedPrompt || !tokenMeta) return "";
-    return assemblePrompt(selectedPrompt.template, tokenMeta.traits, selectedPrompt.hasReferenceImage, tokenId);
+    return assemblePrompt(selectedPrompt.template, tokenMeta.traits, selectedPrompt.hasReferenceImage || selectedPrompt.requiresTpose, tokenId);
   }, [selectedPrompt, tokenMeta]);
 
   async function copyPrompt() {
@@ -502,7 +502,7 @@ export default function Home() {
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="rounded-2xl bg-gvc-dark border border-gvc-gold/20 p-6 mb-6">
               <div className="flex items-center gap-3 mb-2">
                 <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">3</span>
-                <h2 className="text-lg font-display font-bold text-white">{selectedPrompt.hasReferenceImage ? "Copy The Prompt Below" : "Let \u0027Errrr Rip!"}</h2>
+                <h2 className="text-lg font-display font-bold text-white">{(selectedPrompt.hasReferenceImage || selectedPrompt.requiresTpose) ? "Copy The Prompt Below" : "Let \u0027Errrr Rip!"}</h2>
               </div>
 
               
@@ -522,7 +522,7 @@ export default function Home() {
 
               </div>
 
-              {!selectedPrompt.hasReferenceImage && (
+              {!selectedPrompt.hasReferenceImage && !selectedPrompt.requiresTpose && (
                 <div className="mt-5 pt-5 border-t border-white/[0.06]">
                   <p className="text-white/30 font-body text-sm">Open <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors">Gemini</a>. We recommend using Gemini for the best results (but you can also use ChatGPT, Midjourney, Dall-E, etc). Upload your GVC image and paste the prompt.</p>
                 </div>
@@ -534,7 +534,7 @@ export default function Home() {
 
         {/* STEP 4 - Let 'Errrr Rip! (only for prompts with reference images) */}
         <AnimatePresence>
-          {promptGenerated && selectedPrompt && tokenMeta && selectedPrompt.hasReferenceImage && (
+          {promptGenerated && selectedPrompt && tokenMeta && (selectedPrompt.hasReferenceImage || selectedPrompt.requiresTpose) && (
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className="rounded-2xl bg-gvc-dark border border-white/[0.08] p-6 mb-6">
               <div className="flex items-center gap-3 mb-2">
                 <span className="w-8 h-8 rounded-full bg-gvc-gold/15 text-gvc-gold text-sm font-bold flex items-center justify-center flex-shrink-0">4</span>
@@ -542,6 +542,28 @@ export default function Home() {
               </div>
 
               <p className="text-white/40 font-body text-sm mb-5 pl-11">This prompt requires 2 images. Download them below, then upload both to Gemini along with the prompt.</p>
+
+              {selectedPrompt.requiresTpose ? (
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                    <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
+                      <p className="text-white font-body text-sm font-semibold mb-2">Your GVC character</p>
+                      <p className="text-white/40 font-body text-sm mb-3">Your original GVC PFP image.</p>
+                      {imageUrl && (
+                        <button onClick={() => downloadImage(imageUrl, `GVC-${tokenId}.png`)} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-gvc-gold/10 border border-gvc-gold/20 text-gvc-gold text-sm font-body font-semibold hover:bg-gvc-gold/15 transition-colors">
+                          Save GVC image
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        </button>
+                      )}
+                    </div>
+                    <div className="rounded-xl bg-black/30 border border-gvc-gold/20 p-4">
+                      <p className="text-white font-body text-sm font-semibold mb-2">Your T-Pose</p>
+                      <p className="text-white/40 font-body text-sm mb-3">Use the T-Pose you generated from the T-Pose prompt above. If you haven't generated one yet, do that first.</p>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     <div className="rounded-xl bg-black/30 border border-white/[0.08] p-4">
                       <p className="text-white font-body text-sm font-semibold mb-2">Your GVC character</p>
@@ -562,12 +584,15 @@ export default function Home() {
                       </a>
                     </div>
                   </div>
-                  <ol className="text-white/50 font-body text-sm space-y-2 list-decimal list-inside mb-4">
-                    <li>Download both images above</li>
-                    <li>Open <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors font-semibold">Gemini</a>. We recommend using Gemini for the best results (but you can also use ChatGPT, Midjourney, Dall-E, etc).</li>
-                    <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat</li>
-                    <li>Paste the prompt and hit send</li>
-                  </ol>
+                </>
+              )}
+
+              <ol className="text-white/50 font-body text-sm space-y-2 list-decimal list-inside mb-4">
+                <li>Download both images above</li>
+                <li>Open <a href="https://gemini.google.com/app" target="_blank" rel="noopener noreferrer" className="text-gvc-gold/60 hover:text-gvc-gold underline underline-offset-2 transition-colors font-semibold">Gemini</a>. We recommend using Gemini for the best results (but you can also use ChatGPT, Midjourney, Dall-E, etc).</li>
+                <li>Upload <span className="text-white/80 font-semibold">both images</span> to the chat</li>
+                <li>Paste the prompt and hit send</li>
+              </ol>
             </motion.div>
           )}
         </AnimatePresence>
