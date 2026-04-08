@@ -28,6 +28,32 @@ body {
   font-family: var(--font-mundial), system-ui, sans-serif;
 }
 
+/* Grid background texture */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("/grid.svg");
+  background-repeat: repeat;
+  background-size: 40px 40px;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Gold bottom gradient */
+body::after {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70vh;
+  background: radial-gradient(ellipse at 50% 100%, rgba(255, 224, 72, 0.1) 0%, rgba(255, 224, 72, 0.04) 40%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 ::selection {
   background-color: var(--color-gvc-gold);
   color: var(--color-gvc-black);
@@ -162,4 +188,37 @@ body {
   25% { transform: rotate(-12deg); }
   50% { transform: rotate(8deg); }
   75% { transform: rotate(-4deg); }
+}
+
+/* ---------------------------------- */
+/* Rising Gold Particles              */
+/* ---------------------------------- */
+
+.rising-particle {
+  position: fixed;
+  bottom: -10px;
+  width: 3px;
+  height: 3px;
+  background: var(--color-gvc-gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+  animation: riseUp linear infinite;
+}
+
+@keyframes riseUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-100vh) scale(0.3);
+    opacity: 0;
+  }
 }

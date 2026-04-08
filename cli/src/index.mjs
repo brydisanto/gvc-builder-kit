@@ -494,6 +494,10 @@ function generateStarterPage(templateType, projectName, description, addons, pro
     `- \`text-shimmer\` -animated gold gradient text effect for headlines`,
     `- \`card-glow\` -gold glow box-shadow that intensifies on hover`,
     `- \`ember\` -floating gold particle dot (position absolute, add to background)`,
+    `- \`rising-particle\` -gold particles that float up from the bottom of the page`,
+    `- Grid background texture and gold bottom gradient are applied to body via ::before and ::after`,
+    `- Shaka icon (/shaka.png) should wiggle on hover and is used as the site favicon`,
+    `- Site titles should be UPPERCASE (all caps, Brice font-black)`,
     ``,
     `### Assets (already in /public/)`,
     `- \`/shaka.png\` -GVC shaka hand icon (use with next/image)`,
@@ -909,8 +913,12 @@ ${addonDescriptions || "None selected -- you can always add capabilities later b
 - \`.text-shimmer\` -- animated gold gradient text
 - \`.card-glow\` -- gold glow box shadow with hover enhancement
 - \`.ember\` -- floating gold particle dot
+- \`.rising-particle\` -- gold particles that float up from the bottom
 - \`.font-display\` -- Brice headline font
 - \`.font-body\` -- Mundial body font
+- Grid texture background and gold bottom gradient are already applied to body
+- Shaka icon (/shaka.png) should wiggle on hover. It is already set as the site favicon.
+- Site titles should be UPPERCASE (all caps)
 
 ## GVC API (no API key needed)
 All GVC collection data is available from: https://api-hazel-pi-72.vercel.app/api
@@ -1115,7 +1123,7 @@ async function main() {
   if (command === "deploy") return runDeploy();
   if (command === "templates") return showTemplates();
   if (command === "--version" || command === "-v") {
-    console.log("create-gvc-app v0.4.4");
+    console.log("create-gvc-app v0.5.0");
     return;
   }
 
@@ -1314,7 +1322,7 @@ async function main() {
 
   p.outro(
     gold("Good vibes only! ") +
-      dim("// gvc-builder-kit v0.4.4")
+      dim("// gvc-builder-kit v0.5.0")
   );
 }
 

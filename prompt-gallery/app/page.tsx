@@ -369,21 +369,20 @@ export default function Home() {
 
   return (
     <main className="min-h-screen relative overflow-hidden">
-      {/* Background embers */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="ember"
-            style={{
-              left: (8 + i * 15) + "%",
-              top: (10 + (i % 3) * 25) + "%",
-              animationDelay: (i * 0.9) + "s",
-              animationDuration: (5 + i * 0.5) + "s",
-            }}
-          />
-        ))}
-      </div>
+      {/* Rising gold particles from bottom */}
+      {[...Array(12)].map((_, i) => (
+        <div
+          key={`particle-${i}`}
+          className="rising-particle"
+          style={{
+            left: (5 + i * 8 + (i % 3) * 2) + "%",
+            animationDuration: (8 + i * 1.5) + "s",
+            animationDelay: (i * 1.2) + "s",
+            width: (2 + (i % 3)) + "px",
+            height: (2 + (i % 3)) + "px",
+          }}
+        />
+      ))}
 
       <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
         {/* Header */}

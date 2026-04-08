@@ -19,6 +19,8 @@
 <p align="center">
   <a href="https://web-seven-tan-85.vercel.app"><strong>Try the Web Builder</strong></a>
   &nbsp;&nbsp;·&nbsp;&nbsp;
+  <a href="https://prompt-gallery-theta.vercel.app"><strong>The Prompt Machine</strong></a>
+  &nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="#getting-started"><strong>Get Started</strong></a>
   &nbsp;&nbsp;·&nbsp;&nbsp;
   <a href="#what-can-i-build"><strong>Templates</strong></a>
