@@ -1,0 +1,155 @@
+GVC BUILDER KIT LICENSE
+Copyright (c) 2026 Toast Studio LLC / Good Vibes Club. All rights reserved.
+
+This license governs use of the accompanying software, templates, code,
+configuration files, design assets, fonts, illustrations, characters, brand
+marks, and any other materials distributed as part of the GVC Builder Kit
+(collectively, the "Licensed Materials"). By downloading, installing, copying,
+accessing, or using any portion of the Licensed Materials, you ("Licensee")
+agree to the terms of this License. If you do not agree, you may not use the
+Licensed Materials.
+
+1. DEFINITIONS
+
+   1.1 "Licensor" means Toast Studio LLC and its affiliate Good Vibes Club,
+       jointly and severally, the owners of the Licensed Materials.
+
+   1.2 "GVC Brand" means the "Good Vibes Club" and "GVC" names, the Good Vibes
+       Club and Vibetown characters and lore, the shaka mark, associated
+       logos, wordmarks, color systems, typography pairings, illustrations,
+       trade dress, and any other source-identifying elements of Licensor,
+       whether or not registered as trademarks.
+
+   1.3 "Commercial Use" means any use of the Licensed Materials, in whole or
+       in part, or any Derivative Work, that is primarily intended for or
+       directed toward commercial advantage, monetary compensation, paid
+       distribution, advertising revenue, token sales, NFT mints, paid
+       subscriptions, sponsorships, in-app purchases, consulting deliverables,
+       fundraising, or any other activity that generates or is intended to
+       generate revenue, fees, or financial consideration of any kind, whether
+       direct or indirect.
+
+   1.4 "Derivative Work" means any work, product, website, application, tool,
+       template, model, dataset, video, image, audio, document, or other
+       material that is based on, incorporates, is built using, or is
+       generated with the assistance of the Licensed Materials, including
+       projects scaffolded, initialized, or produced using the GVC Builder Kit
+       CLI or its templates.
+
+   1.5 "Personal and Creative Use" means non-commercial personal experimentation,
+       learning, fan art, community contributions made freely back to Licensor,
+       and other uses that are not Commercial Use.
+
+2. LIMITED LICENSE GRANT
+
+   Subject to Licensee's continuous compliance with this License, Licensor
+   grants Licensee a worldwide, royalty-free, non-exclusive, non-transferable,
+   non-sublicensable, revocable license to download, install, run, copy, and
+   modify the Licensed Materials solely for Personal and Creative Use.
+
+3. RESTRICTIONS
+
+   Except as expressly permitted in Section 2, Licensee shall not, and shall
+   not permit any third party to:
+
+   (a) use the Licensed Materials or any Derivative Work for any Commercial
+       Use without first obtaining a separate written commercial license from
+       Licensor;
+
+   (b) sell, rent, lease, sublicense, distribute for a fee, or otherwise
+       monetize the Licensed Materials or any Derivative Work;
+
+   (c) use, display, reproduce, or reference the GVC Brand in any product,
+       service, website, social media account, token, NFT collection, or
+       marketing material, except as strictly necessary to indicate that a
+       Personal and Creative Use project was built with the GVC Builder Kit,
+       and in no case in a manner that suggests affiliation, sponsorship, or
+       endorsement by Licensor without Licensor's prior written consent;
+
+   (d) register, claim, or attempt to register any trademark, domain name,
+       social handle, token ticker, or business name that incorporates "Good
+       Vibes Club," "GVC," "Vibetown," the shaka mark, or any confusingly
+       similar term;
+
+   (e) use the Licensed Materials to train, fine-tune, or evaluate any machine
+       learning model intended for commercial release or sale;
+
+   (f) remove, obscure, or alter any copyright, trademark, or other
+       proprietary notices contained in the Licensed Materials;
+
+   (g) use the Licensed Materials in any manner that is unlawful, defamatory,
+       hateful, fraudulent, or that would reasonably be expected to bring the
+       GVC Brand into disrepute.
+
+4. RESERVATION OF RIGHTS
+
+   All rights not expressly granted in this License are reserved by Licensor.
+   No rights or licenses are granted by implication, estoppel, or otherwise.
+   Licensor retains all right, title, and interest in and to the Licensed
+   Materials and the GVC Brand, including all intellectual property rights
+   therein. Nothing in this License shall be construed as granting Licensee
+   any ownership interest in the Licensed Materials, the GVC Brand, or any
+   improvement, modification, or derivative thereof made by Licensor.
+
+5. COMMERCIAL LICENSING
+
+   Any Commercial Use requires a separate written commercial license from
+   Licensor. To request a commercial license, contact Toast Studio LLC / Good
+   Vibes Club. Licensor may grant, deny, or condition such licenses in its
+   sole discretion and on any terms it chooses, including royalties, revenue
+   share, approval rights, or quality standards.
+
+6. FEEDBACK AND CONTRIBUTIONS
+
+   If Licensee submits any feedback, suggestions, bug reports, pull requests,
+   or contributions relating to the Licensed Materials, Licensee hereby grants
+   Licensor a perpetual, irrevocable, worldwide, royalty-free, sublicensable
+   license to use, reproduce, modify, distribute, and commercialize such
+   contributions for any purpose, without attribution or compensation.
+
+7. TERMINATION
+
+   This License is effective until terminated. Licensor may terminate this
+   License immediately upon any breach by Licensee. This License will also
+   terminate automatically if Licensee initiates any legal proceeding
+   (including a cross-claim or counterclaim) alleging that the Licensed
+   Materials infringe any intellectual property right. Upon termination,
+   Licensee must cease all use of the Licensed Materials and destroy all
+   copies in Licensee's possession or control. Sections 3, 4, 6, 7, 8, 9,
+   and 10 survive termination.
+
+8. DISCLAIMER OF WARRANTY
+
+   THE LICENSED MATERIALS ARE PROVIDED "AS IS" AND "AS AVAILABLE," WITHOUT
+   WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+   WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+   NON-INFRINGEMENT, TITLE, OR THAT THE LICENSED MATERIALS WILL BE
+   UNINTERRUPTED OR ERROR-FREE.
+
+9. LIMITATION OF LIABILITY
+
+   TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL LICENSOR BE
+   LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR
+   PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS, REVENUE, DATA, OR GOODWILL,
+   ARISING OUT OF OR RELATED TO THIS LICENSE OR THE LICENSED MATERIALS,
+   WHETHER IN CONTRACT, TORT, OR OTHERWISE, EVEN IF LICENSOR HAS BEEN ADVISED
+   OF THE POSSIBILITY OF SUCH DAMAGES. LICENSOR'S TOTAL AGGREGATE LIABILITY
+   SHALL NOT EXCEED ONE HUNDRED U.S. DOLLARS (US$100).
+
+10. GENERAL
+
+    This License constitutes the entire agreement between the parties
+    regarding the Licensed Materials and supersedes all prior or contemporaneous
+    understandings. This License shall be governed by and construed in
+    accordance with the laws of the State of Delaware, without regard to its
+    conflict of laws principles. Any dispute arising under this License shall
+    be resolved exclusively in the state or federal courts located in
+    Delaware, and the parties consent to the jurisdiction of such courts. If
+    any provision of this License is held to be unenforceable, that provision
+    shall be modified only to the extent necessary to make it enforceable,
+    and the remaining provisions shall remain in full force and effect.
+    Licensor's failure to enforce any provision is not a waiver of its right
+    to do so later.
+
+For commercial licensing inquiries, contact:
+Toast Studio LLC / Good Vibes Club
