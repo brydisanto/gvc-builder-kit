@@ -29,17 +29,16 @@ body {
   position: relative;
 }
 
-/* Grid background via pseudo-element. The SVG itself uses a 10%-white stroke,
-   so no extra CSS opacity is applied — otherwise the two opacities stack and
-   the grid disappears on the gvc-black body. No background-size override: the
-   browser tiles the SVG at its intrinsic 100×100, matching gvcgallery.xyz. */
+/* Dark cloth fabric background, fixed to viewport so it parallaxes with scroll. */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url('/grid.svg');
-  background-repeat: repeat;
+  background-image: url('/playground-bg.jpg');
+  background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   pointer-events: none;
   z-index: 0;
 }
