@@ -29,20 +29,6 @@ body {
   position: relative;
 }
 
-/* Dark cloth fabric background, fixed to viewport so it parallaxes with scroll. */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url('/playground-bg.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  pointer-events: none;
-  z-index: 0;
-}
-
 /* Radial gold glow behind hero */
 body::after {
   content: '';
